@@ -6,6 +6,7 @@ class PlayerShip extends MovingObject {
   static HEIGHT = 40;
   static HEALTH = 10;
   static SPEED = 5;
+  static COOLDOWN = 500;  // time in ms
 
   static UPKEYS = ["ArrowUp", 'w']
   static DOWNKEYS = ["ArrowDown", 's']
@@ -31,6 +32,8 @@ class PlayerShip extends MovingObject {
       right: false,
       shoot: false
     }
+
+    this.shootOnCooldown = false;
   }
 
   updateVelocity() {
@@ -44,7 +47,11 @@ class PlayerShip extends MovingObject {
 
   move() {
     this.updateVelocity();
-    if (this.keysPressed.shoot) this.shootProjectile();
+    if (this.keysPressed.shoot && !this.shootOnCooldown) {
+      this.shootProjectile();
+      this.shootOnCooldown = true;
+      setTimeout(this.resetCooldown.bind(this), PlayerShip.COOLDOWN);
+    }
     super.move();
   }
 
@@ -77,6 +84,10 @@ class PlayerShip extends MovingObject {
 
   shootProjectile() {
     console.log("fire");
+  }
+
+  resetCooldown() {
+    this.shootOnCooldown = false;
   }
 
   // to be implemented later for game over and reset purposes
