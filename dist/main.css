@@ -75,12 +75,12 @@ table {
 }
 #main-container #header .project-title {
   font-size: 80px;
-  margin-bottom: 10px;
   font-family: "Bangers", sans-serif;
 }
 #main-container #header .dev-name {
   font-family: "Oswald", sans-serif;
   font-size: 30px;
+  margin-bottom: 10px;
 }
 #main-container #header .nav-links {
   display: flex;
@@ -110,24 +110,31 @@ table {
   align-content: center;
   font-size: 25px;
 }
-#main-container #game-instructions .movement-instructions {
+#main-container #game-instructions .instructions-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+#main-container #game-instructions .instructions-container .movement-instructions {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-#main-container #game-instructions .movement-instructions .arrow-icons {
+#main-container #game-instructions .instructions-container .movement-instructions .arrow-icons {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   width: 50%;
 }
-#main-container #game-instructions .shooting-instructions {
-  margin-top: 30px;
+#main-container #game-instructions .instructions-container .shooting-instructions {
+  margin-top: 10px;
   display: flex;
   align-items: center;
   align-content: space-around;
 }
-#main-container #game-instructions .shooting-instructions .spacebar {
+#main-container #game-instructions .instructions-container .shooting-instructions .spacebar {
   border: 3px solid white;
   padding-bottom: 6px;
   width: 100px;
@@ -148,9 +155,11 @@ table {
     padding: 10px;
     width: 680px;
   }
-  #main-container #header h1 {
+  #main-container #header .project-title {
     font-size: 40px;
-    margin-bottom: 10px;
+  }
+  #main-container #header .dev-name {
+    font-size: 20px;
   }
   #main-container #header .nav-links a {
     margin: 0 10px 0 10px;
@@ -159,12 +168,14 @@ table {
     font-size: 30px;
   }
   #main-container aside {
-    flex-basis: 700px;
-    padding: 10px 0 10px 0;
+    flex-basis: 690px;
     height: auto;
     min-height: 75px;
   }
-  #main-container #game-instructions .movement-instructions {
+  #main-container #game-instructions .instructions-container {
+    margin-bottom: 0;
+  }
+  #main-container #game-instructions .instructions-container .movement-instructions {
     margin-top: 10px;
   }
   #main-container canvas {
