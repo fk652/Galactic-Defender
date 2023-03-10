@@ -27,7 +27,7 @@ Galactic Defender is a galaxy shooter game, based off the classic [Space Invader
 * This project will be written with HTML, CSS, and JavaScript.
 * Canvas API to render the game.
 * npm to manage project dependencies.
-* Webpack to bundle the source JavaScript files.
+* Webpack and Babel to bundle and transpile the source JavaScript code.
 
 ## Implementation Timeline
 
