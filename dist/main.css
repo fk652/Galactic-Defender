@@ -101,7 +101,7 @@ table {
 #main-container #game-instructions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   align-content: center;
   font-size: 25px;
 }
@@ -109,6 +109,7 @@ table {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: -30px;
 }
 #main-container #game-instructions .movement-instructions .arrow-icons {
   display: flex;
@@ -126,6 +127,10 @@ table {
   padding-bottom: 60px;
   font-size: 50px;
   margin: 0 10px 0 10px;
+}
+#main-container #game-instructions ul {
+  margin-left: 5px;
+  margin-top: -50px;
 }
 #main-container #game-instructions ul li {
   margin: 20px 0 20px 0;
@@ -155,10 +160,6 @@ table {
   }
   #main-container #game-instructions .movement-instructions {
     margin-top: 10px;
-    margin-bottom: -30px;
-  }
-  #main-container #game-instructions ul {
-    margin-top: -30px;
   }
   #main-container canvas {
     margin: 10px 0 10px 0;
