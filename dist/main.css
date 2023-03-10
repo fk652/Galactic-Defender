@@ -53,10 +53,6 @@ table {
   border-spacing: 0;
 }
 
-.break {
-  flex-basis: 100%;
-}
-
 #main-container {
   display: flex;
   justify-content: center;
@@ -187,4 +183,7 @@ table {
   #main-container canvas {
     margin: 10px 0 10px 0;
   }
+}
+.break {
+  flex-basis: 100%;
 }
