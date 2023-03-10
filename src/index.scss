@@ -1,1 +1,143 @@
 @import "./styles/css-reset.scss";
+
+$color: white;
+
+.break {
+  flex-basis: 100%;
+}
+
+#main-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 10px;
+
+  #header, aside, canvas {
+    border: 3px solid $color;
+  }
+
+  #header {
+    width: 660px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 20px;
+    font-family: "Bangers", sans-serif;
+
+    h1 {
+      font-size: 80px;
+      margin-bottom: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+
+      a {
+        text-decoration: none;
+        margin: 0 10px 0 10px;
+
+        i {
+          color: $color;
+          font-size: 40px;
+        }
+      }
+    }
+  }
+
+  aside {
+    width: 190px;
+    padding: 5px;
+    font-family: "Oswald", sans-serif;
+  }
+
+  canvas {
+    width: 700px;
+    height: 550px;
+  }
+
+  #game-instructions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    font-size: 25px;
+
+    .movement-instructions {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .arrow-icons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 50%;
+      }
+    }
+
+    .shooting-instructions {
+      margin: 10px 0 10px 0;
+      display: flex;
+      align-items: center;
+      align-content: space-around;
+
+      .spacebar {
+        padding-bottom: 60px;
+        font-size: 50px;
+        margin: 0 10px 0 10px;
+      }
+    }
+
+    ul {
+      li {
+        margin: 20px 0 20px 0;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  #main-container {
+    #header {
+      padding: 10px;
+      width: 680px;
+
+      h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .nav-links {
+        a {
+          margin: 0 10px 0 10px;
+          i {
+            font-size: 30px;
+          }
+        }
+      }
+    }
+
+    aside {
+      flex-basis: 700px;
+      padding: 10px 0 10px 0;
+      height: auto;
+      min-height: 75px;
+    }
+
+    #game-instructions {
+      .movement-instructions {
+        margin-top: 10px;
+        margin-bottom: -30px;
+      }
+
+      ul {
+        margin-top: -30px;
+      }
+    }
+
+    canvas {
+      margin: 10px 0 10px 0;
+    }
+  }
+}

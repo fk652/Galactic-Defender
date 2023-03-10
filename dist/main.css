@@ -31,6 +31,7 @@ footer, header, hgroup, menu, nav, section {
 body {
   line-height: 1;
   background-color: black;
+  color: white;
 }
 
 ol, ul {
@@ -50,4 +51,116 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+.break {
+  flex-basis: 100%;
+}
+
+#main-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+#main-container #header, #main-container aside, #main-container canvas {
+  border: 3px solid white;
+}
+#main-container #header {
+  width: 660px;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 20px;
+  font-family: "Bangers", sans-serif;
+}
+#main-container #header h1 {
+  font-size: 80px;
+  margin-bottom: 10px;
+}
+#main-container #header .nav-links {
+  display: flex;
+  justify-content: center;
+}
+#main-container #header .nav-links a {
+  text-decoration: none;
+  margin: 0 10px 0 10px;
+}
+#main-container #header .nav-links a i {
+  color: white;
+  font-size: 40px;
+}
+#main-container aside {
+  width: 190px;
+  padding: 5px;
+  font-family: "Oswald", sans-serif;
+}
+#main-container canvas {
+  width: 700px;
+  height: 550px;
+}
+#main-container #game-instructions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  font-size: 25px;
+}
+#main-container #game-instructions .movement-instructions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#main-container #game-instructions .movement-instructions .arrow-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 50%;
+}
+#main-container #game-instructions .shooting-instructions {
+  margin: 10px 0 10px 0;
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+}
+#main-container #game-instructions .shooting-instructions .spacebar {
+  padding-bottom: 60px;
+  font-size: 50px;
+  margin: 0 10px 0 10px;
+}
+#main-container #game-instructions ul li {
+  margin: 20px 0 20px 0;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 1150px) {
+  #main-container #header {
+    padding: 10px;
+    width: 680px;
+  }
+  #main-container #header h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  #main-container #header .nav-links a {
+    margin: 0 10px 0 10px;
+  }
+  #main-container #header .nav-links a i {
+    font-size: 30px;
+  }
+  #main-container aside {
+    flex-basis: 700px;
+    padding: 10px 0 10px 0;
+    height: auto;
+    min-height: 75px;
+  }
+  #main-container #game-instructions .movement-instructions {
+    margin-top: 10px;
+    margin-bottom: -30px;
+  }
+  #main-container #game-instructions ul {
+    margin-top: -30px;
+  }
+  #main-container canvas {
+    margin: 10px 0 10px 0;
+  }
 }
