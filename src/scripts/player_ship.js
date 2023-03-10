@@ -6,12 +6,17 @@ class PlayerShip extends MovingObject {
   static HEIGHT = 40;
   static HEALTH = 10;
   static SPEED = 5;
-  static COOLDOWN = 500;  // time in ms
+  static COOLDOWN = 250;  // time in ms
 
-  static UPKEYS = ["ArrowUp", 'w']
-  static DOWNKEYS = ["ArrowDown", 's']
-  static RIGHTKEYS = ["ArrowRight", 'd']
-  static LEFTKEYS = ["ArrowLeft", 'a']
+  static PROJECTILE_VELOCITY = [0, -10];
+  static PROJECTILE_HEALTH = 1;
+  static PROJECTILE_WIDTH = 5;
+  static PROJECTILE_HEIGHT = 20;
+
+  static UP_KEYS = ["ArrowUp", 'w']
+  static DOWN_KEYS = ["ArrowDown", 's']
+  static RIGHT_KEYS = ["ArrowRight", 'd']
+  static LEFT_KEYS = ["ArrowLeft", 'a']
 
   constructor(game) {
     const args = {
@@ -58,20 +63,20 @@ class PlayerShip extends MovingObject {
   handleKeyDown(event) {
     event.preventDefault();
 
-    if (PlayerShip.RIGHTKEYS.includes(event.key)) this.keysPressed.right = true;
-    if (PlayerShip.LEFTKEYS.includes(event.key)) this.keysPressed.left = true;
-    if (PlayerShip.UPKEYS.includes(event.key)) this.keysPressed.up = true;
-    if (PlayerShip.DOWNKEYS.includes(event.key)) this.keysPressed.down = true;
+    if (PlayerShip.RIGHT_KEYS.includes(event.key)) this.keysPressed.right = true;
+    if (PlayerShip.LEFT_KEYS.includes(event.key)) this.keysPressed.left = true;
+    if (PlayerShip.UP_KEYS.includes(event.key)) this.keysPressed.up = true;
+    if (PlayerShip.DOWN_KEYS.includes(event.key)) this.keysPressed.down = true;
     if (event.key === " ") this.keysPressed.shoot = true;
   }
   
   handleKeyUp(event) {
     event.preventDefault();
 
-    if (PlayerShip.RIGHTKEYS.includes(event.key)) this.keysPressed.right = false;
-    if (PlayerShip.LEFTKEYS.includes(event.key)) this.keysPressed.left = false;
-    if (PlayerShip.UPKEYS.includes(event.key)) this.keysPressed.up = false;
-    if (PlayerShip.DOWNKEYS.includes(event.key)) this.keysPressed.down = false;
+    if (PlayerShip.RIGHT_KEYS.includes(event.key)) this.keysPressed.right = false;
+    if (PlayerShip.LEFT_KEYS.includes(event.key)) this.keysPressed.left = false;
+    if (PlayerShip.UP_KEYS.includes(event.key)) this.keysPressed.up = false;
+    if (PlayerShip.DOWN_KEYS.includes(event.key)) this.keysPressed.down = false;
     if (event.key === " ") this.keysPressed.shoot = false;
   }
 
@@ -83,7 +88,16 @@ class PlayerShip extends MovingObject {
   }
 
   shootProjectile() {
-    console.log("fire");
+    const projectile = new Projectile({
+      position: [this.position[0] + this.width/2.75, this.position[1]],
+      velocity: PlayerShip.PROJECTILE_VELOCITY,
+      health: PlayerShip.PROJECTILE_HEALTH,
+      game: this.game,
+      width: PlayerShip.PROJECTILE_WIDTH,
+      height: PlayerShip.PROJECTILE_HEIGHT,
+      imageSrc: "src/assets/player_projectile.png"
+    }, "player");
+    this.game.allMovingObjects.projectiles.push(projectile);
   }
 
   resetCooldown() {

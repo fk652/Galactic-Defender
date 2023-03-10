@@ -30,6 +30,13 @@ class MovingObject {
   inYBounds(y) {
     return (y > 0 && y < this.game.canvasHeight - this.height);
   }
+
+  inBounds(position) {
+    return (position[0] > 0 
+      && position[0] < this.game.canvasWidth - this.width
+      && position[1] > 0 
+      && position[1] < this.game.canvasHeight - this.height);
+  }
 }
 
 export default MovingObject;
