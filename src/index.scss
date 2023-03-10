@@ -21,11 +21,17 @@ $color: white;
     text-align: center;
     margin-bottom: 10px;
     padding: 20px;
-    font-family: "Bangers", sans-serif;
+    height: auto;
 
-    h1 {
+    .project-title {
       font-size: 80px;
       margin-bottom: 10px;
+      font-family: "Bangers", sans-serif;
+    }
+
+    .dev-name {
+      font-family: "Oswald", sans-serif;
+      font-size: 30px;
     }
 
     .nav-links {
@@ -66,7 +72,6 @@ $color: white;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      // margin-bottom: -30px;
 
       .arrow-icons {
         display: flex;

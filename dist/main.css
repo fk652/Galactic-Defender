@@ -71,11 +71,16 @@ table {
   text-align: center;
   margin-bottom: 10px;
   padding: 20px;
-  font-family: "Bangers", sans-serif;
+  height: auto;
 }
-#main-container #header h1 {
+#main-container #header .project-title {
   font-size: 80px;
   margin-bottom: 10px;
+  font-family: "Bangers", sans-serif;
+}
+#main-container #header .dev-name {
+  font-family: "Oswald", sans-serif;
+  font-size: 30px;
 }
 #main-container #header .nav-links {
   display: flex;
