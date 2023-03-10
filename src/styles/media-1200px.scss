@@ -1,0 +1,54 @@
+@media screen and (max-width: 1200px) {
+  #main-container {
+    #header {
+      padding: 10px;
+      width: 680px;
+
+      .project-title {
+        font-size: 40px;
+      }
+
+      .dev-name {
+        font-size: 20px;
+      }
+
+      .nav-links {
+        a {
+          margin: 0 10px 0 10px;
+          i {
+            font-size: 30px;
+          }
+        }
+      }
+    }
+
+    aside {
+      flex-basis: 690px;
+      height: auto;
+      min-height: 75px;
+    }
+
+    #game-instructions {
+      .instructions-container {
+        margin-top: 10px;
+        margin-bottom: 0px;
+
+        .keys-text-container {
+          .move-text {
+            padding-top: 10px;
+          }
+        }
+      }
+
+      ul {
+        li {
+          margin: 10px 0 10px 0;
+        }
+      }
+    }
+
+    canvas {
+      margin: 10px 0 10px 0;
+    }
+  }
+}
