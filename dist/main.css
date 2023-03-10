@@ -59,7 +59,7 @@ table {
 
 #main-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   padding: 10px;
 }
@@ -102,6 +102,7 @@ table {
 #main-container canvas {
   width: 700px;
   height: 550px;
+  margin: 0 10px 0 10px;
 }
 #main-container #game-instructions {
   display: flex;
@@ -113,34 +114,35 @@ table {
 #main-container #game-instructions .instructions-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
+  height: 100px;
+  margin-bottom: 20px;
 }
-#main-container #game-instructions .instructions-container .movement-instructions {
+#main-container #game-instructions .instructions-container .keys-container {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
 }
-#main-container #game-instructions .instructions-container .movement-instructions .arrow-icons {
+#main-container #game-instructions .instructions-container .keys-container .arrow-icons {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  width: 50%;
+  width: 75px;
 }
-#main-container #game-instructions .instructions-container .shooting-instructions {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  align-content: space-around;
-}
-#main-container #game-instructions .instructions-container .shooting-instructions .spacebar {
+#main-container #game-instructions .instructions-container .keys-container .spacebar {
   border: 3px solid white;
   padding-bottom: 6px;
   width: 100px;
   text-align: center;
   font-size: 20px;
   margin: 0 5px 0 5px;
+}
+#main-container #game-instructions .instructions-container .keys-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+#main-container #game-instructions .instructions-container .keys-text-container .shoot-text {
+  padding-top: 20px;
 }
 #main-container #game-instructions ul {
   margin-left: 5px;
@@ -150,7 +152,7 @@ table {
   font-size: 20px;
 }
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1200px) {
   #main-container #header {
     padding: 10px;
     width: 680px;
@@ -173,10 +175,14 @@ table {
     min-height: 75px;
   }
   #main-container #game-instructions .instructions-container {
-    margin-bottom: 0;
-  }
-  #main-container #game-instructions .instructions-container .movement-instructions {
     margin-top: 10px;
+    margin-bottom: 0px;
+  }
+  #main-container #game-instructions .instructions-container .keys-text-container .move-text {
+    padding-top: 10px;
+  }
+  #main-container #game-instructions ul li {
+    margin: 10px 0 10px 0;
   }
   #main-container canvas {
     margin: 10px 0 10px 0;
