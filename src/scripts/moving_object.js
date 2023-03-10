@@ -5,7 +5,7 @@ class MovingObject {
     this.health = argsObject["health"];
     this.game = argsObject["game"];
     this.width = argsObject["width"];
-    this.height = argsObject["height"]
+    this.height = argsObject["height"];
 
     this.image = document.createElement("img");
     this.image.src = argsObject["imageSrc"];

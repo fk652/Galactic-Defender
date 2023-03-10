@@ -7,7 +7,7 @@ class GameView {
 
     // to be changed with setting up start menu listener first, 
     // then removing that and adding movement listener
-    this.bindMovementHandlers();
+    this.bindControlHandlers();
   }
 
   start() {
@@ -17,8 +17,8 @@ class GameView {
     }, 20)
   }
 
-  bindMovementHandlers() {
-    this.game.allMovingObjects.player.bindMovementHandlers();
+  bindControlHandlers() {
+    this.game.allMovingObjects.player.bindControlHandlers();
   }
 }
 

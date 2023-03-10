@@ -1,4 +1,5 @@
 import MovingObject from "./moving_object";
+import Projectile from "./projectile";
 
 class PlayerShip extends MovingObject {
   static WIDTH = 20;
@@ -27,7 +28,8 @@ class PlayerShip extends MovingObject {
       up: false,
       down: false,
       left: false,
-      right: false
+      right: false,
+      shoot: false
     }
   }
 
@@ -42,6 +44,7 @@ class PlayerShip extends MovingObject {
 
   move() {
     this.updateVelocity();
+    if (this.keysPressed.shoot) this.shootProjectile();
     super.move();
   }
 
@@ -52,6 +55,7 @@ class PlayerShip extends MovingObject {
     if (PlayerShip.LEFTKEYS.includes(event.key)) this.keysPressed.left = true;
     if (PlayerShip.UPKEYS.includes(event.key)) this.keysPressed.up = true;
     if (PlayerShip.DOWNKEYS.includes(event.key)) this.keysPressed.down = true;
+    if (event.key === " ") this.keysPressed.shoot = true;
   }
   
   handleKeyUp(event) {
@@ -61,11 +65,23 @@ class PlayerShip extends MovingObject {
     if (PlayerShip.LEFTKEYS.includes(event.key)) this.keysPressed.left = false;
     if (PlayerShip.UPKEYS.includes(event.key)) this.keysPressed.up = false;
     if (PlayerShip.DOWNKEYS.includes(event.key)) this.keysPressed.down = false;
+    if (event.key === " ") this.keysPressed.shoot = false;
   }
 
-  bindMovementHandlers() {
-    document.addEventListener("keydown", this.handleKeyDown.bind(this))
-    document.addEventListener("keyup", this.handleKeyUp.bind(this))
+  bindControlHandlers() {
+    document.addEventListener("keydown", this.handleKeyDown.bind(this));
+    document.addEventListener("keyup", this.handleKeyUp.bind(this));
+    document.addEventListener("mousedown", e => this.keysPressed.shoot = true);
+    document.addEventListener("mouseup", e => this.keysPressed.shoot = false);
+  }
+
+  shootProjectile() {
+    console.log("fire");
+  }
+
+  // to be implemented later for game over and reset purposes
+  removeControlHandlers() {
+
   }
 }
 
