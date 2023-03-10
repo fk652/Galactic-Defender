@@ -26,7 +26,7 @@ class PlayerShip extends MovingObject {
       velocity: [0, 0],
       health: PlayerShip.HEALTH,
       game: game,
-      imageSrc: "src/assets/spaceship2_alt.png"
+      imageSrc: "src/assets/player1.png"
     }
     super(args);
 
