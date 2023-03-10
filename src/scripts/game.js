@@ -6,6 +6,7 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
+    this.enemyWave = 1;
 
     this.allMovingObjects = {
       player: new PlayerShip(this),
@@ -41,6 +42,10 @@ class Game {
         objectsValue.draw(ctx);
       }
     }
+  }
+
+  setEnemies() {
+
   }
 }
 
