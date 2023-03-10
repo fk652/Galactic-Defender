@@ -56,6 +56,10 @@ $main-color: white;
     margin: 0 10px 0 10px;
   }
 
+  canvas:hover {
+    cursor: none;
+  }
+
   #game-instructions {
     display: flex;
     flex-wrap: wrap;
