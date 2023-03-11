@@ -91,7 +91,7 @@ $main-color: white;
           width: 100px;
           text-align: center;
           font-size: 20px;
-          margin: 0 5px 0 5px;
+          margin: 18px 5px 0 5px;
         }
       }
 
@@ -158,11 +158,19 @@ $main-color: white;
       display: flex;
       align-items: center;
 
+      .wave-text p {
+        margin: 5px 0;
+      }
+
       .wave-numbers {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         margin-left: 10px;
+        margin-top: 4px;
+        span:first-child {
+          margin-bottom: 5px;
+        }
       }
     }
   }

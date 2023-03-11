@@ -133,7 +133,7 @@ table {
   width: 100px;
   text-align: center;
   font-size: 20px;
-  margin: 0 5px 0 5px;
+  margin: 18px 5px 0 5px;
 }
 #main-container #game-instructions .instructions-container .keys-text-container {
   display: flex;
@@ -188,11 +188,18 @@ table {
   display: flex;
   align-items: center;
 }
+#main-container #game-information #wave-info .wave-text p {
+  margin: 5px 0;
+}
 #main-container #game-information #wave-info .wave-numbers {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin-left: 10px;
+  margin-top: 4px;
+}
+#main-container #game-information #wave-info .wave-numbers span:first-child {
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -201,59 +208,57 @@ table {
     width: 680px;
   }
   #main-container #header .project-title {
-    font-size: 40px;
+    font-size: 35px;
   }
   #main-container #header .dev-name {
-    font-size: 20px;
+    font-size: 18px;
   }
   #main-container #header .nav-links a {
     margin: 0 10px 0 10px;
   }
   #main-container #header .nav-links a i {
-    font-size: 30px;
+    font-size: 25px;
   }
   #main-container aside {
     flex-basis: 690px;
+    height: auto;
     min-height: 75px;
   }
+  #main-container #game-instructions {
+    height: 220px;
+  }
   #main-container #game-instructions .instructions-container {
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 0px;
   }
-  #main-container #game-instructions .instructions-container .keys-text-container .move-text {
+  #main-container #game-instructions .instructions-container .keys-container .keys-text-container .move-text {
     padding-top: 10px;
   }
+  #main-container #game-instructions ul {
+    margin-bottom: 20px;
+  }
   #main-container #game-instructions ul li {
-    margin: 10px 0 10px 0;
+    margin: 5px 0 5px 0;
   }
   #main-container canvas {
     margin: 10px 0 10px 0;
   }
-  #game-information {
-    display: flex;
+  #main-container #game-information {
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    height: 100px;
+    height: 50px;
+    padding-top: 0;
+    font-size: 20px;
   }
-  #game-information #player-health {
+  #main-container #game-information #player-health {
     margin-right: 30px;
+    margin-bottom: 10px;
   }
-  #game-information #wave-info {
+  #main-container #game-information #player-health #player-health-bar .player-health-point {
+    height: 15px;
+  }
+  #main-container #game-information #wave-info {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-  }
-  #game-information #wave-info .wave-text p {
-    margin: 5px 0;
-  }
-  #game-information #wave-info .wave-numbers {
-    margin-top: 4px;
-  }
-  #game-information #wave-info .wave-numbers span:first-child {
-    margin-bottom: 5px;
   }
 }
 .break {
