@@ -1,18 +1,7 @@
 import Ship from "./ship";
-import Projectile from "./projectile";
 
 class PlayerShip extends Ship {
-  static WIDTH = 20;
-  static HEIGHT = 40;
-  static HEALTH = 10;
   static SPEED = 5;
-
-  // static PROJECTILE_VELOCITY = [0, -10];
-  // static PROJECTILE_HEALTH = 1;
-  // static PROJECTILE_WIDTH = 5;
-  // static PROJECTILE_HEIGHT = 20;
-  // static PROJECTILE_COOLDOWN = 250;  // time in ms
-
   static UP_KEYS = ["ArrowUp", 'w']
   static DOWN_KEYS = ["ArrowDown", 's']
   static RIGHT_KEYS = ["ArrowRight", 'd']
@@ -21,25 +10,22 @@ class PlayerShip extends Ship {
   constructor(game) {
     let image = document.createElement("img");
     image.src = "src/assets/player1.png";
-    let scale = 0.05;
     let height = 40;
     let width = 20;
+    let health = 10;
 
     const objArgs = {
       width: width,
       height: height,
       position: [Math.floor(game.canvasWidth / 2), game.canvasHeight - height],
       velocity: [0, 0],
-      health: PlayerShip.HEALTH,
+      health: health,
       game: game,
       image: image
     }
 
     image = document.createElement("img");
     image.src = "src/assets/player_projectile.png";
-    scale = 0.05;
-    height = Math.round(image.height * scale);
-    width = Math.round(image.width * scale)
 
     const projectileArgs = {
       objArgs: {
@@ -52,7 +38,8 @@ class PlayerShip extends Ship {
       },
       origin: "player",
       cooldown: 250,
-      xAdjustment: .75
+      xAdjustment: .75,
+      yAdjustment: 0
     }
 
     super(objArgs, projectileArgs);

@@ -1,31 +1,72 @@
 import Ship from "./ship";
-import Projectile from "./projectile";
 
 class EnemyShip extends Ship {
-  static WIDTH = 30;
-  static HEIGHT = 40;
-  static HEALTH = 5;
-  static SPEED = 3;
+  constructor(game, posX, speed, cooldown) {
+    let image = document.createElement("img");
+    image.src = "src/assets/enemy1.png";
+    let height = 40;
+    let width = 40;
+    let health = 5;
 
-  static PROJECTILE_VELOCITY = [0, 8];
-  static PROJECTILE_HEALTH = 1;
-  static PROJECTILE_WIDTH = 5;
-  static PROJECTILE_HEIGHT = 20;
-  static PROJECTILE_COOLDOWN = 150;  // time in ms
-
-  constructor(game) {
-    const args = {
-      position: [Math.floor(game.canvasWidth / 2), game.canvasHeight - PlayerShip.HEIGHT],
-      width: EnemyShip.WIDTH,
-      height: EnemyShip.HEIGHT,
-      velocity: [0, 0],
-      health: PlayerShip.HEALTH,
-      game: game,
-      imageSrc: "src/assets/player1.png"
+    if (posX < width) {
+      posX = width;
+    } else if (posX > game.canvasWidth - width) {
+      posX = game.canvasWidth - width;
     }
-    super(args);
 
-    this.shootOnCooldown = false;
+    const objArgs = {
+      width: width,
+      height: height,
+      position: [posX, 0 - height],
+      velocity: [0, speed],
+      health: health,
+      game: game,
+      image: image
+    }
+
+    image = document.createElement("img");
+    image.src = "src/assets/enemy_projectile.png";
+
+    const projectileArgs = {
+      objArgs: {
+        velocity: [0, 8],
+        health: 1,
+        game: game,
+        width: 5,
+        height: 20,
+        image: image
+      },
+      origin: "enemy",
+      cooldown: cooldown,
+      xAdjustment: .45,
+      yAdjustment: 0
+    }
+
+    super(objArgs, projectileArgs);
+  }
+
+  move() {
+    const newY = this.position[1] + this.velocity[1];
+
+    // collision against enemy/player logic here?
+    // create seperate collision checking function in game class
+    if (!this.shootOnCooldown) {
+      this.shootProjectile();
+      this.shootOnCooldown = true;
+      setTimeout(this.resetCooldown.bind(this), this.cooldown);
+    }
+
+    if (!this.inYBounds(newY)) {
+      const enemies = this.game.allMovingObjects.enemies;
+      enemies.splice(enemies.indexOf(this), 1);
+      this.game.enemiesRemaining -= 1;
+    } else {
+      this.position = [this.position[0], newY]
+    }
+  }
+
+  inYBounds(y) {
+    return y <= this.game.canvasHeight + this.height;
   }
 }
 

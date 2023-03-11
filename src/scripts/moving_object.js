@@ -10,15 +10,7 @@ class MovingObject {
   }
 
   draw(ctx) {
-    // let [x, y] = this.position;
-    // x += this.width / 2;
-    // y += this.height / 2;
-    // ctx.save()
-    // ctx.translate(x, y);
-    // ctx.rotate(90 * Math.PI/180);
-    // ctx.translate(-x, -y);
     ctx.drawImage(this.image, this.position[0], this.position[1], this.width, this.height);
-    // ctx.restore();
   }
 
   move() {
