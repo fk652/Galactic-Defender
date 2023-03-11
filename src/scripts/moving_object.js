@@ -6,13 +6,19 @@ class MovingObject {
     this.game = argsObject["game"];
     this.width = argsObject["width"];
     this.height = argsObject["height"];
-
-    this.image = document.createElement("img");
-    this.image.src = argsObject["imageSrc"];
+    this.image = argsObject["image"];
   }
 
   draw(ctx) {
+    // let [x, y] = this.position;
+    // x += this.width / 2;
+    // y += this.height / 2;
+    // ctx.save()
+    // ctx.translate(x, y);
+    // ctx.rotate(90 * Math.PI/180);
+    // ctx.translate(-x, -y);
     ctx.drawImage(this.image, this.position[0], this.position[1], this.width, this.height);
+    // ctx.restore();
   }
 
   move() {
@@ -32,10 +38,7 @@ class MovingObject {
   }
 
   inBounds(position) {
-    return (position[0] > 0 
-      && position[0] < this.game.canvasWidth - this.width
-      && position[1] > 0 
-      && position[1] < this.game.canvasHeight - this.height);
+    return this.inXBounds(position[0]) && this.inYBounds(position[1]);
   }
 }
 

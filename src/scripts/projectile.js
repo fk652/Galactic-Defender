@@ -1,9 +1,9 @@
 import MovingObject from "./moving_object";
 
 class Projectile extends MovingObject {
-  constructor(args, origin) {
-    super(args);
-    this.origin = origin; // for collision logic later
+  constructor(args) {
+    super(args.objArgs);
+    this.origin = args.origin; // for collision logic later
   }
 
   move() {
