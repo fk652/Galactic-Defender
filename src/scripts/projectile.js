@@ -3,13 +3,14 @@ import MovingObject from "./moving_object";
 class Projectile extends MovingObject {
   constructor(args, origin) {
     super(args);
-    this.origin = origin;
+    this.origin = origin; // for collision logic later
   }
 
   move() {
     const newY = this.position[1] + this.velocity[1];
 
-    // collision against enemy logic here?
+    // collision against enemy/player logic here?
+    // create seperate collision checking function in game class
 
     if (!this.inYBounds(newY)) {
       const projectiles = this.game.allMovingObjects.projectiles;

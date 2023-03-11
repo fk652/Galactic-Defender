@@ -7,7 +7,7 @@ $main-color: white;
   padding: 10px;
 
   #header, aside, canvas {
-    border: 3px solid $main-color;
+    border: 5px ridge $main-color;
   }
 
   #header {
@@ -111,6 +111,58 @@ $main-color: white;
       li {
         margin: 20px 0 20px 0;
         font-size: 20px;
+      }
+    }
+  }
+
+  #game-information {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    font-family: "Oswald", sans-serif;
+    font-size: 30px;
+
+    #player-health {
+      margin-bottom: 30px;
+
+      p {
+        margin: 10px 0;
+      }
+
+      #player-health-bar {
+        display: flex;
+        align-content: flex-start;
+
+        .player-health-point {
+          width: 10px;
+          height: 20px;
+          background: $main-color;
+          border: 3px ridge grey;
+          animation: fadeIn 1s linear;
+        }
+        
+        @keyframes fadeIn {
+          0% {
+            opacity:0
+          }
+          100% {
+            opacity:1;
+          }
+        }
+      }
+    }
+
+    #wave-info {
+      display: flex;
+      align-items: center;
+
+      .wave-numbers {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-left: 10px;
       }
     }
   }

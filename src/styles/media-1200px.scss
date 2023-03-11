@@ -24,7 +24,7 @@
 
     aside {
       flex-basis: 690px;
-      height: auto;
+      // height: auto;
       min-height: 75px;
     }
 
@@ -49,6 +49,37 @@
 
     canvas {
       margin: 10px 0 10px 0;
+    }
+  }
+
+  #game-information {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100px;
+
+    #player-health {
+      margin-right: 30px;
+    }
+
+    #wave-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .wave-text p {
+        margin: 5px 0;
+      }
+
+      .wave-numbers {
+        margin-top: 4px;
+        span:first-child {
+          margin-bottom: 5px;
+        }
+      }
     }
   }
 }

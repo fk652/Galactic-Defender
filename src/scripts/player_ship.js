@@ -1,17 +1,17 @@
-import MovingObject from "./moving_object";
+import Ship from "./ship";
 import Projectile from "./projectile";
 
-class PlayerShip extends MovingObject {
+class PlayerShip extends Ship {
   static WIDTH = 20;
   static HEIGHT = 40;
   static HEALTH = 10;
   static SPEED = 5;
-  static COOLDOWN = 250;  // time in ms
 
   static PROJECTILE_VELOCITY = [0, -10];
   static PROJECTILE_HEALTH = 1;
   static PROJECTILE_WIDTH = 5;
   static PROJECTILE_HEIGHT = 20;
+  static PROJECTILE_COOLDOWN = 250;  // time in ms
 
   static UP_KEYS = ["ArrowUp", 'w']
   static DOWN_KEYS = ["ArrowDown", 's']
@@ -51,11 +51,14 @@ class PlayerShip extends MovingObject {
   }
 
   move() {
+    // check for collision logic here?
+    // create seperate collision checking function in game class
+
     this.updateVelocity();
     if (this.keysPressed.shoot && !this.shootOnCooldown) {
       this.shootProjectile();
       this.shootOnCooldown = true;
-      setTimeout(this.resetCooldown.bind(this), PlayerShip.COOLDOWN);
+      setTimeout(this.resetCooldown.bind(this), PlayerShip.PROJECTILE_COOLDOWN);
     }
     super.move();
   }

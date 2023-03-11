@@ -60,7 +60,7 @@ table {
   padding: 10px;
 }
 #main-container #header, #main-container aside, #main-container canvas {
-  border: 3px solid white;
+  border: 5px ridge white;
 }
 #main-container #header {
   width: 660px;
@@ -150,6 +150,50 @@ table {
   margin: 20px 0 20px 0;
   font-size: 20px;
 }
+#main-container #game-information {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  font-family: "Oswald", sans-serif;
+  font-size: 30px;
+}
+#main-container #game-information #player-health {
+  margin-bottom: 30px;
+}
+#main-container #game-information #player-health p {
+  margin: 10px 0;
+}
+#main-container #game-information #player-health #player-health-bar {
+  display: flex;
+  align-content: flex-start;
+}
+#main-container #game-information #player-health #player-health-bar .player-health-point {
+  width: 10px;
+  height: 20px;
+  background: white;
+  border: 3px ridge grey;
+  animation: fadeIn 1s linear;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#main-container #game-information #wave-info {
+  display: flex;
+  align-items: center;
+}
+#main-container #game-information #wave-info .wave-numbers {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 10px;
+}
 
 @media screen and (max-width: 1200px) {
   #main-container #header {
@@ -170,7 +214,6 @@ table {
   }
   #main-container aside {
     flex-basis: 690px;
-    height: auto;
     min-height: 75px;
   }
   #main-container #game-instructions .instructions-container {
@@ -185,6 +228,32 @@ table {
   }
   #main-container canvas {
     margin: 10px 0 10px 0;
+  }
+  #game-information {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100px;
+  }
+  #game-information #player-health {
+    margin-right: 30px;
+  }
+  #game-information #wave-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  #game-information #wave-info .wave-text p {
+    margin: 5px 0;
+  }
+  #game-information #wave-info .wave-numbers {
+    margin-top: 4px;
+  }
+  #game-information #wave-info .wave-numbers span:first-child {
+    margin-bottom: 5px;
   }
 }
 .break {

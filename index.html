@@ -16,7 +16,7 @@
       <div id="main-container">
         <div id="header">
           <h1 class="project-title">Galactic Defender</h1>
-          <p class="dev-name">By Fahim Khan</p>
+          <h2 class="dev-name">By Fahim Khan</h2>
           <div class="nav-links">
             <a href="https://github.com/fk652/Galactic-Defender">
               <i class="fab fa-github"></i>
@@ -30,7 +30,25 @@
         <div class="break"></div>
 
         <aside id="game-information">
+          <div id="player-health">
+            <p>Player Health</p>
+            <ul id="player-health-bar"></ul>
+          </div>
 
+          <div class="break"></div>
+
+          <div id="wave-info">
+            <div class="wave-text">
+              <p>Wave:</p>
+              <p>Remaining:</p>
+            </div>
+            <div class="break"></div>
+            <div class="wave-numbers">
+              <span id="wave-number"></span>
+              <span id="enemies-remaining"></span>
+            </div>
+          </div>
+          <div id="boss-hp" type="hidden"></div>
         </aside>
 
         <canvas id="game-view"></canvas>
