@@ -7,6 +7,9 @@ class MovingObject {
     this.width = argsObject["width"];
     this.height = argsObject["height"];
     this.image = argsObject["image"];
+
+    // this.position[0] = Math.round(this.position[0]);
+    // this.position[1] = Math.round(this.position[1]);
   }
 
   draw(ctx) {

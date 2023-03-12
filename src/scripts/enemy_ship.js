@@ -58,7 +58,8 @@ class EnemyShip extends Ship {
 
     if (!this.inYBounds(newY)) {
       const enemies = this.game.allMovingObjects.enemies;
-      enemies.splice(enemies.indexOf(this), 1);
+      // enemies.splice(enemies.indexOf(this), 1);
+      enemies[enemies.indexOf(this)] = null;
       this.game.enemiesRemaining -= 1;
     } else {
       this.position = [this.position[0], newY]

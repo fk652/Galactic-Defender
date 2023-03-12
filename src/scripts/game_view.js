@@ -12,6 +12,7 @@ class GameView {
 
   start() {
     setInterval(() => {
+      this.game.clearNulls();
       this.game.updateInformation();
       this.game.setEnemies();
       this.game.moveObjects();

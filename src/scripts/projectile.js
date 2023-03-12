@@ -7,21 +7,28 @@ class Projectile extends MovingObject {
   }
 
   move() {
-    const newY = this.position[1] + this.velocity[1];
+    const newPos = this.position;
+    newPos[0] += this.velocity[0];
+    newPos[1] += this.velocity[1];
 
     // collision against enemy/player logic here?
     // create seperate collision checking function in game class
 
-    if (!this.inYBounds(newY)) {
+    if (!this.inBounds(newPos)) {
       const projectiles = this.game.allMovingObjects.projectiles;
-      projectiles.splice(projectiles.indexOf(this), 1);
+      // projectiles.splice(projectiles.indexOf(this), 1);
+      projectiles[projectiles.indexOf(this)] = null;
     } else {
-      this.position = [this.position[0], newY]
+      this.position = newPos
     }
   }
 
-  inYBounds(y) {
-    return (y >= 0 - this.height && y <= this.game.canvasHeight + this.height);
+  inBounds(position) {
+    const [x, y] = position;
+    return (x > -this.width 
+      && x < this.game.canvasWidth + this.width
+      && y > -this.height 
+      && y < this.game.canvasHeight + this.height)
   }
 }
 

@@ -15,6 +15,8 @@ class Ship extends MovingObject {
     this.projectileArgs.objArgs.position = [this.position[0] + this.width/(2+dx), this.position[1] + dy];
     const projectile = new Projectile(this.projectileArgs);
     this.game.allMovingObjects.projectiles.push(projectile);
+    this.shootOnCooldown = true;
+    setTimeout(this.resetCooldown.bind(this), this.cooldown);
   }
 
   resetCooldown() {

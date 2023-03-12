@@ -27,15 +27,24 @@ class Game {
     this.boss = new Boss(this);
   }
 
+  clearNulls() {
+    for (let key in this.allMovingObjects) {
+      const objectsValue = this.allMovingObjects[key]
+      if (objectsValue instanceof Array) {
+        objectsValue.filter(el => el);
+      }
+    }
+  }
+
   moveObjects() {
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
       if (objectsValue instanceof Array) {
         objectsValue.forEach(obj => {
-          obj.move()
+          if (obj) obj.move()
         });
       } else {
-        objectsValue.move();
+        if (objectsValue) objectsValue.move();
       }
     }
   }
@@ -47,10 +56,10 @@ class Game {
       const objectsValue = this.allMovingObjects[key]
       if (objectsValue instanceof Array) {
         objectsValue.forEach(obj => {
-          obj.draw(ctx)
+          if (obj) obj.draw(ctx);
         });
       } else {
-        objectsValue.draw(ctx);
+        if (objectsValue) objectsValue.draw(ctx);
       }
     }
   }

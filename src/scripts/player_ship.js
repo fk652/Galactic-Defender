@@ -69,8 +69,6 @@ class PlayerShip extends Ship {
 
     if (this.keysPressed.shoot && !this.shootOnCooldown) {
       this.shootProjectile();
-      this.shootOnCooldown = true;
-      setTimeout(this.resetCooldown.bind(this), this.cooldown);
     }
     super.move();
   }
