@@ -71,12 +71,13 @@ class Boss extends Ship {
   }
 
   move() {
-    this.updateVelocity();
     // this.updateShootingPattern(); // do this when taking damage
-    const newX = this.position[0] + this.velocity[0];
-    const newY = this.position[1] + this.velocity[1];
-    this.position = [newX, newY]
-    // super.move();
+    // console.log(this.position);
+    const newPos = this.position;
+    newPos[0] += this.velocity[0];
+    newPos[1] += this.velocity[1];
+    this.position = newPos;
+    this.updateVelocity();
 
     // collision against enemy/player logic here?
     // create seperate collision checking function in game class
@@ -122,7 +123,8 @@ class Boss extends Ship {
   shootProjectile() {
     if (!this.shootOnCooldown) {
       this.projectilePositions.forEach((pos) => {
-        const projPos = [this.position[0] + pos[0], this.position[1] + pos[1]]
+        const copy = structuredClone(this.position);
+        const projPos = [copy[0] + pos[0], copy[1] + pos[1]]
         this.projectileArgs.objArgs.position = projPos;
         const projectile = new Projectile(this.projectileArgs);
         this.game.allMovingObjects.projectiles.push(projectile);
