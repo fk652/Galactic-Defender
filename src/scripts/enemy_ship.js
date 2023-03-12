@@ -6,7 +6,7 @@ class EnemyShip extends Ship {
     image.src = "src/assets/enemy1.png";
     let height = 40;
     let width = 40;
-    let health = 5;
+    let health = 3;
 
     if (posX < width) {
       posX = width;

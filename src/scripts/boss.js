@@ -13,8 +13,8 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - height],
-      velocity: [0, .01],
-      // velocity: [0, 5],
+      // velocity: [0, 1],
+      velocity: [0, 5],
       health: health,
       game: game,
       image: image
@@ -55,7 +55,10 @@ class Boss extends Ship {
     //   const speed = this.determineSpeed();
     //   // const speed = 1;
     //   if (this.velocity[0] === 0 || this.position[0] < 0) {
-    //     if (this.velocity[0] === 0) this.shootOnCooldown = false;
+    //     if (this.velocity[0] === 0) {
+    //       this.shootOnCooldown = false;
+    //       this.game.allMovingObjects.player.disabled = false;
+    //     }
     //     this.velocity = [speed, 0];
     //   } else if (this.position[0] > this.game.canvasWidth - this.width) {
     //     this.velocity = [-speed, 0];
@@ -65,6 +68,7 @@ class Boss extends Ship {
     if (this.position[1] > 0) {
       if (this.velocity[1] !== 0) {
         this.shootOnCooldown = false;
+        this.game.allMovingObjects.player.disabled = false;
       }
       this.velocity = [0, 0];
     }
@@ -90,11 +94,11 @@ class Boss extends Ship {
 
   determineSpeed() {
     if (this.health > 70) {
-      return 0.003;
+      return 1;
     } else if (this.health > 40) {
-      return 0.005;
+      return 1.5;
     } else if (this.health <= 10) {
-      return 0.008;
+      return 2;
     }
   }
 
@@ -103,7 +107,9 @@ class Boss extends Ship {
       this.projectilePositions = [
         [2, 82],[width-14, 82],
         [22, 80],[width-34, 80],
-        [52, 85],[width-64, 85]
+        [52, 85],[width-64, 85],
+        [(width/2) - 45, height-5],
+        [(width/2) + 33, height-5]
         //add one more later
       ];
     } else if (this.health < 40) {

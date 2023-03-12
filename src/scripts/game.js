@@ -6,8 +6,8 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    this.enemyWave = 0;
-    // this.enemyWave = 10;
+    // this.enemyWave = 0;
+    this.enemyWave = 10;
 
     this.addEnemyOnCooldown = false;
     this.addedEnemies = 0;
@@ -50,6 +50,10 @@ class Game {
         if (objectsValue) objectsValue.move();
       }
     }
+  }
+
+  checkCollisions() {
+    
   }
 
   draw(ctx) {
@@ -111,12 +115,12 @@ class Game {
         this.enemyWaveCount = this.enemyWave * 5;
         this.enemiesRemaining = this.enemyWaveCount;
         this.addedEnemies = 0;
-      } else {
+      } else if (!this.bossFight) {
         this.setBoss();
       }
     }
 
-    if (!this.addEnemyOnCooldown && this.addedEnemies < this.enemyWaveCount) {
+    if (!this.bossfight && !this.addEnemyOnCooldown && this.addedEnemies < this.enemyWaveCount) {
       const remaining = this.enemyWaveCount - this.addedEnemies;
 
       let numNewEnemies;
@@ -148,6 +152,7 @@ class Game {
   setBoss() {
     this.switchGameInformation();
     this.allMovingObjects.enemies.push(this.boss);
+    this.allMovingObjects.player.disabled = true;
     this.bossFight = true;
   }
 

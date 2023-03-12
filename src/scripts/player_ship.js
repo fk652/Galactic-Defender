@@ -51,23 +51,32 @@ class PlayerShip extends Ship {
       right: false,
       shoot: false
     }
+    this.disabled = false;
   }
 
   updateVelocity() {
     const newVelocity = [0, 0];
-    if (this.keysPressed.right) newVelocity[0] += PlayerShip.SPEED;
-    if (this.keysPressed.left) newVelocity[0] -= PlayerShip.SPEED;
-    if (this.keysPressed.up) newVelocity[1] -= PlayerShip.SPEED;
-    if (this.keysPressed.down) newVelocity[1] += PlayerShip.SPEED;
+
+    // console.log(this.disabled);
+    if (this.disabled) {
+      newVelocity[1] = 2;
+    } else {
+      if (this.keysPressed.right) newVelocity[0] += PlayerShip.SPEED;
+      if (this.keysPressed.left) newVelocity[0] -= PlayerShip.SPEED;
+      if (this.keysPressed.up) newVelocity[1] -= PlayerShip.SPEED;
+      if (this.keysPressed.down) newVelocity[1] += PlayerShip.SPEED;
+    }
+
     this.velocity = newVelocity;
   }
 
   move() {
     // check for collision logic here?
     // create seperate collision checking function in game class
+    // console.log(this.disabled);
     this.updateVelocity();
 
-    if (this.keysPressed.shoot && !this.shootOnCooldown) {
+    if (this.keysPressed.shoot && !this.shootOnCooldown && !this.disabled) {
       this.shootProjectile();
     }
     super.move();
