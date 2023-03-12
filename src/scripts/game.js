@@ -1,16 +1,19 @@
 import PlayerShip from "./player_ship";
 import EnemyShip from "./enemy_ship";
+import Boss from "./boss";
 
 class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    this.enemyWave = 0;
+    // this.enemyWave = 0;
+    this.enemyWave = 10;
+
     this.addEnemyOnCooldown = false;
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
     this.enemyWaveCount = 0;
-    
+
     this.enemiesDefeated = 0;
     this.gameOver = false;
     
@@ -20,6 +23,8 @@ class Game {
       projectiles: [],
       particles: []
     };
+
+    this.boss = new Boss(this);
   }
 
   moveObjects() {
@@ -75,11 +80,15 @@ class Game {
   }
 
   setEnemies() {
-    if (this.enemiesRemaining === 0 && this.enemyWave < 10) {
-      this.enemyWave += 1;
-      this.enemyWaveCount = this.enemyWave * 5;
-      this.enemiesRemaining = this.enemyWaveCount;
-      this.addedEnemies = 0;
+    if (this.enemiesRemaining === 0) {
+      if (this.enemyWave < 10) {
+        this.enemyWave += 1;
+        this.enemyWaveCount = this.enemyWave * 5;
+        this.enemiesRemaining = this.enemyWaveCount;
+        this.addedEnemies = 0;
+      } else {
+        this.setBoss();
+      }
     }
 
     if (!this.addEnemyOnCooldown && this.addedEnemies < this.enemyWaveCount) {
@@ -109,6 +118,15 @@ class Game {
 
   resetAddEnemyCooldown() {
     this.addEnemyOnCooldown = false;
+  }
+
+  setBoss() {
+    this.switchGameInformation();
+    this.allMovingObjects.enemies.push(this.boss);
+  }
+
+  switchGameInformation() {
+
   }
 }
 
