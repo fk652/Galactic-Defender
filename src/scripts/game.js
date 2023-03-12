@@ -6,8 +6,8 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    // this.enemyWave = -1;
-    this.enemyWave = 9;
+    // this.enemyWave = 0;
+    this.enemyWave = 10;
 
     // add a delay to this later after implementing start screen
     // this.addEnemyOnCooldown = true;
@@ -81,7 +81,6 @@ class Game {
   }
 
   draw(ctx) {
-    // console.log(this.allMovingObjects.projectiles);
     ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     for (let key in this.allMovingObjects) {
@@ -150,7 +149,7 @@ class Game {
       // this.resetAddEnemyCooldown();
     }
 
-    if (!this.bossfight && !this.addEnemyOnCooldown && this.enemyWave <= 10 && this.addedEnemies < this.enemyWaveCount) {
+    if (!this.bossfight && !this.addEnemyOnCooldown) {
       const remaining = this.enemyWaveCount - this.addedEnemies;
 
       let numNewEnemies;
@@ -168,8 +167,8 @@ class Game {
         // const randSpeed = Math.floor(Math.random() * (5 - 2) + 2);
         const randSpeed = Math.random() * (5 - 2) + 2;
         const randCooldown = Math.floor(Math.random() * (1000 - 450) + 450);
-
-        this.allMovingObjects.enemies.push(new EnemyShip(this, randPosX, randSpeed, randCooldown));
+        const newEnemy = new EnemyShip(this, randPosX, randSpeed, randCooldown);
+        this.allMovingObjects.enemies.push(newEnemy);
       }
 
       this.addEnemyOnCooldown = true;
@@ -183,8 +182,6 @@ class Game {
   }
 
   setBoss() {
-    // console.log("setting boss", this.allMovingObjects.projectiles.length);
-    // console.log(this.allMovingObjects.projectiles);
     this.allMovingObjects.player.disabled = true;
 
     if (this.allMovingObjects.projectiles.length === 0) {

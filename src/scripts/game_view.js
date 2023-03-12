@@ -19,6 +19,7 @@ class GameView {
     //   this.game.moveObjects();
     //   this.game.draw(this.ctx);
     // }, 20)
+    this.lastTime = 0;
     requestAnimationFrame(this.animate.bind(this));
   }
 

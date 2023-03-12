@@ -96,11 +96,11 @@ class Boss extends Ship {
 
   move(timeDelta) {
     // only needed when testing boss first
-    if (isNaN(this.position[0]) || isNaN(this.position[1])) {
-      console.log("bokren");
-      this.position = [(this.game.canvasWidth/2) - (this.width/2), 0 - this.height];
-      console.log("fixed");
-    }
+    // if (isNaN(this.position[0]) || isNaN(this.position[1])) {
+    //   console.log("bokren");
+    //   this.position = [(this.game.canvasWidth/2) - (this.width/2), 0 - this.height];
+    //   console.log("fixed");
+    // }
 
     this.updateVelocity();
 
