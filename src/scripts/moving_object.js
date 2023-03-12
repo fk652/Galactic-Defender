@@ -47,10 +47,14 @@ class MovingObject {
       this.damageTaken(damage);
     } else if (otherObjClass === "EnemyShip") {
       // take 1 damage if collided with enemy
-      console.log("enemy collision");
+      // console.log("enemy collision");
+      const damage = 1;
+      this.damageTaken(damage);
     } else if (otherObjClass === "Boss") {
       // take more damage if collided with boss
-      console.log("boss collision");
+      // console.log("boss collision");
+      const damage = 2;
+      this.damageTaken(damage);
     }
   }
 
@@ -85,6 +89,7 @@ class MovingObject {
     if (this.inYBounds(newY)) this.position[1] = newY;
   }
 
+  // to be refactored for DRY code later
   move(timeDelta) {
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
     const offsetX = this.velocity[0] * velocityScale;

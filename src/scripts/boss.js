@@ -59,7 +59,7 @@ class Boss extends Ship {
     //   if (this.velocity[0] === 0 || this.position[0] < 0) {
     //     if (this.velocity[0] === 0) {
     //       this.shootOnCooldown = false;
-    //       this.game.allMovingObjects.player.disabled = false;
+    //       this.game.player.disabled = false;
     //     }
     //     this.velocity = [speed, 0];
     //   } else if (this.position[0] > this.game.canvasWidth - this.width) {
@@ -71,7 +71,7 @@ class Boss extends Ship {
     if (this.position[1] > 0) {
       if (this.velocity[1] !== 0) {
         this.shootOnCooldown = false;
-        this.game.allMovingObjects.player.disabled = false;
+        this.game.player.disabled = false;
       }
       this.velocity = [0, 0];
     }
@@ -171,12 +171,18 @@ class Boss extends Ship {
     }
   }
 
+  damageTaken(damage) {
+    super.damageTaken(damage);
+
+    if (this.health <= 0) {
+      this.remove()
+    }
+  }
+
   remove() {
     const enemies = this.game.allMovingObjects.enemies;
     enemies[enemies.indexOf(this)] = null;
-
-    // handle game over win
-    // update score and add explosion animation here later
+    // enemies.splice(enemies.indexOf(this), 1);
   }
 }
 

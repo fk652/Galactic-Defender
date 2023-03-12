@@ -100,9 +100,18 @@ class EnemyShip extends Ship {
   remove() {
     const enemies = this.game.allMovingObjects.enemies;
     enemies[enemies.indexOf(this)] = null;
+    // enemies.splice(enemies.indexOf(this), 1);
     this.game.enemiesRemaining -= 1;
+  }
 
-    // update score and add explosion animation here later
+  damageTaken(damage) {
+    super.damageTaken(damage);
+
+    if (this.health <= 0) {
+      this.remove();
+      // update score and add explosion animation here later
+      this.game.score += 10;
+    }
   }
 }
 

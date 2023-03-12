@@ -24,7 +24,7 @@ class GameView {
   }
 
   bindControlHandlers() {
-    this.game.allMovingObjects.player.bindControlHandlers();
+    this.game.player.bindControlHandlers();
   }
 
   animate(time) {

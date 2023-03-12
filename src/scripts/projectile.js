@@ -55,6 +55,7 @@ class Projectile extends MovingObject {
   remove() {
     const projectiles = this.game.allMovingObjects.projectiles;
     projectiles[projectiles.indexOf(this)] = null;
+    // projectiles.splice(projectiles.indexOf(this), 1);
   }
 }
 

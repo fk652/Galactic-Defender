@@ -27,7 +27,7 @@ class Ship extends MovingObject {
     this.health -= damage;
     // remove if enemy health <= 0
     // game over if player health <= 0
-    console.log(this.health);
+    // console.log(this.health);
   }
 }
 

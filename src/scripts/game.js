@@ -7,7 +7,7 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     // this.enemyWave = 0;
-    this.enemyWave = 10;
+    this.enemyWave = 1;
 
     // add a delay to this later after implementing start screen
     // this.addEnemyOnCooldown = true;
@@ -17,11 +17,13 @@ class Game {
     this.enemiesRemaining = 0;
     this.enemyWaveCount = 0;
 
-    this.enemiesDefeated = 0;
+    this.score = 0;
     this.gameOver = false;
+
+    this.player = new PlayerShip(this);
     
     this.allMovingObjects = {
-      player: new PlayerShip(this),
+      player: this.player,
       enemies: [],
       projectiles: [],
       particles: []
@@ -41,6 +43,7 @@ class Game {
     this.moveObjects(timeDelta);
   }
 
+  // null vs splicing testing
   clearNulls() {
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
@@ -81,19 +84,21 @@ class Game {
     // check projectile collisions
     // check projectile hitbox vs enemy hitboxes
     this.allMovingObjects.projectiles.forEach((projectile) => {
-      if (projectile.origin === "player") {
-        this.allMovingObjects.enemies.forEach((enemy) => {
-          enemy.collideCheck(projectile);
-        })
-      } else {
-        this.allMovingObjects.player.collideCheck(projectile);
+      if (projectile) {
+        if (projectile.origin === "player") {
+          this.allMovingObjects.enemies.forEach((enemy) => {
+            if (enemy) enemy.collideCheck(projectile);
+          })
+        } else {
+          this.player.collideCheck(projectile);
+        }
       }
     })
 
     // check enemy to player collisions
     // check player hitbox vs enemy hitboxes
     this.allMovingObjects.enemies.forEach((enemy) => {
-      this.allMovingObjects.player.collideCheck(enemy);
+      if (enemy) this.player.collideCheck(enemy);
     })
   }
 
@@ -113,6 +118,8 @@ class Game {
   }
 
   updateInformation() {
+    // update score here later
+
     this.updateHealthBar('player');
 
     if (this.bossFight) {
@@ -127,7 +134,7 @@ class Game {
   }
 
   updateHealthBar(type) {
-    const obj = (type === 'player' ? this.allMovingObjects.player : this.boss);
+    const obj = (type === 'player' ? this.player : this.boss);
     const healthBar = document.getElementById(`${type}-health-bar`);
 
     const healthPoint = document.createElement("li");
@@ -158,9 +165,14 @@ class Game {
         this.enemyWaveCount = this.enemyWave * 5;
         this.enemiesRemaining = this.enemyWaveCount;
         this.addedEnemies = 0;
+
+        // heal player in between rounds (no more than 10)
+        // can also heal based on score or enemies killed this round
+        this.player.health += Math.min(3, 10-this.player.health);
+
       } else if (!this.bossFight) {
         // this.bossFight = true;
-        // this.allMovingObjects.player.disabled = true;
+        // this.player.disabled = true;
         // setTimeout(this.setBoss.bind(this), 1000);
         this.setBoss();
       }
@@ -201,7 +213,7 @@ class Game {
   }
 
   setBoss() {
-    this.allMovingObjects.player.disabled = true;
+    this.player.disabled = true;
 
     if (this.allMovingObjects.projectiles.length === 0) {
       this.boss = new Boss(this);

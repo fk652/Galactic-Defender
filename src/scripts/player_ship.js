@@ -127,6 +127,18 @@ class PlayerShip extends Ship {
   removeControlHandlers() {
 
   }
+
+  damageTaken(damage) {
+    if (!this.invincible) {
+      super.damageTaken(damage);
+      this.invincible = true;
+      setTimeout(this.resetInvincibility.bind(this), 1000);
+    }
+  }
+
+  resetInvincibility() {
+    this.invincible = false;
+  }
 }
 
 export default PlayerShip;
