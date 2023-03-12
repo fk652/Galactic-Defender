@@ -22,6 +22,13 @@ class Ship extends MovingObject {
   resetCooldown() {
     this.shootOnCooldown = false;
   }
+
+  damageTaken(damage) {
+    this.health -= damage;
+    // remove if enemy health <= 0
+    // game over if player health <= 0
+    console.log(this.health);
+  }
 }
 
 export default Ship;

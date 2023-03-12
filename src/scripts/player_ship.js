@@ -51,7 +51,9 @@ class PlayerShip extends Ship {
       right: false,
       shoot: false
     }
+
     this.disabled = false;
+    this.invincible = false;
   }
 
   updateVelocity() {

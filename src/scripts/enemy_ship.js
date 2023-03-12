@@ -84,10 +84,10 @@ class EnemyShip extends Ship {
     }
 
     if (!this.inYBounds(newY)) {
-      const enemies = this.game.allMovingObjects.enemies;
-      // enemies.splice(enemies.indexOf(this), 1);
-      enemies[enemies.indexOf(this)] = null;
-      this.game.enemiesRemaining -= 1;
+      this.remove();
+      // const enemies = this.game.allMovingObjects.enemies;
+      // enemies[enemies.indexOf(this)] = null;
+      // this.game.enemiesRemaining -= 1;
     } else {
       this.position = [newX, newY]
     }
@@ -95,6 +95,14 @@ class EnemyShip extends Ship {
 
   inYBounds(y) {
     return y <= this.game.canvasHeight + this.height;
+  }
+
+  remove() {
+    const enemies = this.game.allMovingObjects.enemies;
+    enemies[enemies.indexOf(this)] = null;
+    this.game.enemiesRemaining -= 1;
+
+    // update score and add explosion animation here later
   }
 }
 

@@ -36,9 +36,9 @@ class Projectile extends MovingObject {
     // create seperate collision checking function in game class
 
     if (!this.inBounds(newPos)) {
-      const projectiles = this.game.allMovingObjects.projectiles;
-      // projectiles.splice(projectiles.indexOf(this), 1);
-      projectiles[projectiles.indexOf(this)] = null;
+      this.remove();
+      // const projectiles = this.game.allMovingObjects.projectiles;
+      // projectiles[projectiles.indexOf(this)] = null;
     } else {
       this.position = newPos
     }
@@ -50,6 +50,11 @@ class Projectile extends MovingObject {
       && x < this.game.canvasWidth + this.width
       && y > -this.height 
       && y < this.game.canvasHeight + this.height)
+  }
+
+  remove() {
+    const projectiles = this.game.allMovingObjects.projectiles;
+    projectiles[projectiles.indexOf(this)] = null;
   }
 }
 

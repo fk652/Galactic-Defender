@@ -5,7 +5,8 @@ import MovingObject from "./moving_object";
 class Boss extends Ship {
   constructor(game) {
     let image = document.createElement("img");
-    image.src = "src/assets/boss1.png";
+    // image.src = "src/assets/boss1.png";
+    image.src = "src/assets/enemy1.png";
     let height = 200;
     let width = game.canvasWidth/2;
     let health = 100;
@@ -95,13 +96,6 @@ class Boss extends Ship {
   // }
 
   move(timeDelta) {
-    // only needed when testing boss first
-    // if (isNaN(this.position[0]) || isNaN(this.position[1])) {
-    //   console.log("bokren");
-    //   this.position = [(this.game.canvasWidth/2) - (this.width/2), 0 - this.height];
-    //   console.log("fixed");
-    // }
-
     this.updateVelocity();
 
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
@@ -175,6 +169,14 @@ class Boss extends Ship {
         this.game.allMovingObjects.projectiles.push(projectile);
       })
     }
+  }
+
+  remove() {
+    const enemies = this.game.allMovingObjects.enemies;
+    enemies[enemies.indexOf(this)] = null;
+
+    // handle game over win
+    // update score and add explosion animation here later
   }
 }
 

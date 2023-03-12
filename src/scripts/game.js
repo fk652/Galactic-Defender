@@ -35,8 +35,9 @@ class Game {
 
   step(timeDelta) {
     this.clearNulls();
+    this.checkCollisions();
     this.updateInformation();
-    this.setEnemies();
+    this.setEnemies();  // maybe add if else to check for boss fight status or add enemy waves
     this.moveObjects(timeDelta);
   }
 
@@ -77,7 +78,23 @@ class Game {
   }
 
   checkCollisions() {
-    
+    // check projectile collisions
+    // check projectile hitbox vs enemy hitboxes
+    this.allMovingObjects.projectiles.forEach((projectile) => {
+      if (projectile.origin === "player") {
+        this.allMovingObjects.enemies.forEach((enemy) => {
+          enemy.collideCheck(projectile);
+        })
+      } else {
+        this.allMovingObjects.player.collideCheck(projectile);
+      }
+    })
+
+    // check enemy to player collisions
+    // check player hitbox vs enemy hitboxes
+    this.allMovingObjects.enemies.forEach((enemy) => {
+      this.allMovingObjects.player.collideCheck(enemy);
+    })
   }
 
   draw(ctx) {
@@ -127,7 +144,9 @@ class Game {
       }
     } else if ((healthBar.children.length > health)) {
       for (let i = 0; i < healthBar.children.length - health; i++) {
-        healthBar.removeChild();
+        // console.log(healthBar.lastChild);
+        const lastChild = healthBar.lastChild;
+        if (lastChild) healthBar.removeChild(healthBar.lastChild);
       }
     }
   }
