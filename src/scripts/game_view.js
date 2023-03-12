@@ -30,6 +30,7 @@ class GameView {
   animate(time) {
     const timeDelta = time - this.lastTime;
 
+    // handle start, game over, and win screen draw here?
     this.game.step(timeDelta);
     this.game.draw(this.ctx);
     this.lastTime = time;

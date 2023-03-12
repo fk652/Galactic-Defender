@@ -6,8 +6,8 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    // this.enemyWave = 0;
-    this.enemyWave = 10;
+    this.enemyWave = 0;
+    // this.enemyWave = 10;
 
     // add a delay to this later after implementing start screen
     // this.addEnemyOnCooldown = true;
@@ -19,6 +19,8 @@ class Game {
 
     this.score = 0;
     this.gameOver = false;
+    this.win = false;
+    this.startMenu = false;
 
     this.player = new PlayerShip(this);
     
@@ -104,7 +106,6 @@ class Game {
 
   draw(ctx) {
     ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
       if (objectsValue instanceof Array) {
