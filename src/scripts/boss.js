@@ -6,7 +6,7 @@ class Boss extends Ship {
   constructor(game) {
     let image = document.createElement("img");
     // image.src = "src/assets/boss1.png";
-    image.src = "src/assets/enemy1.png";
+    image.src = "src/assets/boss1.png";
     let height = 200;
     let width = game.canvasWidth/2;
     let health = 100;
@@ -45,6 +45,7 @@ class Boss extends Ship {
     this.shootOnCooldown = true;
 
     // array of dx, dy
+    // add seperate cooldowns for each pattern later
     this.projectilePositions = [
       [2, 82],
       [width-14, 82]
@@ -97,6 +98,7 @@ class Boss extends Ship {
 
   move(timeDelta) {
     this.updateVelocity();
+    this.updateShootingPattern();
 
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
     const offsetX = this.velocity[0] * velocityScale;
@@ -136,25 +138,26 @@ class Boss extends Ship {
   }
 
   updateShootingPattern() {
+    // add seperate cooldowns for each pattern later
     if (this.health < 10) {
       this.projectilePositions = [
-        [2, 82],[width-14, 82],
-        [22, 80],[width-34, 80],
-        [52, 85],[width-64, 85],
-        [(width/2) - 45, height-5],
-        [(width/2) + 33, height-5]
+        [2, 82],[this.width-14, 82],
+        [22, 80],[this.width-34, 80],
+        [52, 85],[this.width-64, 85],
+        [(this.width/2) - 45, this.height-5],
+        [(this.width/2) + 33, this.height-5]
         //add one more later
       ];
     } else if (this.health < 40) {
       this.projectilePositions = [
-        [2, 82],[width-14, 82],
-        [22, 80],[width-34, 80],
-        [52, 85],[width-64, 85]
+        [2, 82],[this.width-14, 82],
+        [22, 80],[this.width-34, 80],
+        [52, 85],[this.width-64, 85]
       ];
     } else if (this.health < 70) {
       this.projectilePositions = [
-        [2, 82],[width-14, 82],
-        [22, 80],[width-34, 80]
+        [2, 82],[this.width-14, 82],
+        [22, 80],[this.width-34, 80]
       ];
     }
   }
