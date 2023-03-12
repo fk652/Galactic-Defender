@@ -6,10 +6,13 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    // this.enemyWave = 0;
-    this.enemyWave = 10;
+    // this.enemyWave = -1;
+    this.enemyWave = 9;
 
+    // add a delay to this later after implementing start screen
+    // this.addEnemyOnCooldown = true;
     this.addEnemyOnCooldown = false;
+
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
     this.enemyWaveCount = 0;
@@ -41,7 +44,8 @@ class Game {
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
       if (objectsValue instanceof Array) {
-        objectsValue.filter(el => el);
+        const filtered = objectsValue.filter(el => el);
+        this.allMovingObjects[key] = filtered;
       }
     }
   }
@@ -77,6 +81,7 @@ class Game {
   }
 
   draw(ctx) {
+    // console.log(this.allMovingObjects.projectiles);
     ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     for (let key in this.allMovingObjects) {
@@ -136,11 +141,16 @@ class Game {
         this.enemiesRemaining = this.enemyWaveCount;
         this.addedEnemies = 0;
       } else if (!this.bossFight) {
+        // this.bossFight = true;
+        // this.allMovingObjects.player.disabled = true;
+        // setTimeout(this.setBoss.bind(this), 1000);
         this.setBoss();
       }
+      // might change to delay after start
+      // this.resetAddEnemyCooldown();
     }
 
-    if (!this.bossfight && !this.addEnemyOnCooldown && this.addedEnemies < this.enemyWaveCount) {
+    if (!this.bossfight && !this.addEnemyOnCooldown && this.enemyWave <= 10 && this.addedEnemies < this.enemyWaveCount) {
       const remaining = this.enemyWaveCount - this.addedEnemies;
 
       let numNewEnemies;
@@ -153,7 +163,10 @@ class Game {
 
       for (let i = 0; i < numNewEnemies; i++) {
         const randPosX = Math.floor(Math.random() * this.canvasWidth);
-        const randSpeed = Math.floor(Math.random() * (5 - 2) + 2)
+
+        // might change to increment difficulty per wave
+        // const randSpeed = Math.floor(Math.random() * (5 - 2) + 2);
+        const randSpeed = Math.random() * (5 - 2) + 2;
         const randCooldown = Math.floor(Math.random() * (1000 - 450) + 450);
 
         this.allMovingObjects.enemies.push(new EnemyShip(this, randPosX, randSpeed, randCooldown));
@@ -170,13 +183,16 @@ class Game {
   }
 
   setBoss() {
-    // console.log("setting boss");
-    this.boss = new Boss(this);
-    this.switchGameInformation();
-    this.allMovingObjects.enemies.push(this.boss);
-    // console.log(this.allMovingObjects.enemies);
+    // console.log("setting boss", this.allMovingObjects.projectiles.length);
+    // console.log(this.allMovingObjects.projectiles);
     this.allMovingObjects.player.disabled = true;
-    this.bossFight = true;
+
+    if (this.allMovingObjects.projectiles.length === 0) {
+      this.boss = new Boss(this);
+      this.switchGameInformation();
+      this.allMovingObjects.enemies.push(this.boss);
+      this.bossFight = true;
+    }
   }
 
   switchGameInformation() {

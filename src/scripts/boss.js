@@ -66,6 +66,7 @@ class Boss extends Ship {
     //   }
     // }
 
+    // for testing purposes, make boss stationary
     if (this.position[1] > 0) {
       if (this.velocity[1] !== 0) {
         this.shootOnCooldown = false;
