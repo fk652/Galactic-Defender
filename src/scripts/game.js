@@ -6,8 +6,8 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    // this.enemyWave = 0;
-    this.enemyWave = 10;
+    this.enemyWave = 0;
+    // this.enemyWave = 10;
 
     this.addEnemyOnCooldown = false;
     this.addedEnemies = 0;
@@ -25,6 +25,9 @@ class Game {
     };
 
     this.boss = new Boss(this);
+    const bossInfo = document.getElementById("boss-info");
+    bossInfo.style.display = 'none';
+    this.bossFight = false;
   }
 
   clearNulls() {
@@ -65,27 +68,40 @@ class Game {
   }
 
   updateInformation() {
-    const player = this.allMovingObjects.player;
-    const playerHealthBar = document.getElementById("player-health-bar");
+    this.updateHealthBar('player');
 
-    const playerHealthPoint = document.createElement("li");
-    playerHealthPoint.setAttribute("class", "player-health-point");
+    if (this.bossFight) {
+      this.updateHealthBar('boss');
+    } else {
+      const waveSpan = document.getElementById("wave-number");
+      waveSpan.innerText = this.enemyWave;
 
-    if (playerHealthBar.children.length < player.health) {
-      for (let i = 0; i < player.health - playerHealthBar.children.length; i++) {
-        playerHealthBar.appendChild(playerHealthPoint);
-      }
-    } else if ((playerHealthBar.children.length > player.health)) {
-      for (let i = 0; i < playerHealthBar.children.length - player.health; i++) {
-        playerHealthBar.removeChild();
-      }
+      const enemiesRemainingSpan = document.getElementById("enemies-remaining");
+      enemiesRemainingSpan.innerText = this.enemiesRemaining;
+    }
+  }
+
+  updateHealthBar(type) {
+    const obj = (type === 'player' ? this.allMovingObjects.player : this.boss);
+    const healthBar = document.getElementById(`${type}-health-bar`);
+
+    const healthPoint = document.createElement("li");
+    healthPoint.setAttribute("class", `${type}-health-point`);
+
+    let health = obj.health;
+    if (type === 'boss') {
+      health = Math.ceil(health / 10);
     }
 
-    const waveSpan = document.getElementById("wave-number");
-    waveSpan.innerText = this.enemyWave;
-
-    const enemiesRemainingSpan = document.getElementById("enemies-remaining");
-    enemiesRemainingSpan.innerText = this.enemiesRemaining;
+    if (healthBar.children.length < health) {
+      for (let i = 0; i < health - healthBar.children.length; i++) {
+        healthBar.appendChild(healthPoint);
+      }
+    } else if ((healthBar.children.length > health)) {
+      for (let i = 0; i < healthBar.children.length - health; i++) {
+        healthBar.removeChild();
+      }
+    }
   }
 
   setEnemies() {
@@ -132,10 +148,14 @@ class Game {
   setBoss() {
     this.switchGameInformation();
     this.allMovingObjects.enemies.push(this.boss);
+    this.bossFight = true;
   }
 
   switchGameInformation() {
-
+    const bossInfo = document.getElementById("boss-info");
+    const waveInfo = document.getElementById("wave-info");
+    waveInfo.style.display = 'none';
+    bossInfo.style.display = 'flex';
   }
 }
 

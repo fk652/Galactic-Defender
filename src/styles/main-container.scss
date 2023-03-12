@@ -154,6 +154,43 @@ $main-color: white;
       }
     }
 
+    #boss-info {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        margin: 10px 0;
+      }
+
+      #boss-health-bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: flex-start;
+        flex-wrap: wrap;
+
+        .boss-health-point {
+          width: 30px;
+          height: 20px;
+          background: $main-color;
+          border: 3px ridge grey;
+          animation: fadeIn 1s linear;
+        }
+        
+        @keyframes fadeIn {
+          0% {
+            opacity:0
+          }
+          100% {
+            opacity:1;
+          }
+        }
+      }
+    }
+
     #wave-info {
       display: flex;
       align-items: center;
