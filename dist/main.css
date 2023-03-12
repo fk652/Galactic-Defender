@@ -204,8 +204,8 @@ table {
 #main-container #game-information #boss-info #boss-health-bar .boss-health-point {
   width: 30px;
   height: 20px;
-  background: white;
-  border: 3px ridge grey;
+  background: gray;
+  border: 3px ridge white;
   animation: fadeIn 1s linear;
 }
 @keyframes fadeIn {

@@ -175,8 +175,8 @@ $main-color: white;
         .boss-health-point {
           width: 30px;
           height: 20px;
-          background: $main-color;
-          border: 3px ridge grey;
+          background: gray;
+          border: 3px ridge $main-color;
           animation: fadeIn 1s linear;
         }
         
