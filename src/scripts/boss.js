@@ -15,8 +15,8 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - height],
-      velocity: [0, 1],
-      // velocity: [0, 5],
+      // velocity: [0, 1],
+      velocity: [0, 5],
       health: health,
       game: game,
       image: image
@@ -47,10 +47,85 @@ class Boss extends Ship {
     // array of dx, dy
     // add seperate cooldowns for each pattern later
     this.projectilePositions = [
-      [2, 82],
-      [width-14, 82]
+      // [2, 82],
+      // [width-14, 82]
     ]
   }
+
+  getHitbox() {
+    // return super.getHitbox()
+
+    // weakspot
+    const box1 = {
+      x: this.position[0] + (this.width / 2.5),
+      y: this.position[1],
+      width: this.width / 4.5,
+      height: this.height / 1.8
+    }
+
+    const box2 = {
+      x: this.position[0] + (this.width / 3.75),
+      y: this.position[1],
+      width: this.width / 8.5,
+      height: this.height / 1.2
+    }
+
+    const box3 = {
+      x: this.position[0] + (this.width / 1.6),
+      y: this.position[1],
+      width: this.width / 8,
+      height: this.height / 1.2
+    }
+
+    const box4 = {
+      x: this.position[0] + (this.width/80),
+      y: this.position[1] + (this.height/4),
+      width: this.width / 4,
+      height: this.height / 8.5
+    }
+
+    const box5 = {
+      x: this.position[0] + (this.width/1.3),
+      y: this.position[1] + (this.height/4),
+      width: this.width / 4.5,
+      height: this.height / 8.5
+    }
+
+    return [box1, box2, box3, box4, box5];
+    // return [box1]
+  }
+
+  collideCheck(otherObj) {
+    const thisHitboxes = this.getHitbox();
+    const otherHitboxes = otherObj.getHitbox();
+
+    let hitboxesCollided = {};
+    thisHitboxes.forEach((thisBox, idx) => {
+      hitboxesCollided[idx] = false;
+      return otherHitboxes.forEach((otherBox) => {
+        if (this.rectangleCollision(thisBox, otherBox)) {
+          hitboxesCollided[idx] = true;
+        }
+      })
+    })
+
+    if (Object.values(hitboxesCollided).some((found => found))) {
+      this.handleCollided(otherObj, hitboxesCollided);
+    }
+  }
+
+  handleCollided(otherObj, hitboxesCollided) {
+    const otherObjClass = otherObj.constructor.name;
+
+    if (otherObjClass === "Projectile") {
+      // console.log("projectile collision");
+      const damage = otherObj.health;
+      otherObj.remove();
+      if (hitboxesCollided[0]) this.damageTaken(damage);
+      console.log(this.health);
+    }
+  }
+
 
   updateVelocity() {
     // if (this.position[1] > 0) {
@@ -70,6 +145,7 @@ class Boss extends Ship {
 
     // for testing purposes, make boss stationary
     if (this.position[1] > 0) {
+      this.position[1] = 0;
       if (this.velocity[1] !== 0) {
         this.shootOnCooldown = false;
         this.game.player.disabled = false;
@@ -178,6 +254,7 @@ class Boss extends Ship {
     super.damageTaken(damage);
 
     if (this.health <= 0) {
+      this.game.score += 1000;
       this.remove()
       // activate game over win logic here
     }

@@ -23,7 +23,6 @@ class MovingObject {
     const thisHitboxes = this.getHitbox();
     const otherHitboxes = otherObj.getHitbox();
 
-    // let found = false;
     const found = thisHitboxes.some((thisBox) => {
       return otherHitboxes.some((otherBox) => {
         return this.rectangleCollision(thisBox, otherBox);
