@@ -24,10 +24,17 @@ class Game {
       particles: []
     };
 
-    this.boss = new Boss(this);
+    // this.boss = new Boss(this);
     const bossInfo = document.getElementById("boss-info");
     bossInfo.style.display = 'none';
     this.bossFight = false;
+  }
+
+  step(timeDelta) {
+    this.clearNulls();
+    this.updateInformation();
+    this.setEnemies();
+    this.moveObjects(timeDelta);
   }
 
   clearNulls() {
@@ -39,15 +46,28 @@ class Game {
     }
   }
 
-  moveObjects() {
+  // moveObjects() {
+  //   for (let key in this.allMovingObjects) {
+  //     const objectsValue = this.allMovingObjects[key]
+  //     if (objectsValue instanceof Array) {
+  //       objectsValue.forEach(obj => {
+  //         if (obj) obj.move()
+  //       });
+  //     } else {
+  //       if (objectsValue) objectsValue.move();
+  //     }
+  //   }
+  // }
+
+  moveObjects(timeDelta) {
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
       if (objectsValue instanceof Array) {
         objectsValue.forEach(obj => {
-          if (obj) obj.move()
+          if (obj) obj.move(timeDelta)
         });
       } else {
-        if (objectsValue) objectsValue.move();
+        if (objectsValue) objectsValue.move(timeDelta);
       }
     }
   }
@@ -150,8 +170,11 @@ class Game {
   }
 
   setBoss() {
+    // console.log("setting boss");
+    this.boss = new Boss(this);
     this.switchGameInformation();
     this.allMovingObjects.enemies.push(this.boss);
+    // console.log(this.allMovingObjects.enemies);
     this.allMovingObjects.player.disabled = true;
     this.bossFight = true;
   }

@@ -1,4 +1,6 @@
 class MovingObject {
+  static NORMAL_FRAME_TIME_DELTA = 1000 / 60;
+
   constructor(argsObject) {
     this.position = argsObject["position"];
     this.velocity = argsObject["velocity"];
@@ -16,9 +18,21 @@ class MovingObject {
     ctx.drawImage(this.image, this.position[0], this.position[1], this.width, this.height);
   }
 
-  move() {
-    const newX = this.position[0] + this.velocity[0];
-    const newY = this.position[1] + this.velocity[1];
+  // move() {
+  //   const newX = this.position[0] + this.velocity[0];
+  //   const newY = this.position[1] + this.velocity[1];
+
+  //   if (this.inXBounds(newX)) this.position[0] = newX;
+  //   if (this.inYBounds(newY)) this.position[1] = newY;
+  // }
+
+  move(timeDelta) {
+    const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
+    const offsetX = this.velocity[0] * velocityScale;
+    const offsetY = this.velocity[1] * velocityScale;
+
+    const newX = this.position[0] + offsetX;
+    const newY = this.position[1] + offsetY;
 
     if (this.inXBounds(newX)) this.position[0] = newX;
     if (this.inYBounds(newY)) this.position[1] = newY;

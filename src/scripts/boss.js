@@ -1,5 +1,6 @@
 import Ship from "./ship";
 import Projectile from "./projectile";
+import MovingObject from "./moving_object";
 
 class Boss extends Ship {
   constructor(game) {
@@ -13,8 +14,8 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - height],
-      // velocity: [0, 1],
-      velocity: [0, 5],
+      velocity: [0, 1],
+      // velocity: [0, 5],
       health: health,
       game: game,
       image: image
@@ -74,14 +75,51 @@ class Boss extends Ship {
     }
   }
 
-  move() {
+  // move() {
+  //   // this.updateShootingPattern(); // do this when taking damage
+  //   // console.log(this.position);
+  //   const newPos = this.position;
+  //   newPos[0] += this.velocity[0];
+  //   newPos[1] += this.velocity[1];
+  //   this.position = newPos;
+  //   this.updateVelocity();
+
+  //   // collision against enemy/player logic here?
+  //   // create seperate collision checking function in game class
+  //   if (!this.shootOnCooldown) {
+  //     this.shootProjectile();
+  //     this.shootOnCooldown = true;
+  //     setTimeout(this.resetCooldown.bind(this), this.cooldown);
+  //   }
+  // }
+
+  move(timeDelta) {
+    // only needed when testing boss first
+    if (isNaN(this.position[0]) || isNaN(this.position[1])) {
+      console.log("bokren");
+      this.position = [(this.game.canvasWidth/2) - (this.width/2), 0 - this.height];
+      console.log("fixed");
+    }
+
+    this.updateVelocity();
+
+    const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
+    const offsetX = this.velocity[0] * velocityScale;
+    const offsetY = this.velocity[1] * velocityScale;
+
+    // console.log([
+    //   this.velocity,
+    //   offsetX,
+    //   offsetY,
+    //   this.position[0]
+    // ])
+
     // this.updateShootingPattern(); // do this when taking damage
     // console.log(this.position);
     const newPos = this.position;
-    newPos[0] += this.velocity[0];
-    newPos[1] += this.velocity[1];
+    newPos[0] += offsetX;
+    newPos[1] += offsetY;
     this.position = newPos;
-    this.updateVelocity();
 
     // collision against enemy/player logic here?
     // create seperate collision checking function in game class

@@ -12,17 +12,28 @@ class GameView {
   }
 
   start() {
-    setInterval(() => {
-      this.game.clearNulls();
-      this.game.updateInformation();
-      this.game.setEnemies();
-      this.game.moveObjects();
-      this.game.draw(this.ctx);
-    }, 20)
+    // setInterval(() => {
+    //   this.game.clearNulls();
+    //   this.game.updateInformation();
+    //   this.game.setEnemies();
+    //   this.game.moveObjects();
+    //   this.game.draw(this.ctx);
+    // }, 20)
+    requestAnimationFrame(this.animate.bind(this));
   }
 
   bindControlHandlers() {
     this.game.allMovingObjects.player.bindControlHandlers();
+  }
+
+  animate(time) {
+    const timeDelta = time - this.lastTime;
+
+    this.game.step(timeDelta);
+    this.game.draw(this.ctx);
+    this.lastTime = time;
+
+    requestAnimationFrame(this.animate.bind(this));
   }
 }
 

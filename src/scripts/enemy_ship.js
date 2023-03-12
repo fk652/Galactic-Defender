@@ -1,4 +1,5 @@
 import Ship from "./ship";
+import MovingObject from "./moving_object";
 
 class EnemyShip extends Ship {
   constructor(game, posX, speed, cooldown) {
@@ -45,8 +46,34 @@ class EnemyShip extends Ship {
     super(objArgs, projectileArgs);
   }
 
-  move() {
-    const newY = this.position[1] + this.velocity[1];
+  // move() {
+  //   const newY = this.position[1] + this.velocity[1];
+
+  //   // collision against enemy/player logic here?
+  //   // create seperate collision checking function in game class
+  //   if (!this.shootOnCooldown) {
+  //     this.shootProjectile();
+  //     this.shootOnCooldown = true;
+  //     setTimeout(this.resetCooldown.bind(this), this.cooldown);
+  //   }
+
+  //   if (!this.inYBounds(newY)) {
+  //     const enemies = this.game.allMovingObjects.enemies;
+  //     // enemies.splice(enemies.indexOf(this), 1);
+  //     enemies[enemies.indexOf(this)] = null;
+  //     this.game.enemiesRemaining -= 1;
+  //   } else {
+  //     this.position = [this.position[0], newY]
+  //   }
+  // }
+
+  move(timeDelta) {
+    const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
+    const offsetX = this.velocity[0] * velocityScale;
+    const offsetY = this.velocity[1] * velocityScale;
+
+    const newX = this.position[0] + offsetX;
+    const newY = this.position[1] + offsetY;
 
     // collision against enemy/player logic here?
     // create seperate collision checking function in game class
@@ -62,7 +89,7 @@ class EnemyShip extends Ship {
       enemies[enemies.indexOf(this)] = null;
       this.game.enemiesRemaining -= 1;
     } else {
-      this.position = [this.position[0], newY]
+      this.position = [newX, newY]
     }
   }
 

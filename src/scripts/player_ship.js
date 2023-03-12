@@ -70,7 +70,19 @@ class PlayerShip extends Ship {
     this.velocity = newVelocity;
   }
 
-  move() {
+  // move() {
+  //   // check for collision logic here?
+  //   // create seperate collision checking function in game class
+  //   // console.log(this.disabled);
+  //   this.updateVelocity();
+
+  //   if (this.keysPressed.shoot && !this.shootOnCooldown && !this.disabled) {
+  //     this.shootProjectile();
+  //   }
+  //   super.move();
+  // }
+
+  move(timeDelta) {
     // check for collision logic here?
     // create seperate collision checking function in game class
     // console.log(this.disabled);
@@ -79,7 +91,7 @@ class PlayerShip extends Ship {
     if (this.keysPressed.shoot && !this.shootOnCooldown && !this.disabled) {
       this.shootProjectile();
     }
-    super.move();
+    super.move(timeDelta);
   }
 
   handleKeyDown(event) {
