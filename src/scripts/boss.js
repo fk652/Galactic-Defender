@@ -176,6 +176,7 @@ class Boss extends Ship {
 
     if (this.health <= 0) {
       this.remove()
+      // activate game over win logic here
     }
   }
 

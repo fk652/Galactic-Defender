@@ -7,7 +7,7 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     // this.enemyWave = 0;
-    this.enemyWave = 1;
+    this.enemyWave = 10;
 
     // add a delay to this later after implementing start screen
     // this.addEnemyOnCooldown = true;
@@ -90,7 +90,7 @@ class Game {
             if (enemy) enemy.collideCheck(projectile);
           })
         } else {
-          this.player.collideCheck(projectile);
+          if (this.player) this.player.collideCheck(projectile);
         }
       }
     })
@@ -98,7 +98,7 @@ class Game {
     // check enemy to player collisions
     // check player hitbox vs enemy hitboxes
     this.allMovingObjects.enemies.forEach((enemy) => {
-      if (enemy) this.player.collideCheck(enemy);
+      if (enemy && this.player) this.player.collideCheck(enemy);
     })
   }
 
@@ -168,7 +168,9 @@ class Game {
 
         // heal player in between rounds (no more than 10)
         // can also heal based on score or enemies killed this round
-        this.player.health += Math.min(3, 10-this.player.health);
+        if (this.allMovingObjects.player) {
+          this.player.health += Math.min(3, 10-this.player.health);
+        }
 
       } else if (!this.bossFight) {
         // this.bossFight = true;

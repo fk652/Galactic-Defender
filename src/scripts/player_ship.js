@@ -134,10 +134,20 @@ class PlayerShip extends Ship {
       this.invincible = true;
       setTimeout(this.resetInvincibility.bind(this), 1000);
     }
+
+    if (this.health <= 0) {
+      // activate game over here
+      this.remove();
+    }
   }
 
   resetInvincibility() {
     this.invincible = false;
+  }
+
+  remove() {
+    // this.game.player = null;
+    this.game.allMovingObjects.player = null;
   }
 }
 
