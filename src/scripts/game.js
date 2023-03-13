@@ -7,17 +7,13 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.drawn = false;
-    // this.enemyWave = 0;
-    this.enemyWave = 10;
+    this.enemyWave = 0;
+    // this.enemyWave = 10;
 
-    // add a delay to this later after implementing start screen
-    // this.addEnemyOnCooldown = true;
     this.addEnemyOnCooldown = true;
-
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
     this.enemyWaveCount = 0;
-
     this.score = 0;
     this.gameOver = false;
     this.win = false;
@@ -32,7 +28,6 @@ class Game {
       particles: []
     };
 
-    // this.boss = new Boss(this);
     const bossInfo = document.getElementById("boss-info");
     bossInfo.style.display = 'none';
     this.bossFight = false;
@@ -46,7 +41,7 @@ class Game {
     this.moveObjects(timeDelta);
   }
 
-  // null vs splicing testing
+  // test null vs splicing on removal
   clearNulls() {
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
@@ -56,19 +51,6 @@ class Game {
       }
     }
   }
-
-  // moveObjects() {
-  //   for (let key in this.allMovingObjects) {
-  //     const objectsValue = this.allMovingObjects[key]
-  //     if (objectsValue instanceof Array) {
-  //       objectsValue.forEach(obj => {
-  //         if (obj) obj.move()
-  //       });
-  //     } else {
-  //       if (objectsValue) objectsValue.move();
-  //     }
-  //   }
-  // }
 
   moveObjects(timeDelta) {
     for (let key in this.allMovingObjects) {

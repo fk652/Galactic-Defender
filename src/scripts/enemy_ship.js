@@ -4,14 +4,10 @@ import MovingObject from "./moving_object";
 class EnemyShip extends Ship {
   constructor(game, posX, speed, cooldown) {
     let image = document.createElement("img");
-    // image.src = "src/assets/enemy1.png";
-    // let height = 40;
-    // let width = 40;
+    image.src = "src/assets/enemy1.png";
+    let height = 40;
+    let width = 40;
     let health = 3;
-
-    image.src = "src/assets/enemy2.png";
-    let height = 125;
-    let width = 100;
 
     if (posX < width) {
       posX = width;
@@ -50,27 +46,6 @@ class EnemyShip extends Ship {
     super(objArgs, projectileArgs);
   }
 
-  // move() {
-  //   const newY = this.position[1] + this.velocity[1];
-
-  //   // collision against enemy/player logic here?
-  //   // create seperate collision checking function in game class
-  //   if (!this.shootOnCooldown) {
-  //     this.shootProjectile();
-  //     this.shootOnCooldown = true;
-  //     setTimeout(this.resetCooldown.bind(this), this.cooldown);
-  //   }
-
-  //   if (!this.inYBounds(newY)) {
-  //     const enemies = this.game.allMovingObjects.enemies;
-  //     // enemies.splice(enemies.indexOf(this), 1);
-  //     enemies[enemies.indexOf(this)] = null;
-  //     this.game.enemiesRemaining -= 1;
-  //   } else {
-  //     this.position = [this.position[0], newY]
-  //   }
-  // }
-
   move(timeDelta) {
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
     const offsetX = this.velocity[0] * velocityScale;
@@ -89,9 +64,6 @@ class EnemyShip extends Ship {
 
     if (!this.inYBounds(newY)) {
       this.remove();
-      // const enemies = this.game.allMovingObjects.enemies;
-      // enemies[enemies.indexOf(this)] = null;
-      // this.game.enemiesRemaining -= 1;
     } else {
       this.position = [newX, newY]
     }
@@ -104,7 +76,6 @@ class EnemyShip extends Ship {
   remove() {
     const enemies = this.game.allMovingObjects.enemies;
     enemies[enemies.indexOf(this)] = null;
-    // enemies.splice(enemies.indexOf(this), 1);
     this.game.enemiesRemaining -= 1;
   }
 

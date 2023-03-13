@@ -9,14 +9,10 @@ class PlayerShip extends Ship {
 
   constructor(game) {
     let image = document.createElement("img");
-    // image.src = "src/assets/player1.png";
-    // let height = 40;
-    // let width = 30;
+    image.src = "src/assets/player1.png";
+    let height = 40;
+    let width = 30;
     let health = 10;
-
-    image.src = "src/assets/player2.jpg";
-    let height = 80;
-    let width = 60;
 
     const objArgs = {
       width: width,
@@ -63,7 +59,6 @@ class PlayerShip extends Ship {
   updateVelocity() {
     const newVelocity = [0, 0];
 
-    // console.log(this.disabled);
     if (this.disabled) {
       newVelocity[1] = 2;
     } else {
@@ -76,22 +71,7 @@ class PlayerShip extends Ship {
     this.velocity = newVelocity;
   }
 
-  // move() {
-  //   // check for collision logic here?
-  //   // create seperate collision checking function in game class
-  //   // console.log(this.disabled);
-  //   this.updateVelocity();
-
-  //   if (this.keysPressed.shoot && !this.shootOnCooldown && !this.disabled) {
-  //     this.shootProjectile();
-  //   }
-  //   super.move();
-  // }
-
   move(timeDelta) {
-    // check for collision logic here?
-    // create seperate collision checking function in game class
-    // console.log(this.disabled);
     this.updateVelocity();
 
     if (this.keysPressed.shoot && !this.shootOnCooldown && !this.disabled) {
@@ -166,7 +146,6 @@ class PlayerShip extends Ship {
   }
 
   remove() {
-    // this.game.player = null;
     this.game.allMovingObjects.player = null;
   }
 }

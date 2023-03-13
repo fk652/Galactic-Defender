@@ -5,12 +5,10 @@ import MovingObject from "./moving_object";
 class Boss extends Ship {
   constructor(game) {
     let image = document.createElement("img");
-    // image.src = "src/assets/boss1.png";
+    image.src = "src/assets/boss1.png";
     let height = 200;
     let width = game.canvasWidth/2;
     let health = 100;
-
-    image.src = "src/assets/boss2.png";
 
     const objArgs = {
       width: width,
@@ -54,8 +52,6 @@ class Boss extends Ship {
   }
 
   getHitbox() {
-    // return super.getHitbox()
-
     // weakspot
     const box1 = {
       x: this.position[0] + (this.width / 2.5),
@@ -93,7 +89,6 @@ class Boss extends Ship {
     }
 
     return [box1, box2, box3, box4, box5];
-    // return [box1]
   }
 
   collideCheck(otherObj) {
@@ -119,11 +114,9 @@ class Boss extends Ship {
     const otherObjClass = otherObj.constructor.name;
 
     if (otherObjClass === "Projectile") {
-      // console.log("projectile collision");
       const damage = otherObj.health;
       otherObj.remove();
       if (hitboxesCollided[0]) this.damageTaken(damage);
-      // console.log(this.health);
     }
   }
 
@@ -157,24 +150,6 @@ class Boss extends Ship {
     // }
   }
 
-  // move() {
-  //   // this.updateShootingPattern(); // do this when taking damage
-  //   // console.log(this.position);
-  //   const newPos = this.position;
-  //   newPos[0] += this.velocity[0];
-  //   newPos[1] += this.velocity[1];
-  //   this.position = newPos;
-  //   this.updateVelocity();
-
-  //   // collision against enemy/player logic here?
-  //   // create seperate collision checking function in game class
-  //   if (!this.shootOnCooldown) {
-  //     this.shootProjectile();
-  //     this.shootOnCooldown = true;
-  //     setTimeout(this.resetCooldown.bind(this), this.cooldown);
-  //   }
-  // }
-
   move(timeDelta) {
     this.updateVelocity();
     this.updateShootingPattern();
@@ -183,15 +158,6 @@ class Boss extends Ship {
     const offsetX = this.velocity[0] * velocityScale;
     const offsetY = this.velocity[1] * velocityScale;
 
-    // console.log([
-    //   this.velocity,
-    //   offsetX,
-    //   offsetY,
-    //   this.position[0]
-    // ])
-
-    // this.updateShootingPattern(); // do this when taking damage
-    // console.log(this.position);
     const newPos = this.position;
     newPos[0] += offsetX;
     newPos[1] += offsetY;
@@ -258,17 +224,14 @@ class Boss extends Ship {
 
     if (this.health <= 0) {
       this.game.score += 1000;
-      this.image.src = "src/assets/boss3.png";
-      // this.remove()
-      // this.game.setWin();
-      setTimeout(this.game.setWin.bind(this.game), 100);
+      this.remove()
+      this.game.setWin();
     }
   }
 
   remove() {
     const enemies = this.game.allMovingObjects.enemies;
     enemies[enemies.indexOf(this)] = null;
-    // enemies.splice(enemies.indexOf(this), 1);
   }
 }
 

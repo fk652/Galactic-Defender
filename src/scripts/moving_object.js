@@ -9,9 +9,6 @@ class MovingObject {
     this.width = argsObject["width"];
     this.height = argsObject["height"];
     this.image = argsObject["image"];
-
-    // this.position[0] = Math.round(this.position[0]);
-    // this.position[1] = Math.round(this.position[1]);
   }
 
   draw(ctx) {
@@ -19,7 +16,6 @@ class MovingObject {
   }
 
   collideCheck(otherObj) {
-    // console.log("collide check");
     const thisHitboxes = this.getHitbox();
     const otherHitboxes = otherObj.getHitbox();
 
@@ -30,7 +26,6 @@ class MovingObject {
     })
 
     if (found) {
-      // console.log("collision");
       this.handleCollided(otherObj);
     }
   }
@@ -40,18 +35,15 @@ class MovingObject {
     const otherObjClass = otherObj.constructor.name;
 
     if (otherObjClass === "Projectile") {
-      // console.log("projectile collision");
       const damage = otherObj.health;
       otherObj.remove();
       this.damageTaken(damage);
     } else if (otherObjClass === "EnemyShip") {
       // take 1 damage if collided with enemy
-      // console.log("enemy collision");
       const damage = 1;
       this.damageTaken(damage);
     } else if (otherObjClass === "Boss") {
       // take more damage if collided with boss
-      // console.log("boss collision");
       const damage = 2;
       this.damageTaken(damage);
     }
