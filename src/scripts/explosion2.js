@@ -1,9 +1,9 @@
 import MovingObject from "./moving_object";
 
-class Explosion extends MovingObject {
+class Explosion2 extends MovingObject {
   constructor(game, size, position) {
     const image = document.createElement("img");
-    image.src = "src/assets/explosion1.png";
+    image.src = "src/assets/explosion2.png";
 
     const argsObj = {
       position: position,
@@ -21,17 +21,17 @@ class Explosion extends MovingObject {
   }
 
   draw(ctx) {
-    const yOffset = Math.floor(this.frame/5);
-    const xOffset = this.frame % 5;
+    const yOffset = Math.floor(this.frame/8);
+    const xOffset = this.frame % 8;
     // console.log(xOffset, yOffset);
     ctx.drawImage(this.image, 
-                  192*xOffset, 192*yOffset, 192, 192, 
+                  240*xOffset, 240*yOffset, 240, 240, 
                   this.position[0], this.position[1], this.width, this.height);
     this.frame += 1;
     this.velocity[1] += this.dy;
 
     // remove once this.frame >= 20
-    if (this.frame >= 20) {
+    if (this.frame >= 48) {
       this.remove();
     }
   }
@@ -43,4 +43,4 @@ class Explosion extends MovingObject {
   }
 }
 
-export default Explosion;
+export default Explosion2;

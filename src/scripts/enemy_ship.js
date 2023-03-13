@@ -8,7 +8,9 @@ class EnemyShip extends Ship {
     image.src = "src/assets/enemy1.png";
     let height = 40;
     let width = 40;
-    let health = 3;
+
+    // scale based on wave here or do it within game.setEnemy
+    let health = Math.floor(game.enemyWave / 3);
 
     if (posX < 0 - width) {
       posX = 0;
@@ -85,8 +87,13 @@ class EnemyShip extends Ship {
 
     if (this.health <= 0) {
       // add new explosion animation to game.allMovingObjects.explosions
-      const explosion = new Explosion(this.game, [0, 0], 80, this.position);
-      this.game.allMovingObjects.explosions.push(explosion);
+      try {
+        const explosion = new Explosion(this.game, this.position);
+        this.game.allMovingObjects.explosions.push(explosion);
+      } catch(error) {
+        // console.error();
+        // console.log(this.game);
+      }
 
       this.remove();
       // update score and add explosion animation here later

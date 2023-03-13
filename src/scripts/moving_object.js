@@ -72,14 +72,6 @@ class MovingObject {
     }]
   }
 
-  move() {
-    const newX = this.position[0] + this.velocity[0];
-    const newY = this.position[1] + this.velocity[1];
-
-    if (this.inXBounds(newX)) this.position[0] = newX;
-    if (this.inYBounds(newY)) this.position[1] = newY;
-  }
-
   // to be refactored for DRY code later
   move(timeDelta) {
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;

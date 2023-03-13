@@ -1,6 +1,8 @@
 import Ship from "./ship";
 import Projectile from "./projectile";
 import MovingObject from "./moving_object";
+import Explosion from "./explosion";
+import Explosion2 from "./explosion2";
 
 class Boss extends Ship {
   constructor(game) {
@@ -8,14 +10,15 @@ class Boss extends Ship {
     image.src = "src/assets/boss1.png";
     let height = 200;
     let width = game.canvasWidth/2;
-    let health = 100;
+    // let health = 100;
+    let health = 1;
 
     const objArgs = {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - height],
-      velocity: [0, 1],
-      // velocity: [0, 5],
+      // velocity: [0, 1],
+      velocity: [0, 5],
       health: health,
       game: game,
       image: image
@@ -153,7 +156,7 @@ class Boss extends Ship {
   }
 
   move(timeDelta) {
-    if (!this.disabled) {
+    // if (!this.disabled) {
       this.updateVelocity();
       this.updateShootingPattern();
 
@@ -166,6 +169,7 @@ class Boss extends Ship {
       newPos[1] += offsetY;
       this.position = newPos;
 
+    if (!this.disabled) {
       // collision against enemy/player logic here?
       // create seperate collision checking function in game class
       if (!this.shootOnCooldown) {
@@ -235,11 +239,45 @@ class Boss extends Ship {
         //play death animation
         // add a few random explosions, velocity 0, random or fixed positions around boss
         // loop a few times or add setTimeouts for adding each explosion
+        const hitBoxes = this.getHitbox();
+        hitBoxes.forEach((hitbox) => {
+          for (let i = 0; i < 15; i++) {
+            try {
+              const randPosX = Math.floor(Math.random() * ((hitbox.x + hitbox.width) - hitbox.x)) + hitbox.x;
+              const randPosY = Math.floor(Math.random() * ((hitbox.y + hitbox.height) - hitbox.y) + hitbox.y);
+              const randTime = Math.floor(Math.random() * (1000 - 100) + 100);
+              const explosion = new Explosion(this.game, 80, [randPosX - 30, randPosY - 20]);
+              explosion.dy = 0.5;
+              setTimeout(() => {
+                this.game.allMovingObjects.explosions.push(explosion);
+              }, randTime);
+            } catch(error) {
+              // console.error();
+              // console.log(this.game);
+            }
+          }
+        })
         
-        // put remove and setwin on a setTimeout later to let death animations play
-        this.remove()
-        // finally add one big explosion
-        this.game.setWin();
+        setTimeout(() => {
+          // put remove and setwin on a setTimeout later to let death animations play
+          // this.remove()
+          // finally add one big explosion
+          this.remove()
+          try {
+            const posX = this.position[0]-(this.width/2);
+            const posY = this.position[1]-(this.height/2);
+            const finalExplosion = new Explosion2(this.game, 500, [posX, posY]);
+            this.game.allMovingObjects.explosions.push(finalExplosion);
+          } catch(error) {
+            // console.error();
+            // console.log(this.game);
+          }
+          setTimeout(this.game.setWin.bind(this.game), 2000);
+        }, 1000)
+        // // put remove and setwin on a setTimeout later to let death animations play
+        // this.remove()
+        // // finally add one big explosion
+        // this.game.setWin();
       }
     }
   }

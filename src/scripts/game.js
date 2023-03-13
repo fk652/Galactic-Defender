@@ -1,15 +1,15 @@
 import PlayerShip from "./player_ship";
 import EnemyShip from "./enemy_ship";
 import Boss from "./boss";
-import Explosion from "./explosion"; // for testing
+// import Explosion2 from "./explosion2";
 
 class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
-    this.enemyWave = 0;
-    // this.enemyWave = 10;
+    // this.enemyWave = 0;
+    this.enemyWave = 10;
 
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -29,6 +29,9 @@ class Game {
       particles: [],
       explosions: []
     };
+
+    // const testExplosion = new Explosion2(this, 500, [(this.canvasWidth/2) - 250, (this.canvasHeight/2) - 500]);
+    // this.allMovingObjects.explosions.push(testExplosion);
 
     const bossInfo = document.getElementById("boss-info");
     bossInfo.style.display = 'none';
