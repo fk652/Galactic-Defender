@@ -7,7 +7,8 @@ class GameView {
 
     // to be changed with setting up start menu listener first, 
     // then removing that and adding movement listener
-    this.bindControlHandlers();
+    // this.game.player.bindControlHandlers();
+    this.game.bindStartHandler();
     this.start();
   }
 
@@ -23,16 +24,23 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
-  bindControlHandlers() {
-    this.game.player.bindControlHandlers();
-  }
-
   animate(time) {
-    const timeDelta = time - this.lastTime;
+    // draw moving background here?
 
     // handle start, game over, and win screen draw here?
-    this.game.step(timeDelta);
-    this.game.draw(this.ctx);
+    // can DRY draw messages here later
+    if (this.game.startMenu) {
+      if (!this.game.drawn) this.game.drawStartMenu(this.ctx);
+    } else if (this.game.gameOver) {
+      if (!this.game.drawn) this.game.drawGameOver(this.ctx);
+    } else if (this.game.win) {
+      if (!this.game.drawn) this.game.drawWin(this.ctx);
+    } else {
+      const timeDelta = time - this.lastTime;
+      this.game.step(timeDelta);
+      this.game.draw(this.ctx);
+    }
+
     this.lastTime = time;
 
     requestAnimationFrame(this.animate.bind(this));

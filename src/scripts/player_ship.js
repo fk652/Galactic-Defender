@@ -11,7 +11,7 @@ class PlayerShip extends Ship {
     let image = document.createElement("img");
     image.src = "src/assets/player1.png";
     let height = 40;
-    let width = 20;
+    let width = 30;
     let health = 10;
 
     const objArgs = {
@@ -116,16 +116,26 @@ class PlayerShip extends Ship {
     else if (event.key === " ") this.keysPressed.shoot = false;
   }
 
+  handleMouseDown(event) {
+    this.keysPressed.shoot = true;
+  }
+
+  handleMouseUp(event) {
+    this.keysPressed.shoot = false;
+  }
+
   bindControlHandlers() {
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
     document.addEventListener("keyup", this.handleKeyUp.bind(this));
-    document.addEventListener("mousedown", e => this.keysPressed.shoot = true);
-    document.addEventListener("mouseup", e => this.keysPressed.shoot = false);
+    document.addEventListener("mousedown", this.handleMouseDown.bind(this));
+    document.addEventListener("mouseup", this.handleMouseUp.bind(this));
   }
 
-  // to be implemented later for game over and reset purposes
   removeControlHandlers() {
-
+    document.removeEventListener("keydown", this.handleKeyDown.bind(this));
+    document.removeEventListener("keyup", this.handleKeyUp.bind(this));
+    document.removeEventListener("mousedown", this.handleMouseDown.bind(this));
+    document.removeEventListener("mouseup", this.handleMouseUp.bind(this));
   }
 
   damageTaken(damage) {
@@ -136,8 +146,9 @@ class PlayerShip extends Ship {
     }
 
     if (this.health <= 0) {
-      // activate game over here
       this.remove();
+      // activate game over here
+      this.game.setGameOver();
     }
   }
 

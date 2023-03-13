@@ -6,12 +6,13 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
+    this.drawn = false;
     this.enemyWave = 0;
     // this.enemyWave = 10;
 
     // add a delay to this later after implementing start screen
     // this.addEnemyOnCooldown = true;
-    this.addEnemyOnCooldown = false;
+    this.addEnemyOnCooldown = true;
 
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
@@ -20,7 +21,7 @@ class Game {
     this.score = 0;
     this.gameOver = false;
     this.win = false;
-    this.startMenu = false;
+    this.startMenu = true;
 
     this.player = new PlayerShip(this);
     
@@ -170,13 +171,11 @@ class Game {
         // heal player in between rounds (no more than 10)
         // can also heal based on score or enemies killed this round
         if (this.allMovingObjects.player) {
-          this.player.health += Math.min(3, 10-this.player.health);
+          const newHealth = this.player.health + 3;
+          this.player.health = (newHealth > 10 ? 10 : newHealth);
         }
 
       } else if (!this.bossFight) {
-        // this.bossFight = true;
-        // this.player.disabled = true;
-        // setTimeout(this.setBoss.bind(this), 1000);
         this.setBoss();
       }
       // might change to delay after start
@@ -231,6 +230,102 @@ class Game {
     const waveInfo = document.getElementById("wave-info");
     waveInfo.style.display = 'none';
     bossInfo.style.display = 'flex';
+  }
+
+  // can DRY up setWin and setGameOver
+  setWin() {
+    this.player.removeControlHandlers();
+    this.win = true;
+    this.bindRetryHandler();
+  }
+
+  setGameOver() {
+    this.player.removeControlHandlers();
+    this.gameOver = true;
+    this.bindRetryHandler();
+  }
+
+  // might not be needed
+  setPlay() {
+
+  }
+
+  reset() {
+    // reset all moving objects 
+    // reset every flag to constructor state
+    // reset player and bind playerHandlers
+  }
+
+  drawWin(ctx) {
+    // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    ctx.font = "48px roboto";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "white";
+    ctx.fillText("YOU WIN!", this.canvasWidth/2, this.canvasHeight/2);
+    ctx.font = "24px roboto";
+    ctx.fillText("(press any key to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
+    this.drawn = true;
+  }
+
+  drawGameOver(ctx) {
+    // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    ctx.font = "48px roboto";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "white";
+    ctx.fillText("GAME OVER", this.canvasWidth/2, this.canvasHeight/2);
+    ctx.font = "24px roboto";
+    ctx.fillText("(press any key to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
+    this.drawn = true;
+  }
+
+  drawStartMenu(ctx) {
+    // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    ctx.font = "48px roboto";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "white";
+    ctx.fillText("Press any key to start", this.canvasWidth/2, this.canvasHeight/2);
+    this.drawn = true;
+  }
+
+  drawMessage(ctx, message) {
+    // DRY all draw messages here later
+  }
+
+  bindStartHandler() {
+    document.addEventListener("keypress", this.handleStartKey.bind(this));
+  }
+
+  // might not be needed
+  bindPlayerHandler() {
+    this.player.bindControlHandlers();
+  }
+
+  handleStartKey(event) {
+    event.preventDefault();
+    if (event.key) {
+      this.startMenu = false;
+      document.removeEventListener("keypress", this.handleStartKey.bind(this));
+      this.bindPlayerHandler();
+      setTimeout(this.resetAddEnemyCooldown.bind(this), 3000);
+      this.drawn = false;
+    }
+  }
+
+  bindRetryHandler() {
+    document.addEventListener("keypress", this.handleRetryKey.bind(this));
+  }
+
+  handleRetryKey(event) {
+    event.preventDefault();
+    if (event.key) {
+      this.gameOver = false;
+      this.win = false;
+      document.removeEventListener("keypress", this.handleRetryKey.bind(this));
+      this.reset();
+      this.bindPlayerHandler();
+      setTimeout(this.resetAddEnemyCooldown.bind(this), 3000);
+      this.drawn = false;
+    }
   }
 }
 

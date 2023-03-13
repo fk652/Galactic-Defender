@@ -47,8 +47,8 @@ class Boss extends Ship {
     // array of dx, dy
     // add seperate cooldowns for each pattern later
     this.projectilePositions = [
-      // [2, 82],
-      // [width-14, 82]
+      [2, 82],
+      [width-14, 82]
     ]
   }
 
@@ -128,30 +128,32 @@ class Boss extends Ship {
 
 
   updateVelocity() {
-    // if (this.position[1] > 0) {
-    //   // const randSpeed = Math.random() * (0.005 - 0.003) + 0.003;
-    //   const speed = this.determineSpeed();
-    //   // const speed = 1;
-    //   if (this.velocity[0] === 0 || this.position[0] < 0) {
-    //     if (this.velocity[0] === 0) {
-    //       this.shootOnCooldown = false;
-    //       this.game.player.disabled = false;
-    //     }
-    //     this.velocity = [speed, 0];
-    //   } else if (this.position[0] > this.game.canvasWidth - this.width) {
-    //     this.velocity = [-speed, 0];
-    //   }
-    // }
-
-    // for testing purposes, make boss stationary
     if (this.position[1] > 0) {
-      this.position[1] = 0;
-      if (this.velocity[1] !== 0) {
-        this.shootOnCooldown = false;
-        this.game.player.disabled = false;
+      // const randSpeed = Math.random() * (0.005 - 0.003) + 0.003;
+      // const speed = this.determineSpeed();
+      const speed = 1.5;
+      if (this.velocity[0] === 0 || this.position[0] < 0) {
+        if (this.velocity[0] === 0) {
+          // this.shootOnCooldown = false;
+          setTimeout(this.resetCooldown.bind(this), 1000)
+          this.game.player.disabled = false;
+        }
+        this.velocity = [speed, 0];
+      } else if (this.position[0] > this.game.canvasWidth - this.width) {
+        this.velocity = [-speed, 0];
       }
-      this.velocity = [0, 0];
     }
+
+    // // for testing purposes, make boss stationary
+    // if (this.position[1] > 0) {
+    //   this.position[1] = 0;
+    //   if (this.velocity[1] !== 0) {
+    //     // this.shootOnCooldown = false;
+    //     setTimeout(this.resetCooldown.bind(this), 1000)
+    //     this.game.player.disabled = false;
+    //   }
+    //   this.velocity = [0, 0];
+    // }
   }
 
   // move() {
@@ -205,11 +207,11 @@ class Boss extends Ship {
 
   determineSpeed() {
     if (this.health > 70) {
-      return 1;
+      return 1 * multiplier;
     } else if (this.health > 40) {
-      return 1.5;
+      return 1.5 * multiplier;
     } else if (this.health <= 10) {
-      return 2;
+      return 2 * multiplier;
     }
   }
 
@@ -257,6 +259,7 @@ class Boss extends Ship {
       this.game.score += 1000;
       this.remove()
       // activate game over win logic here
+      this.game.setWin();
     }
   }
 
