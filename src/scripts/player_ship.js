@@ -125,17 +125,22 @@ class PlayerShip extends Ship {
   }
 
   bindControlHandlers() {
-    document.addEventListener("keydown", this.handleKeyDown.bind(this));
-    document.addEventListener("keyup", this.handleKeyUp.bind(this));
-    document.addEventListener("mousedown", this.handleMouseDown.bind(this));
-    document.addEventListener("mouseup", this.handleMouseUp.bind(this));
+    this.keyDownHandler = this.handleKeyDown.bind(this);
+    this.keyUpHandler = this.handleKeyUp.bind(this);
+    this.mouseDownHandler = this.handleMouseDown.bind(this);
+    this.mouseUpHandler = this.handleMouseUp.bind(this);
+
+    document.addEventListener("keydown", this.keyDownHandler);
+    document.addEventListener("keyup", this.keyUpHandler);
+    document.addEventListener("mousedown", this.mouseDownHandler);
+    document.addEventListener("mouseup", this.mouseUpHandler);
   }
 
   removeControlHandlers() {
-    document.removeEventListener("keydown", this.handleKeyDown.bind(this));
-    document.removeEventListener("keyup", this.handleKeyUp.bind(this));
-    document.removeEventListener("mousedown", this.handleMouseDown.bind(this));
-    document.removeEventListener("mouseup", this.handleMouseUp.bind(this));
+    document.removeEventListener("keydown", this.keyDownHandler);
+    document.removeEventListener("keyup", this.keyUpHandler);
+    document.removeEventListener("mousedown", this.mouseDownHandler);
+    document.removeEventListener("mouseup", this.mouseUpHandler);
   }
 
   damageTaken(damage) {

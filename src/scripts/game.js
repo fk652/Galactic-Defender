@@ -241,8 +241,10 @@ class Game {
 
   setGameOver() {
     this.player.removeControlHandlers();
-    this.gameOver = true;
+    // this.gameOver = true;
     this.bindRetryHandler();
+    this.gameOver = true;
+    // console.log(getEventListeners(document));
   }
 
   // might not be needed
@@ -251,9 +253,29 @@ class Game {
   }
 
   reset() {
-    // reset all moving objects 
-    // reset every flag to constructor state
-    // reset player and bind playerHandlers
+    // console.log('resetting');
+    this.drawn = false;
+    this.enemyWave = 0;
+    this.addEnemyOnCooldown = true;
+    this.addedEnemies = 0;
+    this.enemiesRemaining = 0;
+    this.enemyWaveCount = 0;
+    this.score = 0;
+    this.gameOver = false;
+    this.win = false;
+    this.startMenu = false;
+    this.player = new PlayerShip(this);
+    this.allMovingObjects = {
+      player: this.player,
+      enemies: [],
+      projectiles: [],
+      particles: []
+    };
+    const bossInfo = document.getElementById("boss-info");
+    bossInfo.style.display = "none";
+    this.bossFight = false;
+    const waveInfo = document.getElementById("wave-info");
+    waveInfo.display = "flex";
   }
 
   drawWin(ctx) {
@@ -292,7 +314,8 @@ class Game {
   }
 
   bindStartHandler() {
-    document.addEventListener("keypress", this.handleStartKey.bind(this));
+    this.startHandler = this.handleStartKey.bind(this);
+    document.addEventListener("keypress", this.startHandler);
   }
 
   // might not be needed
@@ -304,7 +327,7 @@ class Game {
     event.preventDefault();
     if (event.key) {
       this.startMenu = false;
-      document.removeEventListener("keypress", this.handleStartKey.bind(this));
+      document.removeEventListener("keypress", this.startHandler)
       this.bindPlayerHandler();
       setTimeout(this.resetAddEnemyCooldown.bind(this), 3000);
       this.drawn = false;
@@ -312,15 +335,14 @@ class Game {
   }
 
   bindRetryHandler() {
-    document.addEventListener("keypress", this.handleRetryKey.bind(this));
+    this.retryHandler = this.handleRetryKey.bind(this);
+    document.addEventListener("keypress", this.retryHandler);
   }
 
   handleRetryKey(event) {
     event.preventDefault();
     if (event.key) {
-      this.gameOver = false;
-      this.win = false;
-      document.removeEventListener("keypress", this.handleRetryKey.bind(this));
+      document.removeEventListener("keypress", this.retryHandler);
       this.reset();
       this.bindPlayerHandler();
       setTimeout(this.resetAddEnemyCooldown.bind(this), 3000);
