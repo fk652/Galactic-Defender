@@ -88,7 +88,7 @@ class EnemyShip extends Ship {
     if (this.health <= 0) {
       // add new explosion animation to game.allMovingObjects.explosions
       try {
-        const explosion = new Explosion(this.game, this.position);
+        const explosion = new Explosion(this.game, 80, this.position);
         this.game.allMovingObjects.explosions.push(explosion);
       } catch(error) {
         // console.error();

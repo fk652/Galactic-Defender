@@ -5,20 +5,22 @@ import Explosion from "./explosion";
 import Explosion2 from "./explosion2";
 
 class Boss extends Ship {
+  static MAX_HEALTH = 20;
+
   constructor(game) {
     let image = document.createElement("img");
     image.src = "src/assets/boss1.png";
     let height = 200;
     let width = game.canvasWidth/2;
-    // let health = 100;
-    let health = 1;
+    let health = Boss.MAX_HEALTH;
+    // let health = 1;
 
     const objArgs = {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - height],
-      // velocity: [0, 1],
-      velocity: [0, 5],
+      velocity: [0, 1],
+      // velocity: [0, 5],
       health: health,
       game: game,
       image: image
@@ -180,15 +182,15 @@ class Boss extends Ship {
     }
   }
 
-  determineSpeed() {
-    if (this.health > 70) {
-      return 1 * multiplier;
-    } else if (this.health > 40) {
-      return 1.5 * multiplier;
-    } else if (this.health <= 10) {
-      return 2 * multiplier;
-    }
-  }
+  // determineSpeed() {
+  //   if (this.health > 70) {
+  //     return 1 * multiplier;
+  //   } else if (this.health > 40) {
+  //     return 1.5 * multiplier;
+  //   } else if (this.health <= 10) {
+  //     return 2 * multiplier;
+  //   }
+  // }
 
   updateShootingPattern() {
     // add seperate cooldowns for each pattern later
@@ -233,15 +235,11 @@ class Boss extends Ship {
 
       if (this.health <= 0) {
         this.game.score += 1000;
-        // disable movement and shooting
         this.disabled = true;
 
-        //play death animation
-        // add a few random explosions, velocity 0, random or fixed positions around boss
-        // loop a few times or add setTimeouts for adding each explosion
         const hitBoxes = this.getHitbox();
         hitBoxes.forEach((hitbox) => {
-          for (let i = 0; i < 15; i++) {
+          for (let i = 0; i < 10; i++) {
             try {
               const randPosX = Math.floor(Math.random() * ((hitbox.x + hitbox.width) - hitbox.x)) + hitbox.x;
               const randPosY = Math.floor(Math.random() * ((hitbox.y + hitbox.height) - hitbox.y) + hitbox.y);
@@ -259,9 +257,6 @@ class Boss extends Ship {
         })
         
         setTimeout(() => {
-          // put remove and setwin on a setTimeout later to let death animations play
-          // this.remove()
-          // finally add one big explosion
           this.remove()
           try {
             const posX = this.position[0]-(this.width/2);
@@ -274,10 +269,6 @@ class Boss extends Ship {
           }
           setTimeout(this.game.setWin.bind(this.game), 2000);
         }, 1000)
-        // // put remove and setwin on a setTimeout later to let death animations play
-        // this.remove()
-        // // finally add one big explosion
-        // this.game.setWin();
       }
     }
   }
