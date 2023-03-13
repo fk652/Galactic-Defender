@@ -7,8 +7,8 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.drawn = false;
-    this.enemyWave = 0;
-    // this.enemyWave = 10;
+    // this.enemyWave = 0;
+    this.enemyWave = 8;
 
     // add a delay to this later after implementing start screen
     // this.addEnemyOnCooldown = true;
@@ -160,6 +160,15 @@ class Game {
     }
   }
 
+  healPlayer() {
+    // heal player in between rounds (no more than 10)
+    // can also heal based on score or enemies killed this round
+    if (this.allMovingObjects.player) {
+      const newHealth = this.player.health + 3;
+      this.player.health = (newHealth > 10 ? 10 : newHealth);
+    }
+  }
+
   setEnemies() {
     if (this.enemiesRemaining === 0) {
       if (this.enemyWave < 10) {
@@ -167,19 +176,12 @@ class Game {
         this.enemyWaveCount = this.enemyWave * 5;
         this.enemiesRemaining = this.enemyWaveCount;
         this.addedEnemies = 0;
-
-        // heal player in between rounds (no more than 10)
-        // can also heal based on score or enemies killed this round
-        if (this.allMovingObjects.player) {
-          const newHealth = this.player.health + 3;
-          this.player.health = (newHealth > 10 ? 10 : newHealth);
-        }
+        this.healPlayer();
 
       } else if (!this.bossFight) {
+        // might give extra heal before boss
         this.setBoss();
       }
-      // might change to delay after start
-      // this.resetAddEnemyCooldown();
     }
 
     if (!this.bossfight && !this.addEnemyOnCooldown) {
@@ -218,6 +220,7 @@ class Game {
     this.player.disabled = true;
 
     if (this.allMovingObjects.projectiles.length === 0) {
+      this.healPlayer();
       this.boss = new Boss(this);
       this.switchGameInformation();
       this.allMovingObjects.enemies.push(this.boss);
@@ -235,16 +238,14 @@ class Game {
   // can DRY up setWin and setGameOver
   setWin() {
     this.player.removeControlHandlers();
-    this.win = true;
     this.bindRetryHandler();
+    this.win = true;
   }
 
   setGameOver() {
     this.player.removeControlHandlers();
-    // this.gameOver = true;
     this.bindRetryHandler();
     this.gameOver = true;
-    // console.log(getEventListeners(document));
   }
 
   // might not be needed
@@ -275,7 +276,7 @@ class Game {
     bossInfo.style.display = "none";
     this.bossFight = false;
     const waveInfo = document.getElementById("wave-info");
-    waveInfo.display = "flex";
+    waveInfo.style.display = "flex";
   }
 
   drawWin(ctx) {
