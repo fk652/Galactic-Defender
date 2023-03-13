@@ -5,6 +5,7 @@ class GameView {
     this.ctx = ctx;
     this.game = new Game(canvas);
     this.game.bindStartHandler();
+    // setTimeout(this.game.bindStartHandler.bind(this.game), 1000);
     this.start();
   }
 
@@ -14,16 +15,10 @@ class GameView {
   }
 
   animate(time) {
-    // draw moving background here?
+    // draw moving background here?\
 
-    // handle start, game over, and win screen draw here?
-    // can DRY draw messages here later
-    if (this.game.startMenu) {
-      if (!this.game.drawn) this.game.drawStartMenu(this.ctx);
-    } else if (this.game.gameOver) {
-      if (!this.game.drawn) this.game.drawGameOver(this.ctx);
-    } else if (this.game.win) {
-      if (!this.game.drawn) this.game.drawWin(this.ctx);
+    if (this.game.startScreen || this.game.gameOver || this.game.win) {
+      this.game.drawStartWinGameOver(this.ctx);
     } else {
       const timeDelta = time - this.lastTime;
       this.game.step(timeDelta);
@@ -31,7 +26,6 @@ class GameView {
     }
 
     this.lastTime = time;
-
     requestAnimationFrame(this.animate.bind(this));
   }
 }

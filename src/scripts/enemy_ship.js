@@ -9,8 +9,8 @@ class EnemyShip extends Ship {
     let width = 40;
     let health = 3;
 
-    if (posX < width) {
-      posX = width;
+    if (posX < 0 - width) {
+      posX = 0;
     } else if (posX > game.canvasWidth - width) {
       posX = game.canvasWidth - width;
     }

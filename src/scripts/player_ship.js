@@ -6,13 +6,14 @@ class PlayerShip extends Ship {
   static DOWN_KEYS = ["ArrowDown", 's']
   static RIGHT_KEYS = ["ArrowRight", 'd']
   static LEFT_KEYS = ["ArrowLeft", 'a']
+  static MAX_HEALTH = 10;
 
   constructor(game) {
     let image = document.createElement("img");
     image.src = "src/assets/player1.png";
     let height = 40;
     let width = 30;
-    let health = 10;
+    let health = -2;
 
     const objArgs = {
       width: width,

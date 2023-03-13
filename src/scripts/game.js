@@ -6,7 +6,7 @@ class Game {
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    this.drawn = false;
+    this.messageDrawn = false;
     this.enemyWave = 0;
     // this.enemyWave = 10;
 
@@ -17,7 +17,7 @@ class Game {
     this.score = 0;
     this.gameOver = false;
     this.win = false;
-    this.startMenu = true;
+    this.startScreen = true;
 
     this.player = new PlayerShip(this);
     
@@ -25,7 +25,8 @@ class Game {
       player: this.player,
       enemies: [],
       projectiles: [],
-      particles: []
+      particles: [],
+      explosions: []
     };
 
     const bossInfo = document.getElementById("boss-info");
@@ -125,9 +126,7 @@ class Game {
     healthPoint.setAttribute("class", `${type}-health-point`);
 
     let health = obj.health;
-    if (type === 'boss') {
-      health = Math.ceil(health / 10);
-    }
+    if (type === 'boss') health = Math.ceil(health / 10);
 
     if (healthBar.children.length < health) {
       for (let i = 0; i < health - healthBar.children.length; i++) {
@@ -135,7 +134,6 @@ class Game {
       }
     } else if ((healthBar.children.length > health)) {
       for (let i = 0; i < healthBar.children.length - health; i++) {
-        // console.log(healthBar.lastChild);
         const lastChild = healthBar.lastChild;
         if (lastChild) healthBar.removeChild(healthBar.lastChild);
       }
@@ -159,9 +157,7 @@ class Game {
         this.enemiesRemaining = this.enemyWaveCount;
         this.addedEnemies = 0;
         this.healPlayer();
-
       } else if (!this.bossFight) {
-        // might give extra heal before boss
         this.setBoss();
       }
     }
@@ -178,9 +174,10 @@ class Game {
       this.addedEnemies += numNewEnemies;
 
       for (let i = 0; i < numNewEnemies; i++) {
+        // might change to increment difficulty per wave
+        // maybe have at least 1 enemy spawn in line with player position
         const randPosX = Math.floor(Math.random() * this.canvasWidth);
 
-        // might change to increment difficulty per wave
         // const randSpeed = Math.floor(Math.random() * (5 - 2) + 2);
         const randSpeed = Math.random() * (5 - 2) + 2;
         const randCooldown = Math.floor(Math.random() * (1000 - 450) + 450);
@@ -202,6 +199,7 @@ class Game {
     this.player.disabled = true;
 
     if (this.allMovingObjects.projectiles.length === 0) {
+      // might give extra heal before boss
       this.healPlayer();
       this.boss = new Boss(this);
       this.switchGameInformation();
@@ -217,85 +215,37 @@ class Game {
     bossInfo.style.display = 'flex';
   }
 
-  // can DRY up setWin and setGameOver
   setWin() {
     this.player.removeControlHandlers();
-    // this.bindRetryHandler();
-    setTimeout(this.bindRetryHandler.bind(this), 2000);
     this.win = true;
   }
 
   setGameOver() {
     this.player.removeControlHandlers();
-    this.bindRetryHandler();
-    setTimeout(this.bindRetryHandler.bind(this), 2000);
     this.gameOver = true;
   }
 
-  // might not be needed
-  setPlay() {
+  drawStartWinGameOver(ctx) {
+    const message = this.startScreen 
+                      ?  "Press any key to start"
+                      : this.gameOver
+                        ? "GAME OVER"
+                        : "YOU WIN"
 
+    if (!this.messageDrawn) {
+      ctx.font = "48px roboto";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "white";
+      ctx.fillText(message, this.canvasWidth/2, this.canvasHeight/2);
+      this.messageDrawn = true;
+      if (this.gameOver || this.win) setTimeout(this.drawRetryKey.bind(this, ctx), 1000);
+    }
   }
 
-  reset() {
-    // console.log('resetting');
-    this.drawn = false;
-    this.enemyWave = 0;
-    this.addEnemyOnCooldown = true;
-    this.addedEnemies = 0;
-    this.enemiesRemaining = 0;
-    this.enemyWaveCount = 0;
-    this.score = 0;
-    this.gameOver = false;
-    this.win = false;
-    this.startMenu = false;
-    this.player = new PlayerShip(this);
-    this.allMovingObjects = {
-      player: this.player,
-      enemies: [],
-      projectiles: [],
-      particles: []
-    };
-    const bossInfo = document.getElementById("boss-info");
-    bossInfo.style.display = "none";
-    this.bossFight = false;
-    const waveInfo = document.getElementById("wave-info");
-    waveInfo.style.display = "flex";
-  }
-
-  drawMessage(ctx, message) {
-    // DRY up all draw messages here later
-  }
-
-  drawWin(ctx) {
-    // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    ctx.font = "48px roboto";
-    ctx.textAlign = "center";
-    ctx.fillStyle = "white";
-    ctx.fillText("YOU WIN!", this.canvasWidth/2, this.canvasHeight/2);
+  drawRetryKey(ctx) {
     ctx.font = "24px roboto";
     ctx.fillText("(press any key to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
-    this.drawn = true;
-  }
-
-  drawGameOver(ctx) {
-    // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    ctx.font = "48px roboto";
-    ctx.textAlign = "center";
-    ctx.fillStyle = "white";
-    ctx.fillText("GAME OVER", this.canvasWidth/2, this.canvasHeight/2);
-    ctx.font = "24px roboto";
-    ctx.fillText("(press any key to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
-    this.drawn = true;
-  }
-
-  drawStartMenu(ctx) {
-    // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    ctx.font = "48px roboto";
-    ctx.textAlign = "center";
-    ctx.fillStyle = "white";
-    ctx.fillText("Press any key to start", this.canvasWidth/2, this.canvasHeight/2);
-    this.drawn = true;
+    this.bindRetryHandler();
   }
 
   bindStartHandler() {
@@ -303,19 +253,14 @@ class Game {
     document.addEventListener("keypress", this.startHandler);
   }
 
-  // might not be needed
-  bindPlayerHandler() {
-    this.player.bindControlHandlers();
-  }
-
   handleStartKey(event) {
     event.preventDefault();
     if (event.key) {
-      this.startMenu = false;
+      this.startScreen = false;
       document.removeEventListener("keypress", this.startHandler)
-      this.bindPlayerHandler();
-      setTimeout(this.resetAddEnemyCooldown.bind(this), 3000);
-      this.drawn = false;
+      this.player.bindControlHandlers();
+      setTimeout(this.resetAddEnemyCooldown.bind(this), 1500);
+      this.messageDrawn = false;
     }
   }
 
@@ -329,10 +274,37 @@ class Game {
     if (event.key) {
       document.removeEventListener("keypress", this.retryHandler);
       this.reset();
-      this.bindPlayerHandler();
-      setTimeout(this.resetAddEnemyCooldown.bind(this), 3000);
-      this.drawn = false;
+      this.player.bindControlHandlers();
+      setTimeout(this.resetAddEnemyCooldown.bind(this), 1500);
+      this.messageDrawn = false;
     }
+  }
+
+  reset() {
+    this.messageDrawn = false;
+    this.enemyWave = 0;
+    this.addEnemyOnCooldown = true;
+    this.addedEnemies = 0;
+    this.enemiesRemaining = 0;
+    this.enemyWaveCount = 0;
+    this.score = 0;
+    this.gameOver = false;
+    this.win = false;
+    this.startScreen = false;
+    this.player = new PlayerShip(this);
+    this.allMovingObjects = {
+      player: this.player,
+      enemies: [],
+      projectiles: [],
+      particles: []
+    };
+
+    const bossInfo = document.getElementById("boss-info");
+    bossInfo.style.display = "none";
+    this.bossFight = false;
+    
+    const waveInfo = document.getElementById("wave-info");
+    waveInfo.style.display = "flex";
   }
 }
 
