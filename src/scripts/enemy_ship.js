@@ -1,5 +1,6 @@
 import Ship from "./ship";
 import MovingObject from "./moving_object";
+import Explosion from "./explosion";
 
 class EnemyShip extends Ship {
   constructor(game, posX, speed, cooldown) {
@@ -83,6 +84,10 @@ class EnemyShip extends Ship {
     super.damageTaken(damage);
 
     if (this.health <= 0) {
+      // add new explosion animation to game.allMovingObjects.explosions
+      const explosion = new Explosion(this.game, [0, 0], 80, this.position);
+      this.game.allMovingObjects.explosions.push(explosion);
+
       this.remove();
       // update score and add explosion animation here later
       this.game.score += 10;

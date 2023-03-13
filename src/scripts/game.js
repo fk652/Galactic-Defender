@@ -1,6 +1,7 @@
 import PlayerShip from "./player_ship";
 import EnemyShip from "./enemy_ship";
 import Boss from "./boss";
+import Explosion from "./explosion"; // for testing
 
 class Game {
   constructor(canvas) {

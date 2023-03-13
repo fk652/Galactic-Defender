@@ -13,7 +13,7 @@ class PlayerShip extends Ship {
     image.src = "src/assets/player1.png";
     let height = 40;
     let width = 30;
-    let health = -2;
+    let health = 10;
 
     const objArgs = {
       width: width,
@@ -136,8 +136,10 @@ class PlayerShip extends Ship {
     }
 
     if (this.health <= 0) {
+      // add explosion with 0 velocity here
+
+      // put remove and setGameOver on setTimeout
       this.remove();
-      // activate game over here
       this.game.setGameOver();
     }
   }

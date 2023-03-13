@@ -42,6 +42,8 @@ class Boss extends Ship {
     super(objArgs, projectileArgs);
 
     this.shootOnCooldown = true;
+    // maybe add a disabled flag
+    this.disabled = false;
 
     // array of dx, dy
     // add seperate cooldowns for each pattern later
@@ -151,24 +153,26 @@ class Boss extends Ship {
   }
 
   move(timeDelta) {
-    this.updateVelocity();
-    this.updateShootingPattern();
+    if (!this.disabled) {
+      this.updateVelocity();
+      this.updateShootingPattern();
 
-    const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
-    const offsetX = this.velocity[0] * velocityScale;
-    const offsetY = this.velocity[1] * velocityScale;
+      const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
+      const offsetX = this.velocity[0] * velocityScale;
+      const offsetY = this.velocity[1] * velocityScale;
 
-    const newPos = this.position;
-    newPos[0] += offsetX;
-    newPos[1] += offsetY;
-    this.position = newPos;
+      const newPos = this.position;
+      newPos[0] += offsetX;
+      newPos[1] += offsetY;
+      this.position = newPos;
 
-    // collision against enemy/player logic here?
-    // create seperate collision checking function in game class
-    if (!this.shootOnCooldown) {
-      this.shootProjectile();
-      this.shootOnCooldown = true;
-      setTimeout(this.resetCooldown.bind(this), this.cooldown);
+      // collision against enemy/player logic here?
+      // create seperate collision checking function in game class
+      if (!this.shootOnCooldown) {
+        this.shootProjectile();
+        this.shootOnCooldown = true;
+        setTimeout(this.resetCooldown.bind(this), this.cooldown);
+      }
     }
   }
 
@@ -220,12 +224,23 @@ class Boss extends Ship {
   }
 
   damageTaken(damage) {
-    super.damageTaken(damage);
+    if (!this.disabled) {
+      super.damageTaken(damage);
 
-    if (this.health <= 0) {
-      this.game.score += 1000;
-      this.remove()
-      this.game.setWin();
+      if (this.health <= 0) {
+        this.game.score += 1000;
+        // disable movement and shooting
+        this.disabled = true;
+
+        //play death animation
+        // add a few random explosions, velocity 0, random or fixed positions around boss
+        // loop a few times or add setTimeouts for adding each explosion
+        
+        // put remove and setwin on a setTimeout later to let death animations play
+        this.remove()
+        // finally add one big explosion
+        this.game.setWin();
+      }
     }
   }
 
