@@ -9,10 +9,14 @@ class PlayerShip extends Ship {
 
   constructor(game) {
     let image = document.createElement("img");
-    image.src = "src/assets/player1.png";
-    let height = 40;
-    let width = 30;
+    // image.src = "src/assets/player1.png";
+    // let height = 40;
+    // let width = 30;
     let health = 10;
+
+    image.src = "src/assets/player2.jpg";
+    let height = 80;
+    let width = 60;
 
     const objArgs = {
       width: width,

@@ -6,10 +6,11 @@ class Boss extends Ship {
   constructor(game) {
     let image = document.createElement("img");
     // image.src = "src/assets/boss1.png";
-    image.src = "src/assets/boss1.png";
     let height = 200;
     let width = game.canvasWidth/2;
     let health = 100;
+
+    image.src = "src/assets/boss2.png";
 
     const objArgs = {
       width: width,
@@ -257,9 +258,10 @@ class Boss extends Ship {
 
     if (this.health <= 0) {
       this.game.score += 1000;
-      this.remove()
-      // activate game over win logic here
-      this.game.setWin();
+      this.image.src = "src/assets/boss3.png";
+      // this.remove()
+      // this.game.setWin();
+      setTimeout(this.game.setWin.bind(this.game), 100);
     }
   }
 

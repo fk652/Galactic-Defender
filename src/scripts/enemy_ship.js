@@ -4,10 +4,14 @@ import MovingObject from "./moving_object";
 class EnemyShip extends Ship {
   constructor(game, posX, speed, cooldown) {
     let image = document.createElement("img");
-    image.src = "src/assets/enemy1.png";
-    let height = 40;
-    let width = 40;
+    // image.src = "src/assets/enemy1.png";
+    // let height = 40;
+    // let width = 40;
     let health = 3;
+
+    image.src = "src/assets/enemy2.png";
+    let height = 125;
+    let width = 100;
 
     if (posX < width) {
       posX = width;

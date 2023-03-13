@@ -8,7 +8,7 @@ class Game {
     this.canvasHeight = canvas.height;
     this.drawn = false;
     // this.enemyWave = 0;
-    this.enemyWave = 8;
+    this.enemyWave = 10;
 
     // add a delay to this later after implementing start screen
     // this.addEnemyOnCooldown = true;
@@ -238,13 +238,15 @@ class Game {
   // can DRY up setWin and setGameOver
   setWin() {
     this.player.removeControlHandlers();
-    this.bindRetryHandler();
+    // this.bindRetryHandler();
+    setTimeout(this.bindRetryHandler.bind(this), 2000);
     this.win = true;
   }
 
   setGameOver() {
     this.player.removeControlHandlers();
     this.bindRetryHandler();
+    setTimeout(this.bindRetryHandler.bind(this), 2000);
     this.gameOver = true;
   }
 
@@ -279,6 +281,10 @@ class Game {
     waveInfo.style.display = "flex";
   }
 
+  drawMessage(ctx, message) {
+    // DRY up all draw messages here later
+  }
+
   drawWin(ctx) {
     // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     ctx.font = "48px roboto";
@@ -308,10 +314,6 @@ class Game {
     ctx.fillStyle = "white";
     ctx.fillText("Press any key to start", this.canvasWidth/2, this.canvasHeight/2);
     this.drawn = true;
-  }
-
-  drawMessage(ctx, message) {
-    // DRY all draw messages here later
   }
 
   bindStartHandler() {
