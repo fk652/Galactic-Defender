@@ -291,7 +291,7 @@ class Game {
   }
 
   handleStartKey(event) {
-    event.preventDefault();
+    if (event.key === " ") event.preventDefault();
     if (event.key) {
       this.startScreen = false;
       document.removeEventListener("keypress", this.startHandler)
@@ -307,7 +307,7 @@ class Game {
   }
 
   handleRetryKey(event) {
-    event.preventDefault();
+    if (event.key === " ") event.preventDefault();
     if (event.key) {
       document.removeEventListener("keypress", this.retryHandler);
       this.reset();
