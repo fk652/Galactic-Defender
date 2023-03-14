@@ -11,8 +11,8 @@ class Boss extends Ship {
     let height = 220;
     // let width = game.canvasWidth/2;
     let width = 250
-    // let health = 20;
-    let health = 1;
+    let health = 20;
+    // let health = 1;
 
     const objArgs = {
       width: width,
