@@ -14,8 +14,8 @@ class PlayerShip extends Ship {
     image.src = "src/assets/player1.png";
     let height = 48;
     let width = 37;
-    // let health = 10;
-    let health = -2;
+    let health = 10;
+    // let health = -2;
 
     const objArgs = {
       width: width,
