@@ -7,10 +7,10 @@ class EnemyShip extends Ship {
     let image = document.createElement("img");
     image.src = "src/assets/enemy1.png";
     let height = 40;
-    let width = 40;
+    let width = 46;
 
     // scale based on wave here or do it within game.setEnemy
-    let health = Math.floor(game.enemyWave / 3);
+    let health = Math.floor(game.enemyWave / 3); // update this
 
     if (posX < 0 - width) {
       posX = 0;
@@ -42,8 +42,8 @@ class EnemyShip extends Ship {
       },
       origin: "enemy",
       cooldown: cooldown,
-      xAdjustment: .45,
-      yAdjustment: 0
+      xAdjustment: .25,
+      yAdjustment: 10
     }
 
     super(objArgs, projectileArgs);

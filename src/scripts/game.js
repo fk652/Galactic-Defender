@@ -3,13 +3,15 @@ import EnemyShip from "./enemy_ship";
 import Boss from "./boss";
 
 class Game {
+  static MAX_ENEMY_WAVE = 5;
+
   constructor(canvas) {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
-    this.enemyWave = 0;
-    // this.enemyWave = 10;
-
+    // this.enemyWave = 0;
+    this.enemyWave = 5;
+  
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
@@ -38,11 +40,10 @@ class Game {
     this.clearNulls();
     this.checkCollisions();
     this.updateInformation();
-    this.setEnemies();  // maybe add if else to check for boss fight status or add enemy waves
+    this.setEnemies();
     this.moveObjects(timeDelta);
   }
 
-  // test null vs splicing on removal
   clearNulls() {
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
@@ -104,7 +105,6 @@ class Game {
 
   updateInformation() {
     // update score here later
-
     this.updateHealthBar('player');
 
     if (this.bossFight) {
@@ -126,7 +126,7 @@ class Game {
     healthPoint.setAttribute("class", `${type}-health-point`);
 
     let health = obj.health;
-    if (type === 'boss') health = Math.ceil(health / 10);
+    if (type === 'boss') health = Math.ceil(health / 2);
 
     if (healthBar.children.length < health) {
       for (let i = 0; i < health - healthBar.children.length; i++) {
@@ -141,8 +141,6 @@ class Game {
   }
 
   healPlayer() {
-    // heal player in between rounds (no more than 10)
-    // can also heal based on score or enemies killed this round
     if (this.allMovingObjects.player) {
       const newHealth = this.player.health + 3;
       this.player.health = (newHealth > 10 ? 10 : newHealth);
@@ -151,7 +149,7 @@ class Game {
 
   setEnemies() {
     if (this.enemiesRemaining === 0) {
-      if (this.enemyWave < 10) {
+      if (this.enemyWave < Game.MAX_ENEMY_WAVE) {
         this.enemyWave += 1;
         this.enemyWaveCount = this.enemyWave * 5;
         this.enemiesRemaining = this.enemyWaveCount;
@@ -175,9 +173,7 @@ class Game {
 
       for (let i = 0; i < numNewEnemies; i++) {
         // might change to increment difficulty per wave
-        // maybe have at least 1 enemy spawn in line with player position
         const randPosX = Math.floor(Math.random() * this.canvasWidth);
-
         // const randSpeed = Math.floor(Math.random() * (5 - 2) + 2);
         const randSpeed = Math.random() * (5 - 2) + 2;
         const randCooldown = Math.floor(Math.random() * (1000 - 450) + 450);
@@ -197,9 +193,7 @@ class Game {
 
   setBoss() {
     this.player.disabled = true;
-
     if (this.allMovingObjects.projectiles.length === 0) {
-      // might give extra heal before boss
       this.healPlayer();
       this.boss = new Boss(this);
       this.switchGameInformation();

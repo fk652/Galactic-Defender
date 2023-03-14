@@ -5,22 +5,21 @@ import Explosion from "./explosion";
 import Explosion2 from "./explosion2";
 
 class Boss extends Ship {
-  static MAX_HEALTH = 20;
-
   constructor(game) {
     let image = document.createElement("img");
     image.src = "src/assets/boss1.png";
-    let height = 200;
-    let width = game.canvasWidth/2;
-    let health = Boss.MAX_HEALTH;
+    let height = 220;
+    // let width = game.canvasWidth/2;
+    let width = 250
+    let health = 20;
     // let health = 1;
 
     const objArgs = {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - height],
-      velocity: [0, 1],
-      // velocity: [0, 5],
+      // velocity: [0, 1],
+      velocity: [0, 5],
       health: health,
       game: game,
       image: image
@@ -39,7 +38,7 @@ class Boss extends Ship {
         image: image
       },
       origin: "enemy",
-      cooldown: 250,
+      cooldown: 500,
       xAdjustment: .45,
       yAdjustment: 0
     }
@@ -47,55 +46,53 @@ class Boss extends Ship {
     super(objArgs, projectileArgs);
 
     this.shootOnCooldown = true;
+
     // maybe add a disabled flag
     this.disabled = false;
+
+    this.pattern1 = [[18, 200], [width-32, 200]];
+    this.pattern2 = [[60, 210], [this.width-76, 210]];
+    this.pattern3 = [[75, 180], [this.width-88, 180]];
+    this.pattern4 = [[100, 160], [this.width - 110, 160]];
 
     // array of dx, dy
     // add seperate cooldowns for each pattern later
     this.projectilePositions = [
-      [2, 82],
-      [width-14, 82]
+      ...this.pattern1
     ]
   }
 
   getHitbox() {
     // weakspot
     const box1 = {
-      x: this.position[0] + (this.width / 2.5),
-      y: this.position[1],
-      width: this.width / 4.5,
-      height: this.height / 1.8
+      x: this.position[0] + 85,
+      y: this.position[1] + 90,
+      width: 80,
+      height: 70
     }
 
     const box2 = {
-      x: this.position[0] + (this.width / 3.75),
-      y: this.position[1],
-      width: this.width / 8.5,
-      height: this.height / 1.2
+      x: this.position[0] + 10,
+      y: this.position[1] + 90,
+      width: (this.width - 100) / 2,
+      height: this.height - 110
     }
 
     const box3 = {
-      x: this.position[0] + (this.width / 1.6),
-      y: this.position[1],
-      width: this.width / 8,
-      height: this.height / 1.2
+      x: this.position[0] + 165,
+      y: this.position[1] + 90,
+      width: (this.width - 100) / 2,
+      height: this.height - 110
     }
 
     const box4 = {
-      x: this.position[0] + (this.width/80),
-      y: this.position[1] + (this.height/4),
-      width: this.width / 4,
-      height: this.height / 8.5
+      x: this.position[0] + 45,
+      y: this.position[1] + 30,
+      width: 155,
+      height: 60
     }
 
-    const box5 = {
-      x: this.position[0] + (this.width/1.3),
-      y: this.position[1] + (this.height/4),
-      width: this.width / 4.5,
-      height: this.height / 8.5
-    }
-
-    return [box1, box2, box3, box4, box5];
+    return [box1, box2, box3, box4];
   }
 
   collideCheck(otherObj) {
@@ -130,12 +127,9 @@ class Boss extends Ship {
 
   updateVelocity() {
     if (this.position[1] > 0) {
-      // const randSpeed = Math.random() * (0.005 - 0.003) + 0.003;
-      // const speed = this.determineSpeed();
       const speed = 1.5;
       if (this.velocity[0] === 0 || this.position[0] < 0) {
         if (this.velocity[0] === 0) {
-          // this.shootOnCooldown = false;
           setTimeout(this.resetCooldown.bind(this), 1000)
           this.game.player.disabled = false;
         }
@@ -145,9 +139,10 @@ class Boss extends Ship {
       }
     }
 
-    // // for testing purposes, make boss stationary
+    // for testing purposes, make boss stationary
     // if (this.position[1] > 0) {
-    //   this.position[1] = 0;
+    //   // this.position[1] = 0;
+    //   // this.disabled = true;
     //   if (this.velocity[1] !== 0) {
     //     // this.shootOnCooldown = false;
     //     setTimeout(this.resetCooldown.bind(this), 1000)
@@ -157,8 +152,57 @@ class Boss extends Ship {
     // }
   }
 
+  // draw() {
+  //   var c = document.getElementById("game-view");
+  //   var ctx = c.getContext("2d");
+  //   super.draw(ctx);
+
+  //   const box1 = {
+  //     x: this.position[0] + 85,
+  //     y: this.position[1] + 90,
+  //     width: 80,
+  //     height: 70
+  //   }
+  //   ctx.beginPath();
+  //   ctx.rect(box1.x, box1.y, box1.width, box1.height);
+  //   ctx.strokeStyle = "red";
+  //   ctx.stroke();
+
+  //   ctx.beginPath();
+  //   const box2 = {
+  //     x: this.position[0] + 10,
+  //     y: this.position[1] + 90,
+  //     width: (this.width - 100) / 2,
+  //     height: this.height - 110
+  //   }
+  //   ctx.rect(box2.x, box2.y, box2.width, box2.height);
+  //   ctx.strokeStyle = "red";
+  //   ctx.stroke();
+
+  //   const box3 = {
+  //     x: this.position[0] + 165,
+  //     y: this.position[1] + 90,
+  //     width: (this.width - 100) / 2,
+  //     height: this.height - 110
+  //   }
+  //   ctx.beginPath();
+  //   ctx.rect(box3.x, box3.y, box3.width, box3.height);
+  //   ctx.strokeStyle = "red";
+  //   ctx.stroke();
+
+  //   const box4 = {
+  //     x: this.position[0] + 45,
+  //     y: this.position[1] + 30,
+  //     width: 155,
+  //     height: 60
+  //   }
+  //   ctx.beginPath();
+  //   ctx.rect(box4.x, box4.y, box4.width, box4.height);
+  //   ctx.strokeStyle = "red";
+  //   ctx.stroke();
+  // }
+
   move(timeDelta) {
-    // if (!this.disabled) {
       this.updateVelocity();
       this.updateShootingPattern();
 
@@ -172,8 +216,6 @@ class Boss extends Ship {
       this.position = newPos;
 
     if (!this.disabled) {
-      // collision against enemy/player logic here?
-      // create seperate collision checking function in game class
       if (!this.shootOnCooldown) {
         this.shootProjectile();
         this.shootOnCooldown = true;
@@ -182,37 +224,24 @@ class Boss extends Ship {
     }
   }
 
-  // determineSpeed() {
-  //   if (this.health > 70) {
-  //     return 1 * multiplier;
-  //   } else if (this.health > 40) {
-  //     return 1.5 * multiplier;
-  //   } else if (this.health <= 10) {
-  //     return 2 * multiplier;
-  //   }
-  // }
-
   updateShootingPattern() {
-    // add seperate cooldowns for each pattern later
     if (this.health < 10) {
       this.projectilePositions = [
-        [2, 82],[this.width-14, 82],
-        [22, 80],[this.width-34, 80],
-        [52, 85],[this.width-64, 85],
-        [(this.width/2) - 45, this.height-5],
-        [(this.width/2) + 33, this.height-5]
-        //add one more later
+        ...this.pattern1,
+        ...this.pattern2,
+        ...this.pattern3,
+        ...this.pattern4
       ];
-    } else if (this.health < 40) {
+    } else if (this.health < 15) {
       this.projectilePositions = [
-        [2, 82],[this.width-14, 82],
-        [22, 80],[this.width-34, 80],
-        [52, 85],[this.width-64, 85]
+        ...this.pattern1,
+        ...this.pattern2,
+        ...this.pattern3
       ];
-    } else if (this.health < 70) {
+    } else if (this.health < 20) {
       this.projectilePositions = [
-        [2, 82],[this.width-14, 82],
-        [22, 80],[this.width-34, 80]
+        ...this.pattern1,
+        ...this.pattern2
       ];
     }
   }

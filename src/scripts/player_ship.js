@@ -11,8 +11,8 @@ class PlayerShip extends Ship {
   constructor(game) {
     let image = document.createElement("img");
     image.src = "src/assets/player1.png";
-    let height = 40;
-    let width = 30;
+    let height = 48;
+    let width = 37;
     let health = 10;
 
     const objArgs = {
@@ -39,7 +39,7 @@ class PlayerShip extends Ship {
       },
       origin: "player",
       cooldown: 250,
-      xAdjustment: .75,
+      xAdjustment: .3,
       yAdjustment: 0
     }
 
@@ -55,6 +55,24 @@ class PlayerShip extends Ship {
 
     this.disabled = false;
     this.invincible = false;
+  }
+
+  getHitbox() {
+    const box1 = {
+      x: this.position[0] + (this.width / 3),
+      y: this.position[1],
+      width: this.width / 3,
+      height: this.height
+    }
+
+    const box2 = {
+      x: this.position[0],
+      y: this.position[1] + (this.height * .65),
+      width: this.width,
+      height: this.height/5
+    }
+
+    return [box1, box2];
   }
 
   updateVelocity() {
