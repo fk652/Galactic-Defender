@@ -291,38 +291,62 @@ class Boss extends Ship {
         this.game.score += 1000;
         this.disabled = true;
 
-        const hitBoxes = this.getHitbox();
-        hitBoxes.forEach((hitbox) => {
-          for (let i = 0; i < 10; i++) {
-            try {
-              const randPosX = Math.floor(Math.random() * ((hitbox.x + hitbox.width) - hitbox.x)) + hitbox.x;
-              const randPosY = Math.floor(Math.random() * ((hitbox.y + hitbox.height) - hitbox.y) + hitbox.y);
-              const randTime = Math.floor(Math.random() * (1000 - 100) + 100);
-              const explosion = new Explosion(this.game, 80, [randPosX - 30, randPosY - 20]);
-              explosion.dy = 0.5;
-              setTimeout(() => {
-                this.game.allMovingObjects.explosions.push(explosion);
-              }, randTime);
-            } catch(error) {
-              // console.error();
-              // console.log(this.game);
-            }
+        // const hitBoxes = this.getHitbox();
+        // hitBoxes.forEach((hitbox) => {
+        //   for (let i = 0; i < 10; i++) {
+        //     try {
+        //       const randPosX = Math.floor(Math.random() * ((hitbox.x + hitbox.width) - hitbox.x)) + hitbox.x;
+        //       const randPosY = Math.floor(Math.random() * ((hitbox.y + hitbox.height) - hitbox.y) + hitbox.y);
+        //       const randTime = Math.floor(Math.random() * (1000 - 100) + 100);
+        //       const explosion = new Explosion(this.game, 80, [randPosX - 100, randPosY - 20]);
+        //       explosion.dy = 0.5;
+        //       // explosion.dx = (this.velocity[0]/3)
+        //       setTimeout(() => {
+        //         this.game.allMovingObjects.explosions.push(explosion);
+        //       }, randTime);
+        //     } catch(error) {
+        //       // console.error();
+        //       // console.log(this.game);
+        //     }
+        //   }
+        // })
+
+        for (let i = 0; i < 50; i++) {
+          try {
+            const newX = this.position[0] + this.velocity[0];
+            const newY = this.position[1] + this.velocity[1];
+            const randPosX = Math.floor(Math.random() * ((newX + this.width) - newX) + newX);
+            const randPosY = Math.floor(Math.random() * ((newY + this.height) - newY) + newY);
+            const randTime = Math.floor(Math.random() * (1500 - 100) + 100);
+            const multiplier = (this.velocity[0] < 0 ? 1 : -1);
+            const dx = (this.velocity[0] < 0 ? 100 : 30)
+            const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20]);
+            explosion.dy = 0.5;
+            explosion.dx = (this.velocity[0]/3) * multiplier;
+            explosion.velocity[0] = this.velocity[0];
+            setTimeout(() => {
+              this.game.allMovingObjects.explosions.push(explosion);
+            }, randTime);
+          } catch(error) {
+            // console.error();
+            // console.log(this.game);
           }
-        })
+        }
         
         setTimeout(() => {
           this.remove()
           try {
+            const multiplier = (this.velocity[0] < 0 ? 1 : -1);
             const posX = this.position[0]-(this.width/2);
             const posY = this.position[1]-(this.height/1.5);
-            const finalExplosion = new Explosion2(this.game, 500, [posX, posY]);
+            const finalExplosion = new Explosion2(this.game, 500, [posX - (20 * multiplier), posY]);
             this.game.allMovingObjects.explosions.push(finalExplosion);
           } catch(error) {
             // console.error();
             // console.log(this.game);
           }
           setTimeout(this.game.setWin.bind(this.game), 2000);
-        }, 1000)
+        }, 1500)
       }
     }
   }

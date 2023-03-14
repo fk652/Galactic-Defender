@@ -5,9 +5,7 @@ $main-color: white;
   justify-content: center;
   flex-wrap: wrap;
   padding: 10px;
-  background-image: url("../assets/body_background.png");
-  background-repeat: repeat;
-
+  
   #header, aside, canvas {
     border: 5px ridge $main-color;
   }

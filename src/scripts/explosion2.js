@@ -17,6 +17,7 @@ class Explosion2 extends MovingObject {
     super(argsObj);
 
     this.frame = 0;
+    this.dx = 0;
     this.dy = 1;
   }
 
@@ -28,6 +29,7 @@ class Explosion2 extends MovingObject {
                   240*xOffset, 240*yOffset, 240, 240, 
                   this.position[0], this.position[1], this.width, this.height);
     this.frame += 1;
+    this.velocity[0] += this.dx;
     this.velocity[1] += this.dy;
 
     // remove once this.frame >= 20

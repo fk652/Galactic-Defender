@@ -18,6 +18,7 @@ class Explosion extends MovingObject {
 
     this.frame = 0;
     this.dy = 1;
+    this.dx = 0;
   }
 
   draw(ctx) {
@@ -28,6 +29,7 @@ class Explosion extends MovingObject {
                   192*xOffset, 192*yOffset, 192, 192, 
                   this.position[0], this.position[1], this.width, this.height);
     this.frame += 1;
+    this.velocity[0] += this.dx;
     this.velocity[1] += this.dy;
 
     // remove once this.frame >= 20
