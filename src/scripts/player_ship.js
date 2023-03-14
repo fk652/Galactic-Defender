@@ -14,8 +14,8 @@ class PlayerShip extends Ship {
     image.src = "src/assets/player1.png";
     let height = 48;
     let width = 37;
-    let health = 10;
-    // let health = -2;
+    // let health = 10;
+    let health = -2;
 
     const objArgs = {
       width: width,
@@ -160,17 +160,17 @@ class PlayerShip extends Ship {
       this.disabled = true;
 
       setTimeout(() => {
+        this.remove()
         try {
           const posX = this.position[0] - 40;
           const posY = this.position[1] - 20;
           const finalExplosion = new Explosion2(this.game, 100, [posX, posY]);
+          finalExplosion.dy = 0;
           this.game.allMovingObjects.explosions.push(finalExplosion);
         } catch(error) {
           // console.error();
           // console.log(this.game);
         }
-
-        this.remove()
         setTimeout(this.game.setGameOver.bind(this.game), 2000);
       }, 1000)
 

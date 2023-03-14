@@ -141,7 +141,7 @@ class Game {
   }
 
   healPlayer() {
-    if (this.allMovingObjects.player && (!this.player.disabled || !this.bossFight)) {
+    if (this.allMovingObjects.player && !this.player.disabled) {
       const newHealth = this.player.health + 3;
       this.player.health = (newHealth > 10 ? 10 : newHealth);
     }
@@ -194,7 +194,6 @@ class Game {
   setBoss() {
     this.player.disabled = true;
     if (this.allMovingObjects.projectiles.length === 0) {
-      this.healPlayer();
       this.boss = new Boss(this);
       this.switchGameInformation();
       this.allMovingObjects.enemies.push(this.boss);

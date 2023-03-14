@@ -130,8 +130,9 @@ class Boss extends Ship {
       const speed = 1.5;
       if (this.velocity[0] === 0 || this.position[0] < 0) {
         if (this.velocity[0] === 0) {
-          setTimeout(this.resetCooldown.bind(this), 1000)
+          setTimeout(this.resetCooldown.bind(this), 1250)
           this.game.player.disabled = false;
+          this.game.healPlayer();
         }
         this.velocity = [speed, 0];
       } else if (this.position[0] > this.game.canvasWidth - this.width) {
