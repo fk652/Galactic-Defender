@@ -51,9 +51,17 @@ class Boss extends Ship {
     this.disabled = false;
 
     this.pattern1 = [[18, 200], [width-32, 200]];
+    this.pattern1Cooldown = 1000;
+    this.pattern1OnCooldown = true;
     this.pattern2 = [[60, 210], [this.width-76, 210]];
+    this.pattern2Cooldown = 1000;
+    this.pattern2OnCooldown = false;
     this.pattern3 = [[75, 180], [this.width-88, 180]];
+    this.pattern3Cooldown = 1000;
+    this.pattern3OnCooldown = false;
     this.pattern4 = [[100, 160], [this.width - 110, 160]];
+    this.pattern4Cooldown = 1000;
+    this.pattern4OnCooldown = false;
 
     // array of dx, dy
     // add seperate cooldowns for each pattern later
@@ -222,8 +230,36 @@ class Boss extends Ship {
         this.shootOnCooldown = true;
         setTimeout(this.resetCooldown.bind(this), this.cooldown);
       }
+      if (!this.pattern1OnCooldown) {
+
+      }
+      if (!this.pattern2OnCooldown && this.health < 20) {
+
+      }
+      if (!this.pattern3OnCooldown && this.health < 15) {
+
+      }
+      if (!this.pattern4OnCooldown && this.health < 10) {
+
+      }
     }
   }
+
+  shootProjectile() { //update this to handle different pattern
+    if (!this.shootOnCooldown) {
+      this.projectilePositions.forEach((pos) => {
+        const copy = structuredClone(this.position);
+        const projPos = [copy[0] + pos[0], copy[1] + pos[1]]
+        this.projectileArgs.objArgs.position = projPos;
+        const projectile = new Projectile(this.projectileArgs);
+        this.game.allMovingObjects.projectiles.push(projectile);
+      })
+    }
+  }
+
+  // resetCooldown(patternNum) {
+  //   this[`pattern${patternNum}OnCooldown`] = false;
+  // }
 
   updateShootingPattern() {
     if (this.health < 10) {
@@ -244,18 +280,6 @@ class Boss extends Ship {
         ...this.pattern1,
         ...this.pattern2
       ];
-    }
-  }
-
-  shootProjectile() {
-    if (!this.shootOnCooldown) {
-      this.projectilePositions.forEach((pos) => {
-        const copy = structuredClone(this.position);
-        const projPos = [copy[0] + pos[0], copy[1] + pos[1]]
-        this.projectileArgs.objArgs.position = projPos;
-        const projectile = new Projectile(this.projectileArgs);
-        this.game.allMovingObjects.projectiles.push(projectile);
-      })
     }
   }
 
