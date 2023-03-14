@@ -9,8 +9,8 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
-    this.enemyWave = 0;
-    // this.enemyWave = 5;
+    // this.enemyWave = 0;
+    this.enemyWave = 5;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -35,10 +35,11 @@ class Game {
     bossInfo.style.display = 'none';
     this.bossFight = false;
 
-    const img = new Image();
-    img.src = "src/assets/game_background.png";
+    const backgroundImg = new Image();
+    backgroundImg.src = "src/assets/game_background.png";
     this.backgroundOptions = {
-      img: img,
+      img: backgroundImg,
+      scale: 550 / backgroundImg.height,
       x: 0,
       y: 0,
       dy: .75
@@ -117,13 +118,14 @@ class Game {
 
   drawBackground(ctx) {
     const img = this.backgroundOptions.img;
+    const scale = this.backgroundOptions.scale;
     let imgW = img.width;
     let imgH = img.height;
-    const x = 0;
+    const x = this.backgroundOptions.x;
 
-    if (imgH > this.canvasHeight) this.backgroundOptions.y = this.canvasHeight - imgH;
+    if (imgH * scale > this.canvasHeight) this.backgroundOptions.y = this.canvasHeight - imgH;
 
-    if (imgH <= this.canvasHeight) {
+    if (imgH * scale <= this.canvasHeight) {
       if (this.backgroundOptions.y > this.canvasHeight) this.backgroundOptions.y = -imgH + this.backgroundOptions.y;
       if (this.backgroundOptions.y > 0) ctx.drawImage(img, x, -imgH + this.backgroundOptions.y, imgW, imgH);
       if (this.backgroundOptions.y - imgH > 0) ctx.drawImage(img, x, -imgH * 2 + this.backgroundOptions.y, imgW, imgH);
@@ -134,11 +136,12 @@ class Game {
 
     ctx.drawImage(img, x, this.backgroundOptions.y, imgW, imgH);
     this.backgroundOptions.y += this.backgroundOptions.dy;
-    // console.log(this.backgroundOptions.y)
   }
 
   updateInformation() {
     // update score here later
+    this.updateScore();
+
     this.updateHealthBar('player');
 
     if (this.bossFight) {
@@ -150,6 +153,11 @@ class Game {
       const enemiesRemainingSpan = document.getElementById("enemies-remaining");
       enemiesRemainingSpan.innerText = this.enemiesRemaining;
     }
+  }
+
+  updateScore() {
+    const scoreSpan = document.getElementById("score");
+    scoreSpan.innerText = this.score;
   }
 
   updateHealthBar(type) {
@@ -244,6 +252,8 @@ class Game {
 
   setWin() {
     this.player.removeControlHandlers();
+    this.score *= this.player.health;
+    this.updateScore();
     this.win = true;
   }
 
@@ -323,7 +333,8 @@ class Game {
       player: this.player,
       enemies: [],
       projectiles: [],
-      particles: []
+      particles: [],
+      explosions: []
     };
 
     const bossInfo = document.getElementById("boss-info");

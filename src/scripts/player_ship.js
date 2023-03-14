@@ -112,7 +112,7 @@ class PlayerShip extends Ship {
   }
   
   handleKeyUp(event) {
-    event.preventDefault();
+    if (event.key === " ") event.preventDefault();
 
     if (PlayerShip.RIGHT_KEYS.includes(event.key)) this.keysPressed.right = false;
     else if (PlayerShip.LEFT_KEYS.includes(event.key)) this.keysPressed.left = false;

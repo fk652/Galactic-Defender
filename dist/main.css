@@ -91,7 +91,7 @@ table {
   font-size: 40px;
 }
 #main-container aside {
-  width: 190px;
+  width: 220px;
   padding: 5px;
   font-family: "Oswald", sans-serif;
 }
@@ -160,8 +160,16 @@ table {
   font-family: "Oswald", sans-serif;
   font-size: 30px;
 }
+#main-container #game-information .score-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+#main-container #game-information .score-container p {
+  margin-bottom: 10px;
+}
 #main-container #game-information #player-health {
   margin-bottom: 30px;
+  text-align: center;
 }
 #main-container #game-information #player-health p {
   margin: 10px 0;
@@ -204,7 +212,7 @@ table {
 }
 #main-container #game-information #boss-info #boss-health-bar .boss-health-point {
   width: 30px;
-  height: 20px;
+  height: 15px;
   background: gray;
   border: 3px ridge white;
   animation: fadeIn 1s linear;
@@ -258,11 +266,11 @@ table {
     min-height: 75px;
   }
   #main-container #game-instructions {
-    height: 220px;
+    height: auto;
   }
   #main-container #game-instructions .instructions-container {
-    margin-top: 20px;
-    margin-bottom: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
   #main-container #game-instructions .instructions-container .keys-container .keys-text-container .move-text {
     padding-top: 10px;
@@ -283,9 +291,17 @@ table {
     padding-top: 0;
     font-size: 20px;
   }
+  #main-container #game-information .score-container {
+    margin-right: 30px;
+    margin-top: 30px;
+  }
+  #main-container #game-information .score-container p {
+    margin-bottom: 10px;
+  }
   #main-container #game-information #player-health {
     margin-right: 30px;
     margin-bottom: 10px;
+    text-align: start;
   }
   #main-container #game-information #player-health #player-health-bar .player-health-point {
     height: 15px;
@@ -300,6 +316,7 @@ table {
   }
   #main-container #game-information #boss-info #boss-health-bar .boss-health-point {
     height: 15px;
+    width: 20px;
   }
   #main-container #game-information #wave-info {
     display: flex;
@@ -311,6 +328,6 @@ table {
 }
 
 body {
-  background-image: url(../src/assets/body_backgrounds.png);
+  background-image: url(../src/assets/body_background.png);
   background-repeat: repeat;
 }
