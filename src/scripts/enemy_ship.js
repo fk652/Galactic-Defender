@@ -10,7 +10,7 @@ class EnemyShip extends Ship {
     let width = 46;
 
     // scale based on wave here or do it within game.setEnemy
-    let health = Math.floor(game.enemyWave / 3); // update this
+    let health = 1 + Math.floor(game.enemyWave / 2.5); // update this
 
     if (posX < 0 - width) {
       posX = 0;

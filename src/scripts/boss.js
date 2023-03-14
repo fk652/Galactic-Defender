@@ -38,7 +38,7 @@ class Boss extends Ship {
         image: image
       },
       origin: "enemy",
-      cooldown: 500,
+      cooldown: 1000,
       xAdjustment: .45,
       yAdjustment: 0
     }

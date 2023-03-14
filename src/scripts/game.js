@@ -9,8 +9,8 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
-    // this.enemyWave = 0;
-    this.enemyWave = 5;
+    this.enemyWave = 0;
+    // this.enemyWave = 4;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -141,7 +141,7 @@ class Game {
   }
 
   healPlayer() {
-    if (this.allMovingObjects.player) {
+    if (this.allMovingObjects.player && (!this.player.disabled || !this.bossFight)) {
       const newHealth = this.player.health + 3;
       this.player.health = (newHealth > 10 ? 10 : newHealth);
     }

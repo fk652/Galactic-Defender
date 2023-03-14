@@ -1,4 +1,5 @@
 import Ship from "./ship";
+import Explosion2 from "./explosion2";
 
 class PlayerShip extends Ship {
   static SPEED = 5;
@@ -14,6 +15,7 @@ class PlayerShip extends Ship {
     let height = 48;
     let width = 37;
     let health = 10;
+    // let health = -2;
 
     const objArgs = {
       width: width,
@@ -153,12 +155,28 @@ class PlayerShip extends Ship {
       setTimeout(this.resetInvincibility.bind(this), 1000);
     }
 
-    if (this.health <= 0) {
+    if (this.health <= 0 && !this.disabled) {
       // add explosion with 0 velocity here
+      this.disabled = true;
+
+      setTimeout(() => {
+        try {
+          const posX = this.position[0] - 40;
+          const posY = this.position[1] - 20;
+          const finalExplosion = new Explosion2(this.game, 100, [posX, posY]);
+          this.game.allMovingObjects.explosions.push(finalExplosion);
+        } catch(error) {
+          // console.error();
+          // console.log(this.game);
+        }
+
+        this.remove()
+        setTimeout(this.game.setGameOver.bind(this.game), 2000);
+      }, 1000)
 
       // put remove and setGameOver on setTimeout
-      this.remove();
-      this.game.setGameOver();
+      // this.remove();
+      // this.game.setGameOver();
     }
   }
 
