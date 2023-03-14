@@ -10,13 +10,15 @@ class Ship extends MovingObject {
   }
 
   shootProjectile() {
-    const dx = this.projectileArgs.xAdjustment;
-    const dy = this.projectileArgs.yAdjustment;
-    this.projectileArgs.objArgs.position = [this.position[0] + this.width/(2+dx), this.position[1] + dy];
-    const projectile = new Projectile(this.projectileArgs);
-    this.game.allMovingObjects.projectiles.push(projectile);
-    this.shootOnCooldown = true;
-    setTimeout(this.resetCooldown.bind(this), this.cooldown);
+    // if (!this.shootOnCooldown) {
+      const dx = this.projectileArgs.xAdjustment;
+      const dy = this.projectileArgs.yAdjustment;
+      this.projectileArgs.objArgs.position = [this.position[0] + this.width/(2+dx), this.position[1] + dy];
+      const projectile = new Projectile(this.projectileArgs);
+      this.game.allMovingObjects.projectiles.push(projectile);
+      this.shootOnCooldown = true;
+      setTimeout(this.resetCooldown.bind(this), this.cooldown);
+    // }
   }
 
   resetCooldown() {

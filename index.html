@@ -12,76 +12,74 @@
   </head>
 
   <body>
-    <div>
-      <div id="main-container">
-        <div id="header">
-          <h1 class="project-title">Galactic Defender</h1>
-          <h2 class="dev-name">By Fahim Khan</h2>
-          <div class="nav-links">
-            <a href="https://github.com/fk652/Galactic-Defender">
-              <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/fk652/">
-              <i class="fab fa-linkedin"></i>
-            </a>
+    <div id="main-container">
+      <div id="header">
+        <h1 class="project-title">Galactic Defender</h1>
+        <h2 class="dev-name">By Fahim Khan</h2>
+        <div class="nav-links">
+          <a href="https://github.com/fk652/Galactic-Defender">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/fk652/">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="break"></div>
+
+      <aside id="game-information">
+        <div id="player-health">
+          <p>Player Health</p>
+          <ul id="player-health-bar"></ul>
+        </div>
+        <div id="wave-info">
+          <div class="wave-text">
+            <p>Wave:</p>
+            <p>Remaining:</p>
+          </div>
+          <div class="break"></div>
+          <div class="wave-numbers">
+            <span id="wave-number"></span>
+            <span id="enemies-remaining"></span>
+          </div>
+        </div>
+        <div id="boss-info">
+          <p>Boss Health</p>
+          <ul id="boss-health-bar"></ul>
+        </div>
+      </aside>
+
+      <canvas id="game-view"></canvas>
+
+      <aside id="game-instructions">
+        <div class="instructions-container">
+          <div class="keys-container">
+            <div class="arrow-icons">
+              <i class="far fa-caret-square-up"></i>
+              <div class="break"></div>
+              <i class="far fa-caret-square-left"></i>
+              <i class="far fa-caret-square-down"></i>
+              <i class="far fa-caret-square-right"></i>
+            </div>
+            <p class="spacebar">spacebar</p>
+          </div>
+          <div class="keys-text-container">
+            <p class="move-text">to move</p>
+            <p class="shoot-text">to shoot</p>
           </div>
         </div>
 
         <div class="break"></div>
 
-        <aside id="game-information">
-          <div id="player-health">
-            <p>Player Health</p>
-            <ul id="player-health-bar"></ul>
-          </div>
-          <div id="wave-info">
-            <div class="wave-text">
-              <p>Wave:</p>
-              <p>Remaining:</p>
-            </div>
-            <div class="break"></div>
-            <div class="wave-numbers">
-              <span id="wave-number"></span>
-              <span id="enemies-remaining"></span>
-            </div>
-          </div>
-          <div id="boss-info">
-            <p>Boss Health</p>
-            <ul id="boss-health-bar"></ul>
-          </div>
-        </aside>
-
-        <canvas id="game-view"></canvas>
-
-        <aside id="game-instructions">
-          <div class="instructions-container">
-            <div class="keys-container">
-              <div class="arrow-icons">
-                <i class="far fa-caret-square-up"></i>
-                <div class="break"></div>
-                <i class="far fa-caret-square-left"></i>
-                <i class="far fa-caret-square-down"></i>
-                <i class="far fa-caret-square-right"></i>
-              </div>
-              <p class="spacebar">spacebar</p>
-            </div>
-            <div class="keys-text-container">
-              <p class="move-text">to move</p>
-              <p class="shoot-text">to shoot</p>
-            </div>
-          </div>
-
-          <div class="break"></div>
-
-          <ul id="rules">
-            <li>Survive against waves of enemies and defeat the boss at the end to win.</li>
-            <li>Avoid enemy projectiles and colliding with enemies.</li>
-            <li>Lose 1 health point whenever you take damage.</li>
-            <li>Game over if your health reaches 0.</li>
-          </ul>
-        </aside>
-      </div>
+        <ul id="rules">
+          <li>Survive against waves of enemies and defeat the boss at the end to win.</li>
+          <li>Avoid enemy projectiles and colliding with enemies.</li>
+          <li>Lose 1 health point whenever you take damage.</li>
+          <li>Game over if your health reaches 0.</li>
+          <li>Boss can only be damaged by hitting it's weakpoint in the middle.</li>
+        </ul>
+      </aside>
     </div>
   </body>
-
 </html>

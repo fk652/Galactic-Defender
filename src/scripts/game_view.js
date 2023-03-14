@@ -15,7 +15,7 @@ class GameView {
   }
 
   animate(time) {
-    // draw moving background here?\
+    // always draw moving background here?
 
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
       this.game.drawStartWinGameOver(this.ctx);

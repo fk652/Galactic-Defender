@@ -59,10 +59,10 @@ class EnemyShip extends Ship {
 
     // collision against enemy/player logic here?
     // create seperate collision checking function in game class
-    if (!this.shootOnCooldown) {
+    if (!this.shootOnCooldown) {  // do this within shoot function
       this.shootProjectile();
-      this.shootOnCooldown = true;
-      setTimeout(this.resetCooldown.bind(this), this.cooldown);
+      this.shootOnCooldown = true;  // do this within shoot function
+      setTimeout(this.resetCooldown.bind(this), this.cooldown); //do this within shoot function
     }
 
     if (!this.inYBounds(newY)) {
