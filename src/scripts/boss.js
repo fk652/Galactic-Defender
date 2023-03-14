@@ -18,8 +18,8 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - height],
-      // velocity: [0, 1],
-      velocity: [0, 5],
+      velocity: [0, 1],
+      // velocity: [0, 5],
       health: health,
       game: game,
       image: image
