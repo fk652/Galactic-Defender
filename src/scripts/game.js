@@ -34,6 +34,16 @@ class Game {
     const bossInfo = document.getElementById("boss-info");
     bossInfo.style.display = 'none';
     this.bossFight = false;
+
+    const img = new Image();
+    img.src = "src/assets/game_background.png";
+    this.backgroundOptions = {
+      img: img,
+      x: 0,
+      y: 30,
+      dy: .75
+    }
+    console.log(this.backgroundOptions.y);
   }
 
   step(timeDelta) {
@@ -91,6 +101,9 @@ class Game {
 
   draw(ctx) {
     ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    this.drawBackground(ctx);
+
     for (let key in this.allMovingObjects) {
       const objectsValue = this.allMovingObjects[key]
       if (objectsValue instanceof Array) {
@@ -101,6 +114,28 @@ class Game {
         if (objectsValue) objectsValue.draw(ctx);
       }
     }
+  }
+
+  drawBackground(ctx) {
+    const img = this.backgroundOptions.img;
+    let imgW = img.width;
+    let imgH = img.height;
+    const x = 0;
+
+    if (imgH > this.canvasHeight) this.backgroundOptions.y = this.canvasHeight - imgH;
+
+    if (imgH <= this.canvasHeight) {
+      if (this.backgroundOptions.y > this.canvasHeight) this.backgroundOptions.y = -imgH + this.backgroundOptions.y;
+      if (this.backgroundOptions.y > 0) ctx.drawImage(img, x, -imgH + this.backgroundOptions.y, imgW, imgH);
+      if (this.backgroundOptions.y - imgH > 0) ctx.drawImage(img, x, -imgH * 2 + this.backgroundOptions.y, imgW, imgH);
+    } else {
+      if (this.backgroundOptions.y > this.canvasHeight) this.backgroundOptions.y = this.canvasHeight - imgH;
+      if (this.backgroundOptions.y > this.canvasHeight - imgH) ctx.drawImage(img, x, this.backgroundOptions.y - imgH + 1, imgW, imgH);
+    }
+
+    ctx.drawImage(img, x, this.backgroundOptions.y, imgW, imgH);
+    this.backgroundOptions.y += this.backgroundOptions.dy;
+    // console.log(this.backgroundOptions.y)
   }
 
   updateInformation() {
