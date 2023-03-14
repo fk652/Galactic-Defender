@@ -99,6 +99,7 @@ table {
   width: 700px;
   height: 550px;
   margin: 0 10px 0 10px;
+  background-image: url(../src/assets/game_background.png);
 }
 #main-container canvas:hover {
   cursor: none;
@@ -310,6 +311,6 @@ table {
 }
 
 body {
-  background-image: url(../src/assets/body_background.png);
+  background-image: url(../src/assets/body_backgrounds.png);
   background-repeat: repeat;
 }

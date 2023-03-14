@@ -40,10 +40,9 @@ class Game {
     this.backgroundOptions = {
       img: img,
       x: 0,
-      y: 30,
+      y: 0,
       dy: .75
     }
-    console.log(this.backgroundOptions.y);
   }
 
   step(timeDelta) {
