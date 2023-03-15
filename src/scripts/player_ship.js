@@ -154,6 +154,7 @@ class PlayerShip extends Ship {
     if (!this.invincible) {
       super.damageTaken(damage);
       this.invincible = true;
+      this.game.sounds.playPlayerHurtSound();
       setTimeout(this.resetInvincibility.bind(this), 1000);
     }
 

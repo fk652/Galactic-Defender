@@ -84,8 +84,7 @@ class Sound {
 
   toggleOff() {
     this.currentBGM.pause();
-    this.currentSounds.forEach(sound => sound.pause());
-    this.currentSounds = [];
+    this.reset();
     this.toggle = false;
   }
 
@@ -97,9 +96,11 @@ class Sound {
   }
 
   add(audioSourceKey) {
+    console.log(audioSourceKey);
     if (this.toggle) {
       const newAudio = document.createElement("audio");
       newAudio.src = this.audioSources[audioSourceKey];
+      if (audioSourceKey === "enemyProjectile") newAudio.volume = 0.02;
       this.currentSounds.push(newAudio);
       newAudio.play();
     }
@@ -107,6 +108,11 @@ class Sound {
 
   clear() {
     this.currentSounds = this.currentSounds.filter(sound => !sound.ended);
+  }
+
+  reset() {
+    this.currentSounds.forEach(sound => sound.pause());
+    this.currentSounds = [];
   }
 
   bindToggleListener() {

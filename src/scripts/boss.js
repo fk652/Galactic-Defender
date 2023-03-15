@@ -11,8 +11,8 @@ class Boss extends Ship {
     let height = 220;
     // let width = game.canvasWidth/2;
     let width = 250
-    let health = 20;
-    // let health = 1;
+    // let health = 20;
+    let health = 1;
 
     const objArgs = {
       width: width,
@@ -315,7 +315,7 @@ class Boss extends Ship {
         //   }
         // })
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 20; i++) {
           try {
             const newX = this.position[0] + this.velocity[0];
             const newY = this.position[1] + this.velocity[1];
@@ -328,9 +328,9 @@ class Boss extends Ship {
             explosion.dy = 0.5;
             explosion.dx = (this.velocity[0]/3) * multiplier;
             explosion.velocity[0] = this.velocity[0];
+            this.game.sounds.add("explosion");
             setTimeout(() => {
               this.game.allMovingObjects.explosions.push(explosion);
-              this.game.sounds.add("explosion");
             }, randTime);
           } catch(error) {
             // console.error();
@@ -351,7 +351,7 @@ class Boss extends Ship {
             // console.error();
             // console.log(this.game);
           }
-          setTimeout(this.game.setWin.bind(this.game), 2000);
+          setTimeout(this.game.setWin.bind(this.game), 2500);
         }, 1500)
       }
     }

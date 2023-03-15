@@ -10,8 +10,8 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
-    this.enemyWave = 0;
-    // this.enemyWave = 5;
+    // this.enemyWave = 0;
+    this.enemyWave = 5;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -65,6 +65,7 @@ class Game {
         this.allMovingObjects[key] = filtered;
       }
     }
+    this.sounds.clear();
   }
 
   moveObjects(timeDelta) {
@@ -237,8 +238,9 @@ class Game {
   }
 
   setBoss() {
-    this.player.disabled = true;
+    this.sounds.reset();
     this.sounds.switchBGM("bossIncomingBGM");
+    this.player.disabled = true;
     if (this.allMovingObjects.projectiles.length === 0) {
       this.boss = new Boss(this);
       this.switchGameInformation();
@@ -350,6 +352,7 @@ class Game {
     
     const waveInfo = document.getElementById("wave-info");
     waveInfo.style.display = "flex";
+
     this.sounds.switchBGM("waveBGM");
   }
 }
