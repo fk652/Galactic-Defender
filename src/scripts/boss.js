@@ -345,7 +345,7 @@ class Boss extends Ship {
             const multiplier = (this.velocity[0] < 0 ? 1 : -1);
             const posX = this.position[0]-(this.width/2);
             const posY = this.position[1]-(this.height/1.5);
-            const finalExplosion = new Explosion2(this.game, 500, [posX - (20 * multiplier), posY]);
+            const finalExplosion = new Explosion2(this.game, 500, [posX - (40 * multiplier), posY]);
             this.game.allMovingObjects.explosions.push(finalExplosion);
           } catch(error) {
             // console.error();

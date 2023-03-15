@@ -7,6 +7,7 @@ class PlayerShip extends Ship {
   static DOWN_KEYS = ["ArrowDown", 's']
   static RIGHT_KEYS = ["ArrowRight", 'd']
   static LEFT_KEYS = ["ArrowLeft", 'a']
+  static IGNORE_TARGETS = ["sound-on", "sound-off", "sound-container"]
   static MAX_HEALTH = 10;
 
   constructor(game) {
@@ -124,7 +125,8 @@ class PlayerShip extends Ship {
   }
 
   handleMouseDown(event) {
-    this.keysPressed.shoot = true;
+    const parentId = event.target.parentNode.id;
+    if (!PlayerShip.IGNORE_TARGETS.includes(parentId)) this.keysPressed.shoot = true;
   }
 
   handleMouseUp(event) {

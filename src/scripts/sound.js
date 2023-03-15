@@ -18,6 +18,7 @@ class Sound {
     this.playerDeathSound = document.createElement("audio");
     this.playerDeathSound.src = "src/sounds/player_death.wav"
     this.playerDeathSound.preload = 'auto';
+    this.playerDeathSound.volume = 0.2;
 
     this.bossDeathSound = document.createElement("audio");
     this.bossDeathSound.src = "src/sounds/boss_death.mp3"
@@ -30,6 +31,7 @@ class Sound {
     this.winSound = document.createElement("audio");
     this.winSound.src = "src/sounds/win.mp3"
     this.winSound.preload = 'auto';
+    this.winSound.volume = 0.3;
 
     this.playerHurtSound = document.createElement("audio");
     this.playerHurtSound.src = "src/sounds/player_hurt.wav"
@@ -48,7 +50,6 @@ class Sound {
     // this.toggle = false;
     this.toggle = true;
     this.game = game;
-
 
     this.soundOnElement = document.getElementById("sound-on");
     this.soundOffElement = document.getElementById("sound-off");
