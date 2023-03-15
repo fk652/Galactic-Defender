@@ -68,6 +68,8 @@ class Boss extends Ship {
     this.projectilePositions = [
       ...this.pattern1
     ]
+
+    this.projectileSound = "bossProjectile";
   }
 
   getHitbox() {
@@ -139,6 +141,7 @@ class Boss extends Ship {
       if (this.velocity[0] === 0 || this.position[0] < 0) {
         if (this.velocity[0] === 0) {
           setTimeout(this.resetCooldown.bind(this), 1250)
+          this.game.sounds.switchBGM("bossBGM");
           this.game.player.disabled = false;
           this.game.healPlayer();
         }
@@ -227,6 +230,7 @@ class Boss extends Ship {
     if (!this.disabled) {
       if (!this.shootOnCooldown) {
         this.shootProjectile();
+        this.game.sounds.add(this.projectileSound);
         this.shootOnCooldown = true;
         setTimeout(this.resetCooldown.bind(this), this.cooldown);
       }
@@ -326,6 +330,7 @@ class Boss extends Ship {
             explosion.velocity[0] = this.velocity[0];
             setTimeout(() => {
               this.game.allMovingObjects.explosions.push(explosion);
+              this.game.sounds.add("explosion");
             }, randTime);
           } catch(error) {
             // console.error();
@@ -341,6 +346,7 @@ class Boss extends Ship {
             const posY = this.position[1]-(this.height/1.5);
             const finalExplosion = new Explosion2(this.game, 500, [posX - (20 * multiplier), posY]);
             this.game.allMovingObjects.explosions.push(finalExplosion);
+            this.game.sounds.playBossDeathSound();
           } catch(error) {
             // console.error();
             // console.log(this.game);

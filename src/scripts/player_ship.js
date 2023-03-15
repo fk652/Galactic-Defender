@@ -57,6 +57,8 @@ class PlayerShip extends Ship {
 
     this.disabled = false;
     this.invincible = false;
+
+    this.projectileSound = "playerProjectile";
   }
 
   getHitbox() {
@@ -156,7 +158,6 @@ class PlayerShip extends Ship {
     }
 
     if (this.health <= 0 && !this.disabled) {
-      // add explosion with 0 velocity here
       this.disabled = true;
 
       setTimeout(() => {
@@ -167,16 +168,13 @@ class PlayerShip extends Ship {
           const finalExplosion = new Explosion2(this.game, 100, [posX, posY]);
           finalExplosion.dy = 0;
           this.game.allMovingObjects.explosions.push(finalExplosion);
+          this.game.sounds.playPlayerDeathSound();
         } catch(error) {
           // console.error();
           // console.log(this.game);
         }
         setTimeout(this.game.setGameOver.bind(this.game), 2000);
       }, 1000)
-
-      // put remove and setGameOver on setTimeout
-      // this.remove();
-      // this.game.setGameOver();
     }
   }
 

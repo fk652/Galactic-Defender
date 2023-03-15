@@ -47,6 +47,7 @@ class EnemyShip extends Ship {
     }
 
     super(objArgs, projectileArgs);
+    this.projectileSound = "enemyProjectile";
   }
 
   move(timeDelta) {
@@ -86,17 +87,16 @@ class EnemyShip extends Ship {
     super.damageTaken(damage);
 
     if (this.health <= 0) {
-      // add new explosion animation to game.allMovingObjects.explosions
       try {
         const explosion = new Explosion(this.game, 80, this.position);
         this.game.allMovingObjects.explosions.push(explosion);
+        this.game.sounds.add("explosion");
       } catch(error) {
         // console.error();
         // console.log(this.game);
       }
 
       this.remove();
-      // update score and add explosion animation here later
       this.game.score += 10;
     }
   }

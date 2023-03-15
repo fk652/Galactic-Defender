@@ -1,6 +1,7 @@
 import PlayerShip from "./player_ship";
 import EnemyShip from "./enemy_ship";
 import Boss from "./boss";
+import Sound from "./sound";
 
 class Game {
   static MAX_ENEMY_WAVE = 5;
@@ -44,6 +45,8 @@ class Game {
       y: 0,
       dy: .75
     }
+
+    this.sounds = new Sound(this);
   }
 
   step(timeDelta) {
@@ -235,6 +238,7 @@ class Game {
 
   setBoss() {
     this.player.disabled = true;
+    this.sounds.switchBGM("bossIncomingBGM");
     if (this.allMovingObjects.projectiles.length === 0) {
       this.boss = new Boss(this);
       this.switchGameInformation();
@@ -255,11 +259,13 @@ class Game {
     this.score *= this.player.health;
     this.updateScore();
     this.win = true;
+    this.sounds.playWinSound();
   }
 
   setGameOver() {
     this.player.removeControlHandlers();
     this.gameOver = true;
+    this.sounds.playGameOverSound();
   }
 
   drawStartWinGameOver(ctx) {
@@ -293,6 +299,7 @@ class Game {
   handleStartKey(event) {
     if (event.key === " ") event.preventDefault();
     if (event.key) {
+      this.sounds.switchBGM("waveBGM");
       this.startScreen = false;
       document.removeEventListener("keypress", this.startHandler)
       this.player.bindControlHandlers();
@@ -343,6 +350,7 @@ class Game {
     
     const waveInfo = document.getElementById("wave-info");
     waveInfo.style.display = "flex";
+    this.sounds.switchBGM("waveBGM");
   }
 }
 
