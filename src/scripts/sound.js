@@ -54,6 +54,8 @@ class Sound {
 
   switchBGM(key) {
     this.currentBGM.pause();
+    this.currentBGM.currentTime = 0;
+
     this.currentBGM = this[key];
     if (this.toggle) this.currentBGM.play();
   }
@@ -96,7 +98,7 @@ class Sound {
   }
 
   add(audioSourceKey) {
-    console.log(audioSourceKey);
+    // console.log(audioSourceKey);
     if (this.toggle) {
       const newAudio = document.createElement("audio");
       newAudio.src = this.audioSources[audioSourceKey];
@@ -111,6 +113,30 @@ class Sound {
   }
 
   reset() {
+    this.bossDeathSound.pause();
+    this.bossDeathSound.currentTime = 0;
+
+    this.playerDeathSound.pause();
+    this.playerDeathSound.currentTime = 0;
+
+    this.gameOverSound.pause();
+    this.gameOverSound.currentTime = 0;
+
+    this.winSound.pause();
+    this.winSound.currentTime = 0;
+
+    this.playerHurtSound.pause();
+    this.playerHurtSound.currentTime = 0;
+
+    this.waveBGM.pause();
+    this.waveBGM.currentTime = 0;
+
+    this.bossIncomingBGM.pause();
+    this.bossIncomingBGM.currentTime = 0;
+
+    this.bossBGM.pause();
+    this.bossBGM.currentTime = 0;
+
     this.currentSounds.forEach(sound => sound.pause());
     this.currentSounds = [];
   }
@@ -119,7 +145,7 @@ class Sound {
 
   }
 
-  handleToggle() {
+  handleToggle(event) {
 
   }
 }
