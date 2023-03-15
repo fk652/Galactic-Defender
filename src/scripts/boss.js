@@ -323,10 +323,10 @@ class Boss extends Ship {
             const randPosY = Math.floor(Math.random() * ((newY + this.height) - newY) + newY);
             const randTime = Math.floor(Math.random() * (1500 - 100) + 100);
             const multiplier = (this.velocity[0] < 0 ? 1 : -1);
-            const dx = (this.velocity[0] < 0 ? 100 : 30)
+            const dx = (this.velocity[0] < 0 ? 70 : 20)
             const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20]);
-            explosion.dy = 0.5;
-            explosion.dx = (this.velocity[0]/3) * multiplier;
+            explosion.dy = 0.1;
+            explosion.dx = (this.velocity[0]/4) * multiplier;
             explosion.velocity[0] = this.velocity[0];
             this.game.sounds.add("explosion");
             setTimeout(() => {
