@@ -1,6 +1,5 @@
 import MovingObject from "./moving_object";
 import Projectile from "./projectile";
-import Sound from "./sound";
 
 class Ship extends MovingObject {
   constructor(objArgs, projectileArgs) {
@@ -15,12 +14,15 @@ class Ship extends MovingObject {
     if (!this.shootOnCooldown) {
       const dx = this.projectileArgs.xAdjustment;
       const dy = this.projectileArgs.yAdjustment;
-      this.projectileArgs.objArgs.position = [this.position[0] + this.width/(2+dx), this.position[1] + dy];
+      const startPosition = [this.position[0] + this.width/(2+dx), this.position[1] + dy];
+      this.projectileArgs.objArgs.position = startPosition;
       const projectile = new Projectile(this.projectileArgs);
-      this.game.allMovingObjects.projectiles.push(projectile);
-      this.shootOnCooldown = true;
-      this.playShootSound();
-      setTimeout(this.resetCooldown.bind(this), this.cooldown);
+      if (projectile.inBounds(projectile.position)) {
+        this.game.allMovingObjects.projectiles.push(projectile);
+        this.shootOnCooldown = true;
+        setTimeout(this.resetCooldown.bind(this), this.cooldown);
+        this.playShootSound();
+      }
     }
   }
 

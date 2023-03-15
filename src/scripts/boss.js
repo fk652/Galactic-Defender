@@ -11,8 +11,8 @@ class Boss extends Ship {
     let height = 220;
     // let width = game.canvasWidth/2;
     let width = 250
-    // let health = 20;
-    let health = 1;
+    let health = 20;
+    // let health = 1;
 
     const objArgs = {
       width: width,
@@ -341,12 +341,12 @@ class Boss extends Ship {
         setTimeout(() => {
           this.remove()
           try {
+            this.game.sounds.playBossDeathSound();
             const multiplier = (this.velocity[0] < 0 ? 1 : -1);
             const posX = this.position[0]-(this.width/2);
             const posY = this.position[1]-(this.height/1.5);
             const finalExplosion = new Explosion2(this.game, 500, [posX - (20 * multiplier), posY]);
             this.game.allMovingObjects.explosions.push(finalExplosion);
-            this.game.sounds.playBossDeathSound();
           } catch(error) {
             // console.error();
             // console.log(this.game);

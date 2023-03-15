@@ -10,8 +10,8 @@ class Game {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
-    // this.enemyWave = 0;
-    this.enemyWave = 5;
+    this.enemyWave = 0;
+    // this.enemyWave = 5;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -239,9 +239,10 @@ class Game {
 
   setBoss() {
     // this.sounds.reset();
-    this.sounds.switchBGM("bossIncomingBGM");
+    // this.sounds.switchBGM("bossIncomingBGM");
     this.player.disabled = true;
     if (this.allMovingObjects.projectiles.length === 0) {
+      this.sounds.switchBGM("bossIncomingBGM");
       this.boss = new Boss(this);
       this.switchGameInformation();
       this.allMovingObjects.enemies.push(this.boss);

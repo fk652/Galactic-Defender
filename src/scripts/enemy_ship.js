@@ -21,7 +21,7 @@ class EnemyShip extends Ship {
     const objArgs = {
       width: width,
       height: height,
-      position: [posX, 0 - height],
+      position: [posX, 0 - (height * 2)],
       velocity: [0, speed],
       health: health,
       game: game,
@@ -88,9 +88,9 @@ class EnemyShip extends Ship {
 
     if (this.health <= 0) {
       try {
+        this.game.sounds.add("explosion");
         const explosion = new Explosion(this.game, 80, this.position);
         this.game.allMovingObjects.explosions.push(explosion);
-        this.game.sounds.add("explosion");
       } catch(error) {
         // console.error();
         // console.log(this.game);
