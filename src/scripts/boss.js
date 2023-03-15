@@ -17,7 +17,7 @@ class Boss extends Ship {
     const objArgs = {
       width: width,
       height: height,
-      position: [(game.canvasWidth/2) - (width/2), 0 - height],
+      position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
       velocity: [0, 1],
       // velocity: [0, 5],
       health: health,
