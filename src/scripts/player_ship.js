@@ -174,7 +174,7 @@ class PlayerShip extends Ship {
           // console.error();
           // console.log(this.game);
         }
-        setTimeout(this.game.setGameOver.bind(this.game), 2000);
+        setTimeout(this.game.setGameOver.bind(this.game), 4000);
       }, 1000)
     }
   }

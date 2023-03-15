@@ -284,7 +284,7 @@ class Game {
       ctx.fillStyle = "white";
       ctx.fillText(message, this.canvasWidth/2, this.canvasHeight/2);
       this.messageDrawn = true;
-      if (this.gameOver || this.win) setTimeout(this.drawRetryKey.bind(this, ctx), 2000);
+      if (this.gameOver || this.win) setTimeout(this.drawRetryKey.bind(this, ctx), 3000);
     }
   }
 
