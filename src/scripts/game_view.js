@@ -5,7 +5,7 @@ class GameView {
     this.ctx = ctx;
     this.game = new Game(canvas);
     this.game.bindStartHandler();
-    this.start();
+    // this.start();
   }
 
   start() {
