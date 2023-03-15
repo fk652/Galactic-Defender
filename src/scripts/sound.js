@@ -49,6 +49,9 @@ class Sound {
     this.toggle = true;
     this.game = game;
 
+
+    this.soundOnElement = document.getElementById("sound-on");
+    this.soundOffElement = document.getElementById("sound-off");
     this.bindToggleListener();
   }
 
@@ -142,11 +145,21 @@ class Sound {
   }
 
   bindToggleListener() {
-
+    const soundContainer = document.getElementById("sound-container");
+    soundContainer.addEventListener("click", this.handleSoundToggle.bind(this));
   }
 
-  handleToggle(event) {
-
+  handleSoundToggle(event) {
+    event.preventDefault();
+    if (this.toggle) {
+      this.toggleOff()
+      this.soundOnElement.style.display = 'none';
+      this.soundOffElement.style.display = 'block'; 
+    } else {
+      this.toggleOn()
+      this.soundOnElement.style.display = 'block';
+      this.soundOffElement.style.display = 'none';
+    }
   }
 }
 

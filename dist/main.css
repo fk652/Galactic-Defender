@@ -111,6 +111,18 @@ table {
   align-content: center;
   font-size: 25px;
 }
+#main-container #game-instructions #sound-container {
+  margin: 10px 0;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+#main-container #game-instructions #sound-container:hover {
+  cursor: pointer;
+}
+#main-container #game-instructions #sound-container #sound-off {
+  display: none;
+}
 #main-container #game-instructions .instructions-container {
   display: flex;
   flex-wrap: wrap;
@@ -267,6 +279,17 @@ table {
   }
   #main-container #game-instructions {
     height: auto;
+    justify-content: center;
+    align-items: center;
+  }
+  #main-container #game-instructions #sound-container {
+    margin: 30px 50px 30px 0;
+  }
+  #main-container #game-instructions #sound-container #sound-off {
+    display: none;
+  }
+  #main-container #game-instructions .test {
+    display: none;
   }
   #main-container #game-instructions .instructions-container {
     margin-top: 10px;

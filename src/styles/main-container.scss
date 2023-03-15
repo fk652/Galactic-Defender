@@ -55,10 +55,10 @@ $main-color: white;
     height: 550px;
     margin: 0 10px 0 10px;
     background-image: url(../src/assets/game_background.png);
-  }
 
-  canvas:hover {
-    cursor: none;
+    &:hover {
+      cursor: none;
+    }
   }
 
   #game-instructions {
@@ -67,6 +67,21 @@ $main-color: white;
     justify-content: space-around;
     align-content: center;
     font-size: 25px;
+
+    #sound-container {
+      margin: 10px 0;
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      #sound-off {
+        display: none;
+      }
+    }
 
     .instructions-container {
       display: flex;

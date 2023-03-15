@@ -30,6 +30,20 @@
 
     #game-instructions {
       height: auto;
+      justify-content: center;
+      align-items: center;
+
+      #sound-container {
+        margin: 30px 50px 30px 0;
+  
+        #sound-off {
+          display: none;
+        }
+      }
+
+      .test {
+        display: none;
+      }
 
       .instructions-container {
         margin-top: 10px;
