@@ -47,7 +47,6 @@ class Sound {
 
     this.currentBGM = this.waveBGM;
     this.currentSounds = [];
-    // this.toggle = false;
     this.toggle = true;
     this.game = game;
 
@@ -102,7 +101,6 @@ class Sound {
   }
 
   add(audioSourceKey) {
-    // console.log(audioSourceKey);
     if (this.toggle) {
       const newAudio = document.createElement("audio");
       newAudio.src = this.audioSources[audioSourceKey];

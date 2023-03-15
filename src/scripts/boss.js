@@ -9,17 +9,14 @@ class Boss extends Ship {
     let image = document.createElement("img");
     image.src = "src/assets/boss1.png";
     let height = 220;
-    // let width = game.canvasWidth/2;
     let width = 250
     let health = 20;
-    // let health = 1;
 
     const objArgs = {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
       velocity: [0, 1],
-      // velocity: [0, 5],
       health: health,
       game: game,
       image: image
@@ -46,8 +43,6 @@ class Boss extends Ship {
     super(objArgs, projectileArgs);
 
     this.shootOnCooldown = true;
-
-    // maybe add a disabled flag
     this.disabled = false;
 
     this.pattern1 = [[18, 200], [width-32, 200]];
@@ -64,7 +59,6 @@ class Boss extends Ship {
     this.pattern4OnCooldown = false;
 
     // array of dx, dy
-    // add seperate cooldowns for each pattern later
     this.projectilePositions = [
       ...this.pattern1
     ]
@@ -150,69 +144,7 @@ class Boss extends Ship {
         this.velocity = [-speed, 0];
       }
     }
-
-    // for testing purposes, make boss stationary
-    // if (this.position[1] > 0) {
-    //   // this.position[1] = 0;
-    //   // this.disabled = true;
-    //   if (this.velocity[1] !== 0) {
-    //     // this.shootOnCooldown = false;
-    //     setTimeout(this.resetCooldown.bind(this), 1000)
-    //     this.game.player.disabled = false;
-    //   }
-    //   this.velocity = [0, 0];
-    // }
   }
-
-  // draw() {
-  //   var c = document.getElementById("game-view");
-  //   var ctx = c.getContext("2d");
-  //   super.draw(ctx);
-
-  //   const box1 = {
-  //     x: this.position[0] + 85,
-  //     y: this.position[1] + 90,
-  //     width: 80,
-  //     height: 70
-  //   }
-  //   ctx.beginPath();
-  //   ctx.rect(box1.x, box1.y, box1.width, box1.height);
-  //   ctx.strokeStyle = "red";
-  //   ctx.stroke();
-
-  //   ctx.beginPath();
-  //   const box2 = {
-  //     x: this.position[0] + 10,
-  //     y: this.position[1] + 90,
-  //     width: (this.width - 100) / 2,
-  //     height: this.height - 110
-  //   }
-  //   ctx.rect(box2.x, box2.y, box2.width, box2.height);
-  //   ctx.strokeStyle = "red";
-  //   ctx.stroke();
-
-  //   const box3 = {
-  //     x: this.position[0] + 165,
-  //     y: this.position[1] + 90,
-  //     width: (this.width - 100) / 2,
-  //     height: this.height - 110
-  //   }
-  //   ctx.beginPath();
-  //   ctx.rect(box3.x, box3.y, box3.width, box3.height);
-  //   ctx.strokeStyle = "red";
-  //   ctx.stroke();
-
-  //   const box4 = {
-  //     x: this.position[0] + 45,
-  //     y: this.position[1] + 30,
-  //     width: 155,
-  //     height: 60
-  //   }
-  //   ctx.beginPath();
-  //   ctx.rect(box4.x, box4.y, box4.width, box4.height);
-  //   ctx.strokeStyle = "red";
-  //   ctx.stroke();
-  // }
 
   move(timeDelta) {
       this.updateVelocity();
@@ -249,7 +181,7 @@ class Boss extends Ship {
     }
   }
 
-  shootProjectile() { //update this to handle different pattern
+  shootProjectile() {
     if (!this.shootOnCooldown) {
       this.projectilePositions.forEach((pos) => {
         const copy = structuredClone(this.position);
@@ -260,10 +192,6 @@ class Boss extends Ship {
       })
     }
   }
-
-  // resetCooldown(patternNum) {
-  //   this[`pattern${patternNum}OnCooldown`] = false;
-  // }
 
   updateShootingPattern() {
     if (this.health < 10) {
@@ -295,26 +223,6 @@ class Boss extends Ship {
         this.game.score += 1000;
         this.disabled = true;
 
-        // const hitBoxes = this.getHitbox();
-        // hitBoxes.forEach((hitbox) => {
-        //   for (let i = 0; i < 10; i++) {
-        //     try {
-        //       const randPosX = Math.floor(Math.random() * ((hitbox.x + hitbox.width) - hitbox.x)) + hitbox.x;
-        //       const randPosY = Math.floor(Math.random() * ((hitbox.y + hitbox.height) - hitbox.y) + hitbox.y);
-        //       const randTime = Math.floor(Math.random() * (1000 - 100) + 100);
-        //       const explosion = new Explosion(this.game, 80, [randPosX - 100, randPosY - 20]);
-        //       explosion.dy = 0.5;
-        //       // explosion.dx = (this.velocity[0]/3)
-        //       setTimeout(() => {
-        //         this.game.allMovingObjects.explosions.push(explosion);
-        //       }, randTime);
-        //     } catch(error) {
-        //       // console.error();
-        //       // console.log(this.game);
-        //     }
-        //   }
-        // })
-
         for (let i = 0; i < 20; i++) {
           try {
             const newX = this.position[0] + this.velocity[0];
@@ -333,7 +241,7 @@ class Boss extends Ship {
               this.game.allMovingObjects.explosions.push(explosion);
             }, randTime);
           } catch(error) {
-            // console.error();
+            // console.error(error);
             // console.log(this.game);
           }
         }

@@ -39,11 +39,9 @@ class MovingObject {
       otherObj.remove();
       this.damageTaken(damage);
     } else if (otherObjClass === "EnemyShip") {
-      // take 1 damage if collided with enemy
       const damage = 1;
       this.damageTaken(damage);
     } else if (otherObjClass === "Boss") {
-      // take more damage if collided with boss
       const damage = 2;
       this.damageTaken(damage);
     }
@@ -59,8 +57,6 @@ class MovingObject {
   }
 
   getHitbox() {
-    // to be overwritten for complex boss shapes (multiple x,y,width,height);
-    // return an array of hitboxes
     const [x, y] = this.position;
     const width = this.width;
     const height = this.height;
@@ -72,7 +68,6 @@ class MovingObject {
     }]
   }
 
-  // to be refactored for DRY code later
   move(timeDelta) {
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
     const offsetX = this.velocity[0] * velocityScale;

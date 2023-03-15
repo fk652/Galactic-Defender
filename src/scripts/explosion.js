@@ -8,7 +8,7 @@ class Explosion extends MovingObject {
     const argsObj = {
       position: position,
       velocity: [0, 0],
-      health: 0,  // health won't matter for explosion
+      health: 0,
       game: game,
       width: size,
       height: size,
@@ -24,7 +24,6 @@ class Explosion extends MovingObject {
   draw(ctx) {
     const yOffset = Math.floor(this.frame/5);
     const xOffset = this.frame % 5;
-    // console.log(xOffset, yOffset);
     ctx.drawImage(this.image, 
                   192*xOffset, 192*yOffset, 192, 192, 
                   this.position[0], this.position[1], this.width, this.height);
@@ -32,13 +31,11 @@ class Explosion extends MovingObject {
     this.velocity[0] += this.dx;
     this.velocity[1] += this.dy;
 
-    // remove once this.frame >= 20
     if (this.frame >= 20) {
       this.remove();
     }
   }
 
-  // remove once animation frame limit reached
   remove() {
     const explosions = this.game.allMovingObjects.explosions;
     explosions[explosions.indexOf(this)] = null;

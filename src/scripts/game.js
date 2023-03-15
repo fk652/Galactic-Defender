@@ -11,7 +11,6 @@ class Game {
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
     this.enemyWave = 0;
-    // this.enemyWave = 5;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -82,8 +81,6 @@ class Game {
   }
 
   checkCollisions() {
-    // check projectile collisions
-    // check projectile hitbox vs enemy hitboxes
     this.allMovingObjects.projectiles.forEach((projectile) => {
       if (projectile) {
         if (projectile.origin === "player") {
@@ -96,8 +93,6 @@ class Game {
       }
     })
 
-    // check enemy to player collisions
-    // check player hitbox vs enemy hitboxes
     this.allMovingObjects.enemies.forEach((enemy) => {
       if (enemy && this.player) this.player.collideCheck(enemy);
     })
@@ -143,9 +138,7 @@ class Game {
   }
 
   updateInformation() {
-    // update score here later
     this.updateScore();
-
     this.updateHealthBar('player');
 
     if (this.bossFight) {
@@ -218,9 +211,7 @@ class Game {
       this.addedEnemies += numNewEnemies;
 
       for (let i = 0; i < numNewEnemies; i++) {
-        // might change to increment difficulty per wave
         const randPosX = Math.floor(Math.random() * this.canvasWidth);
-        // const randSpeed = Math.floor(Math.random() * (5 - 2) + 2);
         const randSpeed = Math.random() * (5 - 2) + 2;
         const randCooldown = Math.floor(Math.random() * (1000 - 450) + 450);
         const newEnemy = new EnemyShip(this, randPosX, randSpeed, randCooldown);
@@ -238,8 +229,6 @@ class Game {
   }
 
   setBoss() {
-    // this.sounds.reset();
-    // this.sounds.switchBGM("bossIncomingBGM");
     this.player.disabled = true;
     if (this.allMovingObjects.projectiles.length === 0) {
       this.sounds.switchBGM("bossIncomingBGM");

@@ -16,7 +16,6 @@ class PlayerShip extends Ship {
     let height = 48;
     let width = 37;
     let health = 10;
-    // let health = -2;
 
     const objArgs = {
       width: width,

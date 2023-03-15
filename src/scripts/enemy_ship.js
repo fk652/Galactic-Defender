@@ -8,9 +8,7 @@ class EnemyShip extends Ship {
     image.src = "src/assets/enemy1.png";
     let height = 40;
     let width = 46;
-
-    // scale based on wave here or do it within game.setEnemy
-    let health = 1 + Math.floor(game.enemyWave / 2.5); // update this
+    let health = 1 + Math.floor(game.enemyWave / 2.5);
 
     if (posX < 0 - width) {
       posX = 0;
@@ -58,13 +56,7 @@ class EnemyShip extends Ship {
     const newX = this.position[0] + offsetX;
     const newY = this.position[1] + offsetY;
 
-    // collision against enemy/player logic here?
-    // create seperate collision checking function in game class
-    if (!this.shootOnCooldown) {  // do this within shoot function
-      this.shootProjectile();
-      this.shootOnCooldown = true;  // do this within shoot function
-      setTimeout(this.resetCooldown.bind(this), this.cooldown); //do this within shoot function
-    }
+    this.shootProjectile();
 
     if (!this.inYBounds(newY)) {
       this.remove();
