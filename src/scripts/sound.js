@@ -47,7 +47,7 @@ class Sound {
 
     this.currentBGM = this.waveBGM;
     this.currentSounds = [];
-    this.toggle = true;
+    this.toggle = false;
     this.game = game;
 
     this.soundOnElement = document.getElementById("sound-on");

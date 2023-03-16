@@ -68,24 +68,32 @@ $main-color: white;
     align-content: center;
     font-size: 25px;
 
-    #sound-container {
-      margin: 10px 0;
-      font-size: 40px;
-      width: 40px;
-      height: 40px;
+    .toggle-mute-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-basis: 100%;
 
-      &:hover {
-        cursor: pointer;
-      }
+      #sound-container {
+        margin: 10px 20px 10px 30px;
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
 
-      #sound-off {
-        display: none;
+        &:hover {
+          cursor: pointer;
+        }
+
+        #sound-on {
+          display: none;
+        }
       }
     }
 
     .instructions-container {
       display: flex;
       flex-wrap: wrap;
+      flex-basis: 100%;
       height: 100px;
       margin-bottom: 20px;
 

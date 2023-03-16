@@ -33,21 +33,18 @@
       justify-content: center;
       align-items: center;
 
-      #sound-container {
-        margin: 30px 50px 30px 0;
+      .toggle-mute-container {
+        flex-basis: 50%;
   
-        #sound-off {
-          display: none;
+        #sound-container {
+          margin-right: 10px;
         }
-      }
-
-      .test {
-        display: none;
       }
 
       .instructions-container {
         margin-top: 10px;
         margin-bottom: 10px;
+        flex-basis: 50%;
 
         .keys-container {
           .keys-text-container {
