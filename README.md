@@ -101,8 +101,8 @@ ___
 
 * Nav links include a link to this project's Github repo and my LinkedIn.
 * Game instructions include basic controls and any rules about the game.
-* Game information will dynamically be updated with the current state of the game.
-* Game screen will be a Canvas element that renders the actual gameplay.
+* Game information is dynamically updated with the current state of the game.
+* Game screen is a Canvas element that renders the actual gameplay.
 
 ## Technologies, Libraries, APIs
 
