@@ -6,6 +6,7 @@ class MovingObject {
   constructor(argsObject) {
     this.position = argsObject["position"];
     this.velocity = argsObject["velocity"];
+    this.speed = argsObject["speed"];
     this.health = argsObject["health"];
     this.game = argsObject["game"];
     this.width = argsObject["width"];

@@ -22,6 +22,7 @@ class EnemyShip extends Ship {
       height: height,
       position: [posX, 0 - (height * 2)],
       velocity: [0, speed],
+      speed: speed,
       health: health,
       game: game,
       image: image,
@@ -34,6 +35,7 @@ class EnemyShip extends Ship {
     const projectileArgs = {
       objArgs: {
         velocity: [0, 8],
+        speed: 8,
         health: 1,
         game: game,
         width: 5,

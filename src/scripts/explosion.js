@@ -12,6 +12,7 @@ class Explosion extends MovingObject {
     const argsObj = {
       position: position,
       velocity: [0, 0],
+      speed: 0,
       health: 0,
       game: game,
       width: size,

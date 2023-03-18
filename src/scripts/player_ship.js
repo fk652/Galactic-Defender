@@ -1,5 +1,6 @@
 import Ship from "./ship";
 import Explosion from "./explosion";
+import { vectorScale } from "./utils";
 
 class PlayerShip extends Ship {
   static SPEED = 5;
@@ -21,6 +22,7 @@ class PlayerShip extends Ship {
       height: height,
       position: [Math.floor(game.canvasWidth / 2), game.canvasHeight - height],
       velocity: [0, 0],
+      speed: PlayerShip.SPEED,
       health: PlayerShip.MAX_HEALTH,
       game: game,
       image: image,
@@ -32,6 +34,7 @@ class PlayerShip extends Ship {
     const projectileArgs = {
       objArgs: {
         velocity: [0, -10],
+        speed: 10,
         health: 1,
         game: game,
         width: 5,
@@ -77,7 +80,7 @@ class PlayerShip extends Ship {
   }
 
   updateVelocity() {
-    const newVelocity = [0, 0];
+    let newVelocity = [0, 0];
 
     if (this.disabled) {
       newVelocity[1] = 2;
@@ -88,6 +91,7 @@ class PlayerShip extends Ship {
       if (this.keysPressed.down) newVelocity[1] += PlayerShip.SPEED;
     }
 
+    if (newVelocity[0] && newVelocity[1]) newVelocity = vectorScale(newVelocity, this.speed);
     this.velocity = newVelocity;
   }
 

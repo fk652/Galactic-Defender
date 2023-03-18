@@ -16,5 +16,10 @@ export function rectangleCollision(box1, box2) {
 // circle to circle collision
 
 // vector scaling calculation
+export function vectorScale(vector, newMagnitude) {
+  const magnitude = Math.sqrt(vector[0]**2 + vector[1]**2);
+  const scale = newMagnitude/magnitude;
+  return [vector[0] * scale, vector[1] * scale]
+}
 
 // new angle calculation

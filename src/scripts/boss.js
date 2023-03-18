@@ -15,8 +15,9 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
-      // velocity: [0, 1],
-      velocity: [0, 5],
+      velocity: [0, 1],
+      // velocity: [0, 5],
+      speed: 1,
       health: health,
       game: game,
       image: image,
@@ -28,6 +29,7 @@ class Boss extends Ship {
     const projectileArgs = {
       objArgs: {
         velocity: [0, 8],
+        speed: 8,
         health: 1,
         game: game,
         width: 10,
@@ -128,16 +130,16 @@ class Boss extends Ship {
 
   updateVelocity() {
     if (this.position[1] > 0) {
-      const speed = 1.5;
+      this.speed = 1.5;
       if (this.velocity[0] === 0 || this.position[0] < 0) {
         if (this.velocity[0] === 0) {
           setTimeout(this.resetCooldown.bind(this), 1250)
           this.game.sounds.switchBGM("bossBGM");
           this.game.player.disabled = false;
         }
-        this.velocity = [speed, 0];
+        this.velocity = [this.speed, 0];
       } else if (this.position[0] > this.game.canvasWidth - this.width) {
-        this.velocity = [-speed, 0];
+        this.velocity = [-this.speed, 0];
       }
     }
   }
