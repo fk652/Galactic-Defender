@@ -97,19 +97,19 @@ class MovingObject {
   }
 
   inUpperXBounds(x) {
-    return (x > 0);
+    return (x >= 0);
   }
 
   inUpperYBounds(y) {
-    return (y > 0);
+    return (y >= 0);
   }
 
   inLowerXBounds(x) {
-    return (x < this.game.canvasWidth - this.width);
+    return (x <= this.game.canvasWidth - this.width);
   }
 
   inLowerYBounds(y) {
-    return (y < this.game.canvasHeight - this.height);
+    return (y <= this.game.canvasHeight - this.height);
   }
 
   inXBounds(x) {
