@@ -11,25 +11,29 @@ class Game {
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
     this.enemyWave = 0;
+    // this.enemyWave = 5;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
     this.enemyWaveCount = 0;
     this.score = 0;
+    
     this.gameOver = false;
     this.win = false;
     this.startScreen = true;
 
-    this.player = new PlayerShip(this);
+    this.idCounter = 1;
     
     this.allMovingObjects = {
-      player: this.player,
-      enemies: [],
-      projectiles: [],
-      particles: [],
-      explosions: []
+      player: {},
+      enemies: {},
+      projectiles: {},
+      particles: {},
+      explosions: {}
     };
+
+    this.player = new PlayerShip(this);
 
     const bossInfo = document.getElementById("boss-info");
     bossInfo.style.display = 'none';
@@ -49,42 +53,29 @@ class Game {
   }
 
   step(timeDelta) {
-    this.clearNulls();
     this.checkCollisions();
     this.updateInformation();
     this.setEnemies();
     this.moveObjects(timeDelta);
-  }
-
-  clearNulls() {
-    for (let key in this.allMovingObjects) {
-      const objectsValue = this.allMovingObjects[key]
-      if (objectsValue instanceof Array) {
-        const filtered = objectsValue.filter(el => el);
-        this.allMovingObjects[key] = filtered;
-      }
-    }
-    this.sounds.clear();
+    this.shootProjectiles();
   }
 
   moveObjects(timeDelta) {
     for (let key in this.allMovingObjects) {
-      const objectsValue = this.allMovingObjects[key]
-      if (objectsValue instanceof Array) {
-        objectsValue.forEach(obj => {
-          if (obj) obj.move(timeDelta)
-        });
-      } else {
-        if (objectsValue) objectsValue.move(timeDelta);
-      }
+      Object.values(this.allMovingObjects[key]).forEach(obj => obj.move(timeDelta));
     }
   }
 
+  shootProjectiles() {
+    Object.values(this.allMovingObjects.player)[0].shootProjectile();
+    Object.values(this.allMovingObjects.enemies).forEach(enemy => enemy.shootProjectile());
+  }
+
   checkCollisions() {
-    this.allMovingObjects.projectiles.forEach((projectile) => {
+    Object.values(this.allMovingObjects.projectiles).forEach((projectile) => {
       if (projectile) {
         if (projectile.origin === "player") {
-          this.allMovingObjects.enemies.forEach((enemy) => {
+          Object.values(this.allMovingObjects.enemies).forEach((enemy) => {
             if (enemy) enemy.collideCheck(projectile);
           })
         } else {
@@ -93,7 +84,7 @@ class Game {
       }
     })
 
-    this.allMovingObjects.enemies.forEach((enemy) => {
+    Object.values(this.allMovingObjects.enemies).forEach((enemy) => {
       if (enemy && this.player) this.player.collideCheck(enemy);
     })
   }
@@ -104,14 +95,7 @@ class Game {
     this.drawBackground(ctx);
 
     for (let key in this.allMovingObjects) {
-      const objectsValue = this.allMovingObjects[key]
-      if (objectsValue instanceof Array) {
-        objectsValue.forEach(obj => {
-          if (obj) obj.draw(ctx);
-        });
-      } else {
-        if (objectsValue) objectsValue.draw(ctx);
-      }
+      Object.values(this.allMovingObjects[key]).forEach(obj => obj.draw(ctx));
     }
   }
 
@@ -215,7 +199,6 @@ class Game {
         const randSpeed = Math.random() * (5 - 2) + 2;
         const randCooldown = Math.floor(Math.random() * (1000 - 450) + 450);
         const newEnemy = new EnemyShip(this, randPosX, randSpeed, randCooldown);
-        this.allMovingObjects.enemies.push(newEnemy);
       }
 
       this.addEnemyOnCooldown = true;
@@ -230,11 +213,10 @@ class Game {
 
   setBoss() {
     this.player.disabled = true;
-    if (this.allMovingObjects.projectiles.length === 0) {
+    if (Object.values(this.allMovingObjects.projectiles).length === 0) {
       this.sounds.switchBGM("bossIncomingBGM");
       this.boss = new Boss(this);
       this.switchGameInformation();
-      this.allMovingObjects.enemies.push(this.boss);
       this.bossFight = true;
     }
   }
@@ -318,6 +300,7 @@ class Game {
 
   reset() {
     this.messageDrawn = false;
+    this.idCounter = 0;
     this.enemyWave = 0;
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -327,14 +310,16 @@ class Game {
     this.gameOver = false;
     this.win = false;
     this.startScreen = false;
-    this.player = new PlayerShip(this);
+
     this.allMovingObjects = {
-      player: this.player,
-      enemies: [],
-      projectiles: [],
-      particles: [],
-      explosions: []
+      player: {},
+      enemies: {},
+      projectiles: {},
+      particles: {},
+      explosions: {}
     };
+
+    this.player = new PlayerShip(this);
 
     const bossInfo = document.getElementById("boss-info");
     bossInfo.style.display = "none";

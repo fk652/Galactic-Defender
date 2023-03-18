@@ -9,6 +9,10 @@ class MovingObject {
     this.width = argsObject["width"];
     this.height = argsObject["height"];
     this.image = argsObject["image"];
+    this.type = argsObject["type"];
+
+    this.id = this.game.idCounter++;
+    this.game.allMovingObjects[this.type][this.id] = this;
   }
 
   draw(ctx) {
@@ -69,6 +73,7 @@ class MovingObject {
   }
 
   move(timeDelta) {
+    this.updateVelocity();
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
     const offsetX = this.velocity[0] * velocityScale;
     const offsetY = this.velocity[1] * velocityScale;
@@ -76,20 +81,51 @@ class MovingObject {
     const newX = this.position[0] + offsetX;
     const newY = this.position[1] + offsetY;
 
-    if (this.inXBounds(newX)) this.position[0] = newX;
-    if (this.inYBounds(newY)) this.position[1] = newY;
+    this.handleBounds([newX, newY])
+  }
+
+  handleBounds(newPosition) {
+    // to be implemented in sub classes
+  }
+
+  updateVelocity() {
+    // to be implemented in sub classes
+  }
+
+  inUpperYHeightBounds(y) {
+    return (y <= this.game.canvasHeight + this.height);
+  }
+
+  inUpperXBounds(x) {
+    return (x > 0);
+  }
+
+  inUpperYBounds(y) {
+    return (y > 0);
+  }
+
+  inLowerXBounds(x) {
+    return (x < this.game.canvasWidth - this.width);
+  }
+
+  inLowerYBounds(y) {
+    return (y < this.game.canvasHeight - this.height);
   }
 
   inXBounds(x) {
-    return (x > 0 && x < this.game.canvasWidth - this.width);
+    return (this.inUpperXBounds(x) && this.inLowerXBounds(x));
   }
 
   inYBounds(y) {
-    return (y > 0 && y < this.game.canvasHeight - this.height);
+    return (this.inUpperYBounds(y) && this.inLowerYBounds(y));
   }
 
   inBounds(position) {
     return this.inXBounds(position[0]) && this.inYBounds(position[1]);
+  }
+
+  remove() {
+    delete this.game.allMovingObjects[this.type][this.id];
   }
 }
 

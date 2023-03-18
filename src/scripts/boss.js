@@ -11,20 +11,21 @@ class Boss extends Ship {
     let height = 220;
     let width = 250
     let health = 20;
-
+    // let health = 1;
     const objArgs = {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
       velocity: [0, 1],
+      // velocity: [0, 5],
       health: health,
       game: game,
-      image: image
+      image: image,
+      type: "enemies"
     }
 
     image = document.createElement("img");
     image.src = "src/assets/enemy_projectile.png";
-
     const projectileArgs = {
       objArgs: {
         velocity: [0, 8],
@@ -36,8 +37,8 @@ class Boss extends Ship {
       },
       origin: "enemy",
       cooldown: 1000,
-      xAdjustment: .45,
-      yAdjustment: 0
+      adjustments: [.45, 0],
+      projectileSound: "bossProjectile"
     }
 
     super(objArgs, projectileArgs);
@@ -62,8 +63,6 @@ class Boss extends Ship {
     this.projectilePositions = [
       ...this.pattern1
     ]
-
-    this.projectileSound = "bossProjectile";
   }
 
   getHitbox() {
@@ -128,7 +127,6 @@ class Boss extends Ship {
     }
   }
 
-
   updateVelocity() {
     if (this.position[1] > 0) {
       const speed = 1.5;
@@ -146,49 +144,20 @@ class Boss extends Ship {
     }
   }
 
-  move(timeDelta) {
-      this.updateVelocity();
-      this.updateShootingPattern();
-
-      const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
-      const offsetX = this.velocity[0] * velocityScale;
-      const offsetY = this.velocity[1] * velocityScale;
-
-      const newPos = this.position;
-      newPos[0] += offsetX;
-      newPos[1] += offsetY;
-      this.position = newPos;
-
-    if (!this.disabled) {
-      if (!this.shootOnCooldown) {
-        this.shootProjectile();
-        this.game.sounds.add(this.projectileSound);
-        this.shootOnCooldown = true;
-        setTimeout(this.resetCooldown.bind(this), this.cooldown);
-      }
-      if (!this.pattern1OnCooldown) {
-
-      }
-      if (!this.pattern2OnCooldown && this.health < 20) {
-
-      }
-      if (!this.pattern3OnCooldown && this.health < 15) {
-
-      }
-      if (!this.pattern4OnCooldown && this.health < 10) {
-
-      }
-    }
+  handleBounds(newPosition) {
+    this.position = newPosition;
   }
 
   shootProjectile() {
-    if (!this.shootOnCooldown) {
+    if (!this.shootOnCooldown && !this.disabled) {
       this.projectilePositions.forEach((pos) => {
         const copy = structuredClone(this.position);
         const projPos = [copy[0] + pos[0], copy[1] + pos[1]]
         this.projectileArgs.objArgs.position = projPos;
-        const projectile = new Projectile(this.projectileArgs);
-        this.game.allMovingObjects.projectiles.push(projectile);
+        new Projectile(this.projectileArgs);
+        this.game.sounds.add(this.projectileSound);
+        this.shootOnCooldown = true;
+        setTimeout(this.resetCooldown.bind(this), this.cooldown);
       })
     }
   }
@@ -218,56 +187,50 @@ class Boss extends Ship {
   damageTaken(damage) {
     if (!this.disabled) {
       super.damageTaken(damage);
-
-      if (this.health <= 0) {
-        this.game.score += 1000;
-        this.disabled = true;
-
-        for (let i = 0; i < 20; i++) {
-          try {
-            const newX = this.position[0] + this.velocity[0];
-            const newY = this.position[1] + this.velocity[1];
-            const randPosX = Math.floor(Math.random() * ((newX + this.width) - newX) + newX);
-            const randPosY = Math.floor(Math.random() * ((newY + this.height) - newY) + newY);
-            const randTime = Math.floor(Math.random() * (1500 - 100) + 100);
-            const multiplier = (this.velocity[0] < 0 ? 1 : -1);
-            const dx = (this.velocity[0] < 0 ? 70 : 20)
-            const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20]);
-            explosion.dy = 0.1;
-            explosion.dx = (this.velocity[0]/4) * multiplier;
-            explosion.velocity[0] = this.velocity[0];
-            this.game.sounds.add("explosion");
-            setTimeout(() => {
-              this.game.allMovingObjects.explosions.push(explosion);
-            }, randTime);
-          } catch(error) {
-            // console.error(error);
-            // console.log(this.game);
-          }
-        }
-        
-        setTimeout(() => {
-          this.remove()
-          try {
-            this.game.sounds.playBossDeathSound();
-            const multiplier = (this.velocity[0] < 0 ? 1 : -1);
-            const posX = this.position[0]-(this.width/2);
-            const posY = this.position[1]-(this.height/1.5);
-            const finalExplosion = new Explosion2(this.game, 500, [posX - (40 * multiplier), posY]);
-            this.game.allMovingObjects.explosions.push(finalExplosion);
-          } catch(error) {
-            // console.error();
-            // console.log(this.game);
-          }
-          setTimeout(this.game.setWin.bind(this.game), 2500);
-        }, 1500)
-      }
+      this.updateShootingPattern();
     }
   }
 
   remove() {
-    const enemies = this.game.allMovingObjects.enemies;
-    enemies[enemies.indexOf(this)] = null;
+    this.game.score += 1000;
+    this.disabled = true;
+
+    for (let i = 0; i < 20; i++) {
+      try {
+        const newX = this.position[0] + this.velocity[0];
+        const newY = this.position[1] + this.velocity[1];
+        const randPosX = Math.floor(Math.random() * ((newX + this.width) - newX) + newX);
+        const randPosY = Math.floor(Math.random() * ((newY + this.height) - newY) + newY);
+        const randTime = Math.floor(Math.random() * (1500 - 100) + 100);
+        const multiplier = (this.velocity[0] < 0 ? 1 : -1);
+        const dx = (this.velocity[0] < 0 ? 70 : 20)
+        if (i % 5 === 0) setTimeOut(() => this.game.sounds.add("explosion"), 100 * (20/i));
+        setTimeout(() => {
+          const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20]);
+          explosion.dy = 0.1;
+          explosion.dx = (this.velocity[0]/4) * multiplier;
+          explosion.velocity[0] = this.velocity[0];
+        }, randTime);
+      } catch(error) {
+        // console.error(error);
+        // console.log(this.game);
+      }
+    }
+    
+    setTimeout(() => {
+      super.remove();
+      try {
+        this.game.sounds.playBossDeathSound();
+        const multiplier = (this.velocity[0] < 0 ? 1 : -1);
+        const posX = this.position[0]-(this.width/2);
+        const posY = this.position[1]-(this.height/1.5);
+        new Explosion2(this.game, 500, [posX - (40 * multiplier), posY]);
+      } catch(error) {
+        // console.error();
+        // console.log(this.game);
+      }
+      setTimeout(this.game.setWin.bind(this.game), 2500);
+    }, 1500)
   }
 }
 

@@ -8,7 +8,8 @@ class EnemyShip extends Ship {
     image.src = "src/assets/enemy1.png";
     let height = 40;
     let width = 46;
-    let health = 1 + Math.floor(game.enemyWave / 2.5);
+    // let health = 1 + Math.floor(game.enemyWave / 2.5);
+    let health = 1;
 
     if (posX < 0 - width) {
       posX = 0;
@@ -23,7 +24,8 @@ class EnemyShip extends Ship {
       velocity: [0, speed],
       health: health,
       game: game,
-      image: image
+      image: image,
+      type: "enemies"
     }
 
     image = document.createElement("img");
@@ -40,44 +42,22 @@ class EnemyShip extends Ship {
       },
       origin: "enemy",
       cooldown: cooldown,
-      xAdjustment: .25,
-      yAdjustment: 10
+      adjustments: [.25, 10],
+      projectileSound: "enemyProjectile"
     }
 
     super(objArgs, projectileArgs);
-    this.projectileSound = "enemyProjectile";
   }
 
-  move(timeDelta) {
-    const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
-    const offsetX = this.velocity[0] * velocityScale;
-    const offsetY = this.velocity[1] * velocityScale;
-
-    const newX = this.position[0] + offsetX;
-    const newY = this.position[1] + offsetY;
-
-    this.shootProjectile();
-
-    if (!this.inYBounds(newY)) {
+  handleBounds(newPosition) {
+    if (!this.inUpperYHeightBounds(newPosition[1])) {
       this.remove();
     } else {
-      this.position = [newX, newY]
+      this.position = newPosition
     }
   }
 
-  inYBounds(y) {
-    return y <= this.game.canvasHeight + this.height;
-  }
-
   remove() {
-    const enemies = this.game.allMovingObjects.enemies;
-    enemies[enemies.indexOf(this)] = null;
-    this.game.enemiesRemaining -= 1;
-  }
-
-  damageTaken(damage) {
-    super.damageTaken(damage);
-
     if (this.health <= 0) {
       try {
         this.game.sounds.add("explosion");
@@ -89,9 +69,11 @@ class EnemyShip extends Ship {
         // console.log(this.game);
       }
 
-      this.remove();
       this.game.score += 10;
     }
+
+    super.remove();
+    this.game.enemiesRemaining -= 1;
   }
 }
 

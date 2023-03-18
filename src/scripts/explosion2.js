@@ -12,7 +12,8 @@ class Explosion2 extends MovingObject {
       game: game,
       width: size,
       height: size,
-      image: image
+      image: image,
+      type: "explosions"
     }
     super(argsObj);
 
@@ -34,11 +35,6 @@ class Explosion2 extends MovingObject {
     if (this.frame >= 48) {
       this.remove();
     }
-  }
-
-  remove() {
-    const explosions = this.game.allMovingObjects.explosions;
-    explosions[explosions.indexOf(this)] = null;
   }
 }
 

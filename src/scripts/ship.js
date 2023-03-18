@@ -7,18 +7,17 @@ class Ship extends MovingObject {
     this.projectileArgs = projectileArgs;
     this.cooldown = projectileArgs.cooldown;
     this.shootOnCooldown = false;
-    this.projectileSound = "defaultProjectile";
+    this.projectileSound = projectileArgs.projectileSound;
   }
 
   shootProjectile() {
     if (!this.shootOnCooldown) {
-      const dx = this.projectileArgs.xAdjustment;
-      const dy = this.projectileArgs.yAdjustment;
+      const [dx, dy] = this.projectileArgs.adjustments;
       const startPosition = [this.position[0] + this.width/(2+dx), this.position[1] + dy];
       this.projectileArgs.objArgs.position = startPosition;
       const projectile = new Projectile(this.projectileArgs);
       if (projectile.inBounds(projectile.position)) {
-        this.game.allMovingObjects.projectiles.push(projectile);
+        this.game.allMovingObjects.projectiles[projectile.id] = projectile;
         this.shootOnCooldown = true;
         setTimeout(this.resetCooldown.bind(this), this.cooldown);
         this.playShootSound();
@@ -36,7 +35,7 @@ class Ship extends MovingObject {
 
   damageTaken(damage) {
     this.health -= damage;
-    // when hp === 0 handled in subclasses
+    if (this.health <= 0) this.remove();
   }
 }
 

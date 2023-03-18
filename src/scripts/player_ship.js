@@ -15,21 +15,19 @@ class PlayerShip extends Ship {
     image.src = "src/assets/player1.png";
     let height = 48;
     let width = 37;
-    let health = 10;
-
     const objArgs = {
       width: width,
       height: height,
       position: [Math.floor(game.canvasWidth / 2), game.canvasHeight - height],
       velocity: [0, 0],
-      health: health,
+      health: PlayerShip.MAX_HEALTH,
       game: game,
-      image: image
+      image: image,
+      type: "player"
     }
 
     image = document.createElement("img");
     image.src = "src/assets/player_projectile.png";
-
     const projectileArgs = {
       objArgs: {
         velocity: [0, -10],
@@ -41,8 +39,8 @@ class PlayerShip extends Ship {
       },
       origin: "player",
       cooldown: 250,
-      xAdjustment: .3,
-      yAdjustment: 0
+      adjustments: [.3, 0],
+      projectileSound: "playerProjectile"
     }
 
     super(objArgs, projectileArgs);
@@ -57,8 +55,6 @@ class PlayerShip extends Ship {
 
     this.disabled = false;
     this.invincible = false;
-
-    this.projectileSound = "playerProjectile";
   }
 
   getHitbox() {
@@ -94,13 +90,13 @@ class PlayerShip extends Ship {
     this.velocity = newVelocity;
   }
 
-  move(timeDelta) {
-    this.updateVelocity();
+  shootProjectile() {
+    if (this.keysPressed.shoot && !this.disabled) super.shootProjectile();
+  }
 
-    if (this.keysPressed.shoot && !this.shootOnCooldown && !this.disabled) {
-      this.shootProjectile();
-    }
-    super.move(timeDelta);
+  handleBounds(newPosition) {
+    if (this.inXBounds(newPosition[0])) this.position[0] = newPosition[0];
+    if (this.inYBounds(newPosition[1])) this.position[1] = newPosition[1];
   }
 
   handleKeyDown(event) {
@@ -158,34 +154,30 @@ class PlayerShip extends Ship {
       this.game.sounds.playPlayerHurtSound();
       setTimeout(this.resetInvincibility.bind(this), 1000);
     }
+  }
 
-    if (this.health <= 0 && !this.disabled) {
-      this.disabled = true;
+  remove() {
+    this.disabled = true;
 
-      setTimeout(() => {
-        this.remove()
-        try {
-          const posX = this.position[0] - 40;
-          const posY = this.position[1] - 20;
-          const finalExplosion = new Explosion2(this.game, 100, [posX, posY]);
-          finalExplosion.dy = 0;
-          this.game.allMovingObjects.explosions.push(finalExplosion);
-          this.game.sounds.playPlayerDeathSound();
-        } catch(error) {
-          // console.error();
-          // console.log(this.game);
-        }
-        setTimeout(this.game.setGameOver.bind(this.game), 4000);
-      }, 1000)
-    }
+    setTimeout(() => {
+      super.remove()
+      try {
+        const posX = this.position[0] - 40;
+        const posY = this.position[1] - 20;
+        const finalExplosion = new Explosion2(this.game, 100, [posX, posY]);
+        finalExplosion.dy = 0;
+        this.game.allMovingObjects.explosions.push(finalExplosion);
+        this.game.sounds.playPlayerDeathSound();
+      } catch(error) {
+        // console.error();
+        // console.log(this.game);
+      }
+      setTimeout(this.game.setGameOver.bind(this.game), 4000);
+    }, 1000)
   }
 
   resetInvincibility() {
     this.invincible = false;
-  }
-
-  remove() {
-    this.game.allMovingObjects.player = null;
   }
 }
 
