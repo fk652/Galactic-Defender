@@ -1,5 +1,5 @@
 import Ship from "./ship";
-import Explosion2 from "./explosion2";
+import Explosion from "./explosion";
 
 class PlayerShip extends Ship {
   static SPEED = 5;
@@ -9,6 +9,7 @@ class PlayerShip extends Ship {
   static LEFT_KEYS = ["ArrowLeft", 'a']
   static IGNORE_TARGETS = ["sound-on", "sound-off", "sound-container"]
   static MAX_HEALTH = 10;
+  // static MAX_HEALTH = -2;
 
   constructor(game) {
     let image = document.createElement("img");
@@ -157,23 +158,24 @@ class PlayerShip extends Ship {
   }
 
   remove() {
-    this.disabled = true;
+    if (!this.disabled) { 
+      this.disabled = true;
 
-    setTimeout(() => {
-      super.remove()
-      try {
-        const posX = this.position[0] - 40;
-        const posY = this.position[1] - 20;
-        const finalExplosion = new Explosion2(this.game, 100, [posX, posY]);
-        finalExplosion.dy = 0;
-        this.game.allMovingObjects.explosions.push(finalExplosion);
-        this.game.sounds.playPlayerDeathSound();
-      } catch(error) {
-        // console.error();
-        // console.log(this.game);
-      }
-      setTimeout(this.game.setGameOver.bind(this.game), 4000);
-    }, 1000)
+      setTimeout(() => {
+        super.remove()
+        try {
+          const posX = this.position[0] - 40;
+          const posY = this.position[1] - 20;
+          const finalExplosion = new Explosion(this.game, 100, [posX, posY], "major");
+          finalExplosion.dy = 0;
+          this.game.sounds.playPlayerDeathSound();
+        } catch(error) {
+          // console.error();
+          // console.log(this.game);
+        }
+        setTimeout(this.game.setGameOver.bind(this.game), 4000);
+      }, 1000)
+    }
   }
 
   resetInvincibility() {

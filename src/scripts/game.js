@@ -67,7 +67,7 @@ class Game {
   }
 
   shootProjectiles() {
-    Object.values(this.allMovingObjects.player)[0].shootProjectile();
+    this.player.shootProjectile();
     Object.values(this.allMovingObjects.enemies).forEach(enemy => enemy.shootProjectile());
   }
 

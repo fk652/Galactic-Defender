@@ -2,7 +2,6 @@ import Ship from "./ship";
 import Projectile from "./projectile";
 import MovingObject from "./moving_object";
 import Explosion from "./explosion";
-import Explosion2 from "./explosion2";
 
 class Boss extends Ship {
   constructor(game) {
@@ -205,7 +204,7 @@ class Boss extends Ship {
         const dx = (this.velocity[0] < 0 ? 70 : 20)
         if (i % 5 === 0) setTimeOut(() => this.game.sounds.add("explosion"), 100 * (20/i));
         setTimeout(() => {
-          const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20]);
+          const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20], "minor");
           explosion.dy = 0.1;
           explosion.dx = (this.velocity[0]/4) * multiplier;
           explosion.velocity[0] = this.velocity[0];
@@ -223,7 +222,7 @@ class Boss extends Ship {
         const multiplier = (this.velocity[0] < 0 ? 1 : -1);
         const posX = this.position[0]-(this.width/2);
         const posY = this.position[1]-(this.height/1.5);
-        new Explosion2(this.game, 500, [posX - (40 * multiplier), posY]);
+        new Explosion(this.game, 500, [posX - (40 * multiplier), posY], "major");
       } catch(error) {
         // console.error();
         // console.log(this.game);
