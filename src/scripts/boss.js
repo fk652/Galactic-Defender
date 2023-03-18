@@ -1,7 +1,7 @@
 import Ship from "./ship";
 import Projectile from "./projectile";
-import MovingObject from "./moving_object";
 import Explosion from "./explosion";
+import { rectangleCollision } from "./utils";
 
 class Boss extends Ship {
   constructor(game) {
@@ -105,7 +105,7 @@ class Boss extends Ship {
     thisHitboxes.forEach((thisBox, idx) => {
       hitboxesCollided[idx] = false;
       return otherHitboxes.forEach((otherBox) => {
-        if (this.rectangleCollision(thisBox, otherBox)) {
+        if (rectangleCollision(thisBox, otherBox)) {
           hitboxesCollided[idx] = true;
         }
       })

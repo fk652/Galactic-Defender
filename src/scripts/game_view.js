@@ -17,8 +17,8 @@ class GameView {
       this.game.drawStartWinGameOver(this.ctx);
     } else {
       const timeDelta = time - this.lastTime;
-      this.game.step(timeDelta);
       this.game.draw(this.ctx);
+      this.game.step(timeDelta);
     }
 
     this.lastTime = time;

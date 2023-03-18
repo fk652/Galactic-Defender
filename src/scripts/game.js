@@ -164,7 +164,7 @@ class Game {
   }
 
   healPlayer() {
-    if (this.allMovingObjects.player) {
+    if (this.allMovingObjects.player && this.player.health > 0) {
       const newHealth = this.player.health + 3;
       this.player.health = (newHealth > 10 ? 10 : newHealth);
     }
