@@ -142,10 +142,6 @@ class Boss extends Ship {
     }
   }
 
-  handleBounds(newPosition) {
-    this.position = newPosition;
-  }
-
   shootProjectile() {
     if (!this.shootOnCooldown && !this.disabled) {
       this.projectilePositions.forEach((pos) => {

@@ -78,7 +78,8 @@ class MovingObject {
   }
 
   handleBounds(newPosition) {
-    // to be implemented in sub classes
+    // to be changed in most sub classes
+    this.position = newPosition;
   }
 
   updateVelocity() {

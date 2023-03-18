@@ -53,7 +53,7 @@ class EnemyShip extends Ship {
     if (!this.inUpperYHeightBounds(newPosition[1])) {
       this.remove();
     } else {
-      this.position = newPosition
+      this.position = newPosition;
     }
   }
 
