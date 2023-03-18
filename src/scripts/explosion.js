@@ -1,7 +1,7 @@
 import MovingObject from "./moving_object";
 
 class Explosion extends MovingObject {
-  constructor(game, size, position, explosionType) {
+  constructor(game, size, position, explosionType, velocityDelta) {
     const image = document.createElement("img");
     if (explosionType === "minor") {
       image.src = "src/assets/explosion1.png";
@@ -34,8 +34,7 @@ class Explosion extends MovingObject {
     }
 
     this.frame = 0;
-    this.dx = 0;
-    this.dy = 1;
+    this.velocityDelta = velocityDelta;
   }
 
   draw(ctx) {
@@ -52,8 +51,8 @@ class Explosion extends MovingObject {
   }
 
   updateVelocity() {
-    this.velocity[0] += this.dx;
-    this.velocity[1] += this.dy;
+    this.velocity[0] += this.velocityDelta[0];
+    this.velocity[1] += this.velocityDelta[1];
   }
 }
 

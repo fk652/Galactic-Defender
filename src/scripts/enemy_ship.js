@@ -61,8 +61,7 @@ class EnemyShip extends Ship {
     if (this.health <= 0) {
       try {
         this.game.sounds.add("explosion");
-        const explosion = new Explosion(this.game, 80, this.position, "minor");
-        explosion.dy = 0.5
+        const explosion = new Explosion(this.game, 80, this.position, "minor", [0, 0.5]);
       } catch(error) {
         // console.error();
         // console.log(this.game);

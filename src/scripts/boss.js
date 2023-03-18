@@ -15,8 +15,8 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
-      velocity: [0, 1],
-      // velocity: [0, 5],
+      // velocity: [0, 1],
+      velocity: [0, 5],
       health: health,
       game: game,
       image: image,
@@ -191,19 +191,15 @@ class Boss extends Ship {
 
     for (let i = 0; i < 20; i++) {
       try {
-        const newX = this.position[0] + this.velocity[0];
-        const newY = this.position[1] + this.velocity[1];
-        const randPosX = Math.floor(Math.random() * ((newX + this.width) - newX) + newX);
-        const randPosY = Math.floor(Math.random() * ((newY + this.height) - newY) + newY);
-        const randTime = Math.floor(Math.random() * (1500 - 100) + 100);
-        const multiplier = (this.velocity[0] < 0 ? 1 : -1);
-        const dx = (this.velocity[0] < 0 ? 70 : 20)
-        if (i % 4 === 0) setTimeout(() => this.game.sounds.add("explosion"), 100 * (i/4));
+        if (i % 4 === 0) setTimeout(() => this.game.sounds.add("explosion"), 300 * (i/4));
+        const randTime = Math.floor(Math.random() * (1200 - 100) + 100);
         setTimeout(() => {
-          const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20], "minor");
-          explosion.dy = 0.1;
-          explosion.dx = (this.velocity[0]/4) * multiplier;
-          explosion.velocity[0] = this.velocity[0];
+          const hitBoxes = this.getHitbox();
+          const randHitBox = hitBoxes[Math.floor(Math.random()*hitBoxes.length)]
+          const randPosX = Math.floor(Math.random() * ((randHitBox.x + randHitBox.width) - randHitBox.x) + randHitBox.x);
+          const randPosY = Math.floor(Math.random() * ((randHitBox.y + randHitBox.height) - randHitBox.y) + randHitBox.y);
+          const dx = (this.velocity[0] < 0 ? 30 : 10)
+          new Explosion(this.game, 80, [randPosX - dx, randPosY - 70], "minor", [0, 0.1]);
         }, randTime);
       } catch(error) {
         // console.error(error);
@@ -218,7 +214,7 @@ class Boss extends Ship {
         const multiplier = (this.velocity[0] < 0 ? 1 : -1);
         const posX = this.position[0]-(this.width/2);
         const posY = this.position[1]-(this.height/1.5);
-        new Explosion(this.game, 500, [posX - (40 * multiplier), posY], "major");
+        new Explosion(this.game, 500, [posX - (40 * multiplier), posY], "major", [0, 0]);
       } catch(error) {
         // console.error();
         // console.log(this.game);

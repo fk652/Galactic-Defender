@@ -166,8 +166,7 @@ class PlayerShip extends Ship {
         try {
           const posX = this.position[0] - 40;
           const posY = this.position[1] - 20;
-          const finalExplosion = new Explosion(this.game, 100, [posX, posY], "major");
-          finalExplosion.dy = 0;
+          const finalExplosion = new Explosion(this.game, 100, [posX, posY], "major", [0, 0]);
           this.game.sounds.playPlayerDeathSound();
         } catch(error) {
           // console.error();
