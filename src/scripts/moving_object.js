@@ -1,3 +1,5 @@
+import { rectangleCollision } from "./utils";
+
 class MovingObject {
   static NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
@@ -25,7 +27,7 @@ class MovingObject {
 
     const found = thisHitboxes.some((thisBox) => {
       return otherHitboxes.some((otherBox) => {
-        return this.rectangleCollision(thisBox, otherBox);
+        return rectangleCollision(thisBox, otherBox);
       })
     })
 
@@ -49,15 +51,6 @@ class MovingObject {
       const damage = 2;
       this.damageTaken(damage);
     }
-  }
-
-  rectangleCollision(box1, box2) {
-    return (
-      box1.x < box2.x + box2.width &&
-      box1.x + box1.width > box2.x &&
-      box1.y < box2.y + box2.height &&
-      box1.height + box1.y > box2.y
-    )
   }
 
   getHitbox() {
