@@ -22,4 +22,6 @@ export function vectorScale(vector, newMagnitude) {
   return [vector[0] * scale, vector[1] * scale]
 }
 
+// vector calculation between two points
+
 // new angle calculation
