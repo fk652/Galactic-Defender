@@ -11,7 +11,7 @@ class Game {
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
     this.enemyWave = 0;
-    // this.enemyWave = 5;
+    // this.enemyWave = 4;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
@@ -164,21 +164,22 @@ class Game {
   }
 
   healPlayer() {
-    if (this.allMovingObjects.player && !this.player.disabled) {
+    if (this.allMovingObjects.player) {
       const newHealth = this.player.health + 3;
       this.player.health = (newHealth > 10 ? 10 : newHealth);
     }
   }
 
   setEnemies() {
-    if (this.enemiesRemaining === 0) {
+    if (this.enemiesRemaining === 0 && !this.bossFight) {
       if (this.enemyWave < Game.MAX_ENEMY_WAVE) {
         this.enemyWave += 1;
         this.enemyWaveCount = this.enemyWave * 5;
         this.enemiesRemaining = this.enemyWaveCount;
         this.addedEnemies = 0;
+        this.score *= Math.ceil(this.player.health/2) || 1;
         this.healPlayer();
-      } else if (!this.bossFight) {
+      } else {
         this.setBoss();
       }
     }
@@ -217,6 +218,8 @@ class Game {
       this.sounds.switchBGM("bossIncomingBGM");
       this.boss = new Boss(this);
       this.switchGameInformation();
+      this.score *= Math.ceil(this.player.health/2) || 1;
+      this.healPlayer();
       this.bossFight = true;
     }
   }

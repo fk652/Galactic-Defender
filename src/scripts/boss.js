@@ -135,7 +135,6 @@ class Boss extends Ship {
           setTimeout(this.resetCooldown.bind(this), 1250)
           this.game.sounds.switchBGM("bossBGM");
           this.game.player.disabled = false;
-          this.game.healPlayer();
         }
         this.velocity = [speed, 0];
       } else if (this.position[0] > this.game.canvasWidth - this.width) {
