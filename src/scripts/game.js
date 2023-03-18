@@ -11,7 +11,7 @@ class Game {
     this.canvasHeight = canvas.height;
     this.messageDrawn = false;
     this.enemyWave = 0;
-    // this.enemyWave = 4;
+    // this.enemyWave = 5;
   
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;

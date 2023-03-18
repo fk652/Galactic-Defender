@@ -153,10 +153,10 @@ class Boss extends Ship {
         const projPos = [copy[0] + pos[0], copy[1] + pos[1]]
         this.projectileArgs.objArgs.position = projPos;
         new Projectile(this.projectileArgs);
-        this.game.sounds.add(this.projectileSound);
         this.shootOnCooldown = true;
         setTimeout(this.resetCooldown.bind(this), this.cooldown);
       })
+      this.game.sounds.add(this.projectileSound);
     }
   }
 
@@ -202,7 +202,7 @@ class Boss extends Ship {
         const randTime = Math.floor(Math.random() * (1500 - 100) + 100);
         const multiplier = (this.velocity[0] < 0 ? 1 : -1);
         const dx = (this.velocity[0] < 0 ? 70 : 20)
-        if (i % 5 === 0) setTimeOut(() => this.game.sounds.add("explosion"), 100 * (20/i));
+        if (i % 4 === 0) setTimeout(() => this.game.sounds.add("explosion"), 100 * (i/4));
         setTimeout(() => {
           const explosion = new Explosion(this.game, 80, [randPosX - (dx * multiplier), randPosY - 20], "minor");
           explosion.dy = 0.1;
