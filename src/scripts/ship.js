@@ -2,33 +2,44 @@ import MovingObject from "./moving_object";
 import Projectile from "./projectile";
 
 class Ship extends MovingObject {
-  constructor(objArgs, projectileArgs) {
+  constructor(objArgs, projectileArgs, patternArgs) {
     super(objArgs);
     this.projectileArgs = projectileArgs;
-    this.cooldown = projectileArgs.cooldown;
-    this.shootOnCooldown = false;
-    this.projectileSound = projectileArgs.projectileSound;
+    this.patternArgs = patternArgs;
   }
 
   shootProjectile() {
-    if (!this.shootOnCooldown && this.inBounds(this.position)) {
-      const [dx, dy] = this.projectileArgs.adjustments;
-      const startPosition = [this.position[0] + this.width/(2+dx), this.position[1] + dy];
-      this.projectileArgs.objArgs.position = startPosition;
-      const projectile = new Projectile(this.projectileArgs);
-      this.game.allMovingObjects.projectiles[projectile.id] = projectile;
-      this.shootOnCooldown = true;
-      setTimeout(this.resetCooldown.bind(this), this.cooldown);
-      this.playShootSound();
-    }
+    this.patternArgs.forEach((pattern, idx) => {
+      if (!pattern.onCooldown && this.inBounds(this.position)) {
+        for (let i = 0; i < pattern.batchFireNum; i ++) {
+          setTimeout(() => {
+            pattern.positionDeltas.forEach(delta => {
+              const [x, y] = this.position;
+              const [dx, dy] = delta;
+              const startPosition = [x + dx, y + dy];
+
+              const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
+              const projArgs = this.projectileArgs[pattern.projectileArgIndex];
+              projArgs.objArgs.position = startPosition;
+
+              new Projectile(projArgs);
+              this.playShootSound(projSound);
+            })
+          }, pattern.batchFireInterval * i);
+        }
+
+        pattern.onCooldown = true;
+        setTimeout(this.resetCooldown.bind(this, idx), pattern.cooldown);
+      }
+    })
   }
 
-  playShootSound() {
-    this.game.sounds.add(this.projectileSound);
+  playShootSound(projectileSound) {
+    this.game.sounds.add(projectileSound);
   }
 
-  resetCooldown() {
-    this.shootOnCooldown = false;
+  resetCooldown(index) {
+    this.patternArgs[index].onCooldown = false;
   }
 
   damageTaken(damage) {

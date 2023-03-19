@@ -136,14 +136,18 @@ class Game {
   }
 
   setWin() {
-    this.score *= this.player.health;
-    this.win = true;
-    this.sounds.playWinSound();
+    if (!this.gameOver) {
+      this.score *= this.player.health;
+      this.win = true;
+      this.sounds.playWinSound();
+    }
   }
 
   setGameOver() {
-    this.gameOver = true;
-    this.sounds.playGameOverSound();
+    if (!this.win) {
+      this.gameOver = true;
+      this.sounds.playGameOverSound();
+    }
   }
 
   reset() {

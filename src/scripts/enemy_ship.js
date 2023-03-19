@@ -8,7 +8,6 @@ class EnemyShip extends Ship {
     image.src = "src/assets/enemy1.png";
     let height = 40;
     let width = 46;
-    // let health = 1 + Math.floor(game.enemyWave / 2.5);
     let health = 1;
 
     if (posX < 0 - width) {
@@ -32,7 +31,7 @@ class EnemyShip extends Ship {
     image = document.createElement("img");
     image.src = "src/assets/enemy_projectile.png";
 
-    const projectileArgs = {
+    const projectileArgs = [{
       objArgs: {
         velocity: [0, 8],
         speed: 8,
@@ -42,13 +41,21 @@ class EnemyShip extends Ship {
         height: 20,
         image: image
       },
+      type: "bullet",
       origin: "enemy",
-      cooldown: cooldown,
-      adjustments: [.25, 10],
       projectileSound: "enemyProjectile"
-    }
+    }]
 
-    super(objArgs, projectileArgs);
+    const patternArgs = [{
+      positionDeltas: [[width/(2.25), 10]],
+      batchFireNum: 1,
+      batchFireInterval: 0,
+      cooldown: cooldown,
+      onCooldown: false,
+      projectileArgIndex: 0
+    }]
+
+    super(objArgs, projectileArgs, patternArgs);
   }
 
   handleBounds(newPosition) {

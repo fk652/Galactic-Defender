@@ -17,8 +17,8 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
-      // velocity: [0, 1],
-      velocity: [0, 5],
+      velocity: [0, 1],
+      // velocity: [0, 5],
       speed: 1,
       health: health,
       game: game,
@@ -28,7 +28,7 @@ class Boss extends Ship {
 
     image = document.createElement("img");
     image.src = "src/assets/enemy_projectile.png";
-    const projectileArgs = {
+    const projectileArgs = [{
       objArgs: {
         velocity: [0, 8],
         speed: 8,
@@ -38,34 +38,45 @@ class Boss extends Ship {
         height: 40,
         image: image
       },
+      type: "bullet",
       origin: "enemy",
-      cooldown: 1000,
-      adjustments: [.45, 0],
       projectileSound: "bossProjectile"
-    }
+    }]
 
-    super(objArgs, projectileArgs);
+    const patternArgs = [{
+      positionDeltas: [[18, 200], [width-32, 200]],
+      batchFireNum: 1,
+      batchFireInterval: 0,
+      cooldown: 1000,
+      onCooldown: true,
+      projectileArgIndex: 0
+    },
+    {
+      positionDeltas: [[60, 210], [width-76, 210]],
+      batchFireNum: 1,
+      batchFireInterval: 0,
+      cooldown: 1000,
+      onCooldown: true,
+      projectileArgIndex: 0
+    },
+    {
+      positionDeltas: [[75, 180], [width-88, 180]],
+      batchFireNum: 1,
+      batchFireInterval: 0,
+      cooldown: 1000,
+      onCooldown: true,
+      projectileArgIndex: 0
+    },
+    {
+      positionDeltas: [[100, 160], [width - 110, 160]],
+      batchFireNum: 1,
+      batchFireInterval: 0,
+      cooldown: 1000,
+      onCooldown: true,
+      projectileArgIndex: 0
+    }]
 
-    this.shootOnCooldown = true;
-    this.disabled = false;
-
-    this.pattern1 = [[18, 200], [width-32, 200]];
-    this.pattern1Cooldown = 1000;
-    this.pattern1OnCooldown = true;
-    this.pattern2 = [[60, 210], [this.width-76, 210]];
-    this.pattern2Cooldown = 1000;
-    this.pattern2OnCooldown = false;
-    this.pattern3 = [[75, 180], [this.width-88, 180]];
-    this.pattern3Cooldown = 1000;
-    this.pattern3OnCooldown = false;
-    this.pattern4 = [[100, 160], [this.width - 110, 160]];
-    this.pattern4Cooldown = 1000;
-    this.pattern4OnCooldown = false;
-
-    // array of dx, dy
-    this.projectilePositions = [
-      ...this.pattern1
-    ]
+    super(objArgs, projectileArgs, patternArgs);
   }
 
   getHitbox() {
@@ -118,7 +129,7 @@ class Boss extends Ship {
       this.speed = 1.5;
       if (this.velocity[0] === 0 || this.position[0] < 0) {
         if (this.velocity[0] === 0) {
-          setTimeout(this.resetCooldown.bind(this), 1250)
+          setTimeout(this.resetCooldown.bind(this, 0), 1250)
           this.game.sounds.switchBGM("bossBGM");
           this.game.player.disabled = false;
         }
@@ -129,39 +140,13 @@ class Boss extends Ship {
     }
   }
 
-  shootProjectile() {
-    if (!this.shootOnCooldown && !this.disabled) {
-      this.projectilePositions.forEach((pos) => {
-        const copy = structuredClone(this.position);
-        const projPos = [copy[0] + pos[0], copy[1] + pos[1]]
-        this.projectileArgs.objArgs.position = projPos;
-        new Projectile(this.projectileArgs);
-        this.shootOnCooldown = true;
-        setTimeout(this.resetCooldown.bind(this), this.cooldown);
-      })
-      this.game.sounds.add(this.projectileSound);
-    }
-  }
-
   updateShootingPattern() {
-    if (this.health < 10) {
-      this.projectilePositions = [
-        ...this.pattern1,
-        ...this.pattern2,
-        ...this.pattern3,
-        ...this.pattern4
-      ];
-    } else if (this.health < 15) {
-      this.projectilePositions = [
-        ...this.pattern1,
-        ...this.pattern2,
-        ...this.pattern3
-      ];
-    } else if (this.health < 20) {
-      this.projectilePositions = [
-        ...this.pattern1,
-        ...this.pattern2
-      ];
+    if (this.health === 10) {
+      this.patternArgs[3].onCooldown = false;
+    } else if (this.health === 15) {
+      this.patternArgs[2].onCooldown = false;
+    } else if (this.health === 18) {
+      this.patternArgs[1].onCooldown = false;
     }
   }
 

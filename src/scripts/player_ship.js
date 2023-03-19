@@ -26,7 +26,7 @@ class PlayerShip extends Ship {
 
     image = document.createElement("img");
     image.src = "src/assets/player_projectile.png";
-    const projectileArgs = {
+    const projectileArgs = [{
       objArgs: {
         velocity: [0, -10],
         speed: 10,
@@ -36,13 +36,21 @@ class PlayerShip extends Ship {
         height: 20,
         image: image
       },
+      type: "bullet",
       origin: "player",
-      cooldown: 250,
-      adjustments: [.3, 0],
       projectileSound: "playerProjectile"
-    }
+    }]
 
-    super(objArgs, projectileArgs);
+    const patternArgs = [{
+      positionDeltas: [[width/(2.3), 0]],
+      batchFireNum: 1,
+      batchFireInterval: 0,
+      cooldown: 250,
+      onCooldown: false,
+      projectileArgIndex: 0
+    }]
+
+    super(objArgs, projectileArgs, patternArgs);
 
     this.keysPressed = {
       up: false,
@@ -118,7 +126,7 @@ class PlayerShip extends Ship {
         new Explosion(this.game, 100, [posX, posY], "major", [0, 0]);
         super.remove();
         this.game.sounds.playPlayerDeathSound();
-        setTimeout(this.game.setGameOver.bind(this.game), 4000);
+        setTimeout(this.game.setGameOver.bind(this.game), 3000);
       }, 1000)
     }
   }
