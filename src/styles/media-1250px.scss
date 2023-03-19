@@ -34,12 +34,21 @@
       align-items: center;
 
       .instructions-container {
-        margin-top: 10px;
         flex-basis: 100%;
         justify-content: center;
 
         .keys-container {
           flex-basis: 30%;
+          justify-content: center;
+          margin-bottom: 0;
+
+          #sound-icons-container {
+            margin-right: 0;
+          }
+
+          .keys-icon {
+            flex-basis: auto;
+          }
         }
       }
 

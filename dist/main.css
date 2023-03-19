@@ -123,6 +123,7 @@ table {
 }
 .main-container .game-instructions .instructions-container .keys-container #sound-icons-container {
   width: 40px;
+  margin-right: 10px;
 }
 .main-container .game-instructions .instructions-container .keys-container #sound-icons-container #sound-on {
   display: none;
@@ -282,12 +283,19 @@ table {
     align-items: center;
   }
   .main-container .game-instructions .instructions-container {
-    margin-top: 10px;
     flex-basis: 100%;
     justify-content: center;
   }
   .main-container .game-instructions .instructions-container .keys-container {
     flex-basis: 30%;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+  .main-container .game-instructions .instructions-container .keys-container #sound-icons-container {
+    margin-right: 0;
+  }
+  .main-container .game-instructions .instructions-container .keys-container .keys-icon {
+    flex-basis: auto;
   }
   .main-container .game-instructions ul {
     margin-bottom: 10px;
