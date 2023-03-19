@@ -1,6 +1,6 @@
 @media screen and (max-width: 1250px) {
-  #main-container {
-    #header {
+  .main-container {
+    .header {
       padding: 10px;
       width: 680px;
 
@@ -28,46 +28,34 @@
       min-height: 75px;
     }
 
-    #game-instructions {
+    .game-instructions {
       height: auto;
       justify-content: center;
       align-items: center;
 
-      .toggle-mute-container {
-        flex-basis: 50%;
-  
-        #sound-container {
-          margin-right: 10px;
-        }
-      }
-
       .instructions-container {
         margin-top: 10px;
-        margin-bottom: 10px;
-        flex-basis: 50%;
+        flex-basis: 100%;
+        justify-content: center;
 
         .keys-container {
-          .keys-text-container {
-            .move-text {
-              padding-top: 10px;
-            }
-          }
+          flex-basis: 30%;
         }
       }
 
       ul {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         li {
           margin: 5px 0 5px 0;
         }
       }
     }
 
-    canvas {
+    #game-view {
       margin: 10px 0 10px 0;
     }
 
-    #game-information {
+    .game-information {
       flex-direction: column;
       align-items: center;
       height: 50px;
@@ -83,7 +71,7 @@
         }
       }
   
-      #player-health {
+      .player-health {
         margin-right: 30px;
         margin-bottom: 10px;
         text-align: start;

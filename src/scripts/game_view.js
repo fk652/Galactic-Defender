@@ -6,7 +6,7 @@ class GameView {
   static DOWN_KEYS = ["ArrowDown", 's']
   static RIGHT_KEYS = ["ArrowRight", 'd']
   static LEFT_KEYS = ["ArrowLeft", 'a']
-  static IGNORE_TARGETS = ["sound-on", "sound-off", "sound-container"]
+  static IGNORE_TARGETS = ["sound-on", "sound-off", "sound-container", "keys-container", "sound-icon"]
 
   constructor(canvas, ctx) {
     this.ctx = ctx;
@@ -223,6 +223,7 @@ class GameView {
 
   handleMouseDown(event) {
     const parentId = event.target.parentNode.id;
+    console.log(event.target.parentNode.className);
     if (!GameView.IGNORE_TARGETS.includes(parentId)) this.game.player.keysPressed.shoot = true;
   }
 

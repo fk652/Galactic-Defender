@@ -52,6 +52,7 @@ class Sound {
 
     this.soundOnElement = document.getElementById("sound-on");
     this.soundOffElement = document.getElementById("sound-off");
+    this.soundTextElement = document.getElementById("sound-text");
     this.bindToggleListener();
   }
 
@@ -154,10 +155,12 @@ class Sound {
       this.toggleOff()
       this.soundOnElement.style.display = 'none';
       this.soundOffElement.style.display = 'block'; 
+      this.soundTextElement.innerHTML = "muted";
     } else {
       this.toggleOn()
       this.soundOnElement.style.display = 'block';
       this.soundOffElement.style.display = 'none';
+      this.soundTextElement.innerHTML = "sound on";
     }
   }
 }

@@ -15,8 +15,8 @@
   </head>
 
   <body>
-    <div id="main-container">
-      <div id="header">
+    <div class="main-container">
+      <div class="header">
         <h1 class="project-title">Galactic Defender</h1>
         <h2 class="dev-name">By Fahim Khan</h2>
 
@@ -32,7 +32,7 @@
 
       <div class="break"></div>
 
-      <aside id="game-information">
+      <aside class="game-information">
         <div class="score-container">
           <p>Score</p>
           <span id="score"></span>
@@ -40,7 +40,7 @@
 
         <div class="break"></div>
 
-        <div id="player-health">
+        <div class="player-health">
           <p>Player Health</p>
           <ul id="player-health-bar"></ul>
         </div>
@@ -67,34 +67,38 @@
 
       <canvas id="game-view"></canvas>
 
-      <aside id="game-instructions">
-        <div class="toggle-mute-container">
-          <div id="sound-container">
-            <div id="sound-on">
-              <i class="fa fa-volume-up"></i>
-            </div>
-            <div id="sound-off">
-              <i class="fa fa-volume-off"></i>
-            </div>
-          </div>
-          <p id="mute-text">toggle mute</p>
-        </div>
-
+      <aside class="game-instructions">
         <div class="instructions-container">
           <div class="keys-container">
-            <div class="arrow-icons">
-              <i class="far fa-caret-square-up"></i>
-              <div class="break"></div>
-              <i class="far fa-caret-square-left"></i>
-              <i class="far fa-caret-square-down"></i>
-              <i class="far fa-caret-square-right"></i>
+            <div id="sound-container" class="keys-icon">
+              <div id="sound-on" class="sound-icon">
+                <i class="fa fa-volume-up"></i>
+              </div>
+              <div id="sound-off" class="sound-icon">
+                <i class="fa fa-volume-off"></i>
+              </div>
             </div>
-            <p class="spacebar">spacebar</p>
+            <p id="sound-text" class="keys-text">muted</p>
           </div>
 
-          <div class="keys-text-container">
-            <p class="move-text">to move</p>
-            <p class="shoot-text">to shoot</p>
+          <div class="keys-container">
+            <div class="keys-icon">
+                <div class="arrow-icons">
+                  <i class="far fa-caret-square-up"></i>
+                  <div class="break"></div>
+                  <i class="far fa-caret-square-left"></i>
+                  <i class="far fa-caret-square-down"></i>
+                  <i class="far fa-caret-square-right"></i>
+                </div>
+            </div>
+            <p class="keys-text">to move</p>
+          </div>
+
+          <div class="keys-container">
+            <div class="keys-icon">
+              <p class="spacebar">spacebar</p>
+            </div>
+            <p class="keys-text">to shoot</p>
           </div>
         </div>
 

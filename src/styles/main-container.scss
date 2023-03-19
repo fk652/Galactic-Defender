@@ -1,16 +1,16 @@
 $main-color: white;
 
-#main-container {
+.main-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   padding: 10px;
   
-  #header, aside, canvas {
+  .header, aside, #game-view {
     border: 5px ridge $main-color;
   }
 
-  #header {
+  .header {
     width: 660px;
     text-align: center;
     margin-bottom: 10px;
@@ -50,7 +50,7 @@ $main-color: white;
     font-family: "Oswald", sans-serif;
   }
 
-  canvas {
+  #game-view {
     width: 700px;
     height: 550px;
     margin: 0 10px 0 10px;
@@ -61,71 +61,59 @@ $main-color: white;
     }
   }
 
-  #game-instructions {
+  .game-instructions {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: center;
     font-size: 25px;
 
-    .toggle-mute-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-basis: 100%;
-
-      #sound-container {
-        margin: 10px 20px 10px 30px;
-        font-size: 40px;
-        width: 40px;
-        height: 40px;
-
-        &:hover {
-          cursor: pointer;
-        }
-
-        #sound-on {
-          display: none;
-        }
-      }
-    }
-
     .instructions-container {
       display: flex;
       flex-wrap: wrap;
       flex-basis: 100%;
-      height: 100px;
-      margin-bottom: 20px;
 
       .keys-container {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-basis: 100%;
+        margin-bottom: 10px;
 
-        .arrow-icons {
+        #sound-on {
+          display: none;
+        }
+        
+        .sound-icon {
+          font-size: 40px;
+  
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .keys-icon {
           display: flex;
-          flex-wrap: wrap;
-          justify-content: space-around;
-          width: 75px;
+          justify-content: center;
+          flex-basis: 50%;
+
+          .arrow-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 75px;
+          }
+  
+          .spacebar {
+            border: 3px solid $main-color;
+            padding-bottom: 6px;
+            width: 80px;
+            text-align: center;
+            font-size: 20px;
+          }
         }
 
-        .spacebar {
-          border: 3px solid $main-color;
-          padding-bottom: 6px;
-          width: 100px;
-          text-align: center;
-          font-size: 20px;
-          margin: 18px 5px 0 5px;
-        }
-      }
-
-      .keys-text-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-
-        .shoot-text {
-          padding-top: 20px;
+        .keys-text {
+          flex-basis: 50%;
         }
       }
     }
@@ -133,13 +121,13 @@ $main-color: white;
     ul {
       margin-left: 5px;
       li {
-        margin: 20px 0 20px 0;
+        margin: 20px 0;
         font-size: 20px;
       }
     }
   }
 
-  #game-information {
+  .game-information {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -156,7 +144,7 @@ $main-color: white;
       }
     }
 
-    #player-health {
+    .player-health {
       margin-bottom: 30px;
       text-align: center;
       p {
