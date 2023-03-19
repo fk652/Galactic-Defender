@@ -29,7 +29,8 @@ class Ship extends MovingObject {
         }
 
         pattern.onCooldown = true;
-        setTimeout(this.resetCooldown.bind(this, idx), pattern.cooldown);
+        const batchCooldownOffset = pattern.batchFireInterval * pattern.batchFireNum;
+        setTimeout(this.resetCooldown.bind(this, idx), (pattern.cooldown + batchCooldownOffset));
       }
     })
   }

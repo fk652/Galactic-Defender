@@ -5,7 +5,6 @@ import { rectangleCollision } from "./utils";
 
 class Boss extends Ship {
   static MAX_HEALTH = 20;
-  // static MAX_HEALTH = 1;
 
   constructor(game) {
     let image = document.createElement("img");
@@ -13,6 +12,7 @@ class Boss extends Ship {
     let height = 220;
     let width = 250
     let health = Boss.MAX_HEALTH;
+    // let health = 1;
     const objArgs = {
       width: width,
       height: height,

@@ -12,6 +12,7 @@ class Game {
     this.gameView = gameView;
 
     this.enemyWave = 0;
+    // this.enemyWave = 5;
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
