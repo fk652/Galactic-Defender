@@ -1,6 +1,12 @@
 $main-color: white;
+$secondary-color: gray;
+$icon-background-color: black;
 
 .main-container {
+  i {
+    background-color: $icon-background-color;
+  }
+
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -115,6 +121,7 @@ $main-color: white;
             width: 80px;
             text-align: center;
             font-size: 20px;
+            background-color: $icon-background-color;
           }
         }
 
@@ -165,17 +172,8 @@ $main-color: white;
           width: 10px;
           height: 20px;
           background: $main-color;
-          border: 3px ridge grey;
+          border: 3px ridge $secondary-color;
           animation: fadeIn 1s linear;
-        }
-        
-        @keyframes fadeIn {
-          0% {
-            opacity:0
-          }
-          100% {
-            opacity:1;
-          }
         }
       }
     }
@@ -201,18 +199,9 @@ $main-color: white;
         .boss-health-point {
           width: 30px;
           height: 15px;
-          background: gray;
+          background: $secondary-color;
           border: 3px ridge $main-color;
           animation: fadeIn 1s linear;
-        }
-        
-        @keyframes fadeIn {
-          0% {
-            opacity:0
-          }
-          100% {
-            opacity:1;
-          }
         }
       }
     }
@@ -235,6 +224,15 @@ $main-color: white;
           margin-bottom: 5px;
         }
       }
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity:0
+    }
+    100% {
+      opacity:1;
     }
   }
 }
