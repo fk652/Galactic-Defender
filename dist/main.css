@@ -121,19 +121,23 @@ table {
   flex-basis: 100%;
   margin-bottom: 10px;
 }
-.main-container .game-instructions .instructions-container .keys-container #sound-on {
+.main-container .game-instructions .instructions-container .keys-container #sound-icons-container {
+  width: 40px;
+}
+.main-container .game-instructions .instructions-container .keys-container #sound-icons-container #sound-on {
   display: none;
 }
-.main-container .game-instructions .instructions-container .keys-container .sound-icon {
+.main-container .game-instructions .instructions-container .keys-container #sound-icons-container .sound-icon {
   font-size: 40px;
 }
-.main-container .game-instructions .instructions-container .keys-container .sound-icon:hover {
+.main-container .game-instructions .instructions-container .keys-container #sound-icons-container .sound-icon:hover {
   cursor: pointer;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   flex-basis: 50%;
+  margin-right: 15px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .arrow-icons {
   display: flex;

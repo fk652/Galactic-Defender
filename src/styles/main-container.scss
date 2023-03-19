@@ -79,22 +79,26 @@ $main-color: white;
         flex-basis: 100%;
         margin-bottom: 10px;
 
-        #sound-on {
-          display: none;
-        }
-        
-        .sound-icon {
-          font-size: 40px;
-  
-          &:hover {
-            cursor: pointer;
+        #sound-icons-container {
+          width: 40px;
+          #sound-on {
+            display: none;
+          }
+          
+          .sound-icon {
+            font-size: 40px;
+    
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
 
         .keys-icon {
           display: flex;
-          justify-content: center;
+          justify-content: end;
           flex-basis: 50%;
+          margin-right: 15px;
 
           .arrow-icons {
             display: flex;

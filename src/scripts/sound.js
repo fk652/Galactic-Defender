@@ -145,7 +145,7 @@ class Sound {
   }
 
   bindToggleListener() {
-    const soundContainer = document.getElementById("sound-container");
+    const soundContainer = document.getElementById("sound-icons-container");
     soundContainer.addEventListener("click", this.handleSoundToggle.bind(this));
   }
 
