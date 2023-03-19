@@ -5,14 +5,14 @@ import { rectangleCollision } from "./utils";
 
 class Boss extends Ship {
   static MAX_HEALTH = 20;
-  
+  // static MAX_HEALTH = 1;
+
   constructor(game) {
     let image = document.createElement("img");
     image.src = "src/assets/boss1.png";
     let height = 220;
     let width = 250
-    let health = 20;
-    // let health = 1;
+    let health = Boss.MAX_HEALTH;
     const objArgs = {
       width: width,
       height: height,
@@ -194,35 +194,26 @@ class Boss extends Ship {
     this.disabled = true;
 
     for (let i = 0; i < 20; i++) {
-      try {
-        if (i % 4 === 0) setTimeout(() => this.game.sounds.add("explosion"), 300 * (i/4));
-        const randTime = Math.floor(Math.random() * (1200 - 100) + 100);
-        setTimeout(() => {
-          const hitBoxes = this.getHitbox();
-          const randHitBox = hitBoxes[Math.floor(Math.random()*hitBoxes.length)]
-          const randPosX = Math.floor(Math.random() * ((randHitBox.x + randHitBox.width) - randHitBox.x) + randHitBox.x);
-          const randPosY = Math.floor(Math.random() * ((randHitBox.y + randHitBox.height) - randHitBox.y) + randHitBox.y);
-          const dx = (this.velocity[0] < 0 ? 30 : 10)
-          new Explosion(this.game, 80, [randPosX - dx, randPosY - 70], "minor", [0, 0.1]);
-        }, randTime);
-      } catch(error) {
-        // console.error(error);
-        // console.log(this.game);
-      }
+      if (i % 4 === 0) setTimeout(() => this.game.sounds.add("explosion"), 300 * (i/4));
+      const randTime = Math.floor(Math.random() * (1200 - 100) + 100);
+      setTimeout(() => {
+        const hitBoxes = this.getHitbox();
+        const randHitBox = hitBoxes[Math.floor(Math.random()*hitBoxes.length)]
+        const randPosX = Math.floor(Math.random() * ((randHitBox.x + randHitBox.width) - randHitBox.x) + randHitBox.x);
+        const randPosY = Math.floor(Math.random() * ((randHitBox.y + randHitBox.height) - randHitBox.y) + randHitBox.y);
+        const dx = (this.velocity[0] < 0 ? 30 : 10)
+        new Explosion(this.game, 80, [randPosX - dx, randPosY - 70], "minor", [0, 0.1]);
+      }, randTime);
     }
     
     setTimeout(() => {
+      this.game.sounds.playBossDeathSound();
+      const multiplier = (this.velocity[0] < 0 ? 1 : -1);
+      const posX = this.position[0]-(this.width/2);
+      const posY = this.position[1]-(this.height/1.5);
+      new Explosion(this.game, 500, [posX - 30, posY], "major", [0, 0]);
       super.remove();
-      try {
-        this.game.sounds.playBossDeathSound();
-        const multiplier = (this.velocity[0] < 0 ? 1 : -1);
-        const posX = this.position[0]-(this.width/2);
-        const posY = this.position[1]-(this.height/1.5);
-        new Explosion(this.game, 500, [posX - (40 * multiplier), posY], "major", [0, 0]);
-      } catch(error) {
-        // console.error();
-        // console.log(this.game);
-      }
+
       setTimeout(this.game.setWin.bind(this.game), 2500);
     }, 1500)
   }

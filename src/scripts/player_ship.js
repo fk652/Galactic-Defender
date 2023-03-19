@@ -113,16 +113,11 @@ class PlayerShip extends Ship {
       this.disabled = true;
 
       setTimeout(() => {
-        super.remove()
-        try {
-          const posX = this.position[0] - 40;
-          const posY = this.position[1] - 20;
-          const finalExplosion = new Explosion(this.game, 100, [posX, posY], "major", [0, 0]);
-          this.game.sounds.playPlayerDeathSound();
-        } catch(error) {
-          // console.error();
-          // console.log(this.game);
-        }
+        const posX = this.position[0] - 40;
+        const posY = this.position[1] - 20;
+        new Explosion(this.game, 100, [posX, posY], "major", [0, 0]);
+        super.remove();
+        this.game.sounds.playPlayerDeathSound();
         setTimeout(this.game.setGameOver.bind(this.game), 4000);
       }, 1000)
     }
