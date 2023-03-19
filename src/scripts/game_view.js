@@ -223,7 +223,6 @@ class GameView {
 
   handleMouseDown(event) {
     const parentId = event.target.parentNode.id;
-    // console.log(event.target.parentNode.className);
     if (!GameView.IGNORE_TARGETS.includes(parentId)) this.game.player.keysPressed.shoot = true;
   }
 

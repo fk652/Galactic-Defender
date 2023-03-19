@@ -5,7 +5,6 @@ import { vectorScale } from "./utils";
 class PlayerShip extends Ship {
   static SPEED = 5;
   static MAX_HEALTH = 10;
-  // static MAX_HEALTH = -2;
 
   constructor(game) {
     let image = document.createElement("img");
