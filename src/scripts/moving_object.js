@@ -22,13 +22,13 @@ class MovingObject {
   draw(ctx) {
     // ctx.drawImage(this.image, this.position[0], this.position[1], this.width, this.height);
 
-    // rotation
+    // rotate from center
     const [x, y] = this.position;
-    const [transX, transY] = [x + (this.width/2), y + (this.height/2)]
+    const [centerX, centerY] = [x + (this.width/2), y + (this.height/2)]
     ctx.save();
-    ctx.translate(transX, transY);
+    ctx.translate(centerX, centerY);
     ctx.rotate((Math.PI / 180) * this.rotationAngle);
-    ctx.translate(-transX, -transY);
+    ctx.translate(-centerX, -centerY);
     ctx.drawImage(this.image, x, y, this.width, this.height);
     ctx.restore();
   }
