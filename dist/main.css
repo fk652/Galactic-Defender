@@ -212,7 +212,7 @@ table {
   }
 }
 #main-container #game-information #boss-info {
-  display: flex;
+  display: none;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;

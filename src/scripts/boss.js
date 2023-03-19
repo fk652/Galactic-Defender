@@ -4,6 +4,8 @@ import Explosion from "./explosion";
 import { rectangleCollision } from "./utils";
 
 class Boss extends Ship {
+  static MAX_HEALTH = 20;
+  
   constructor(game) {
     let image = document.createElement("img");
     image.src = "src/assets/boss1.png";
