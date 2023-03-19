@@ -24,7 +24,7 @@ It's game over if the player loses all their health points (HP) before defeating
 
 ___
 
-Controls are simply arrow keys (or WASD) to move in any direction, spacebar or left click to shoot (can be held down to continously shoot), and a clickable toggle mute button.
+Controls are simply arrow keys (or WASD) to move in any direction, spacebar (or left click) to shoot (can be held down to continously shoot), and a clickable toggle mute button.
 
 ![instructions screenshot](./src/assets/screenshots/game_instructions.png)
 
@@ -39,57 +39,74 @@ ___
 * [x] Start game screen, game over screen, and win screen.
 * [x] Player can retry on win or lose.
 
-## How the game is rendered
+## How the game is being rendered
 
 ___
 
-The GameView class animates the current state of the game on canvas using requestAnimationFrame
+The GameView animate function updates and draws the current state of the game on canvas using requestAnimationFrame
 
 ```javascript
-animate(time) {
-  if (this.game.startScreen || this.game.gameOver || this.game.win) {
-    this.game.drawStartWinGameOver(this.ctx);
-  } else {
-    const timeDelta = time - this.lastTime;
-    this.game.step(timeDelta);
-    this.game.draw(this.ctx);
+class GameView {
+
+  ...
+
+  animate(time) {
+    if (this.game.startScreen || this.game.gameOver || this.game.win) {
+      this.drawStartWinGameOver();
+    } else {
+      this.updateInformation();
+      this.draw();
+      const timeDelta = time - this.lastTime;
+      this.game.step(timeDelta);
+    }
+
+    this.lastTime = time;
+    requestAnimationFrame(this.animate.bind(this));
   }
 
-  this.lastTime = time;
-  requestAnimationFrame(this.animate.bind(this));
+  ...
+
 }
 ```
 
-In Game class, the step function applies game logic to determine the next state of the game, such as where objects are positioned next, what objects are to be added or removed, and collision detection.
+The Game step function applies game logic to determine the next state of the game such as where objects are positioned next, what enemies and projectiles are to be added or removed, collision detection.
 
 ```javascript
-step(timeDelta) {
-  this.clearNulls();
-  this.checkCollisions();
-  this.updateInformation();
-  this.setEnemies();
-  this.moveObjects(timeDelta);
+class Game {
+
+  ...
+
+  step(timeDelta) {
+    this.checkCollisions();
+    this.setEnemies();
+    this.moveObjects(timeDelta);
+    this.shootProjectiles();
+  }
+
+  ...
+
 }
 ```
 
-The draw function then draws all objects contained in the allMovingObjects attribute.
+The GameView draw function then clears the canvas screen and redraws all objects contained in the game.allMovingObjects attribute, at their newest positions.
 
 ```javascript
-draw(ctx) {
-  ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+class GameView {
 
-  this.drawBackground(ctx);
+  ...
 
-  for (let key in this.allMovingObjects) {
-    const objectsValue = this.allMovingObjects[key]
-    if (objectsValue instanceof Array) {
-      objectsValue.forEach(obj => {
-        if (obj) obj.draw(ctx);
-      });
-    } else {
-      if (objectsValue) objectsValue.draw(ctx);
+  draw() {
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    this.drawBackground();
+
+    for (let key in this.game.allMovingObjects) {
+      Object.values(this.game.allMovingObjects[key]).forEach(obj => obj.draw(this.ctx));
     }
   }
+
+  ...
+
 }
 ```
 
@@ -150,4 +167,4 @@ ___
 
 * All assets were provided as free open source material from [itch.io](https://itch.io/)
   * Game backgrounds were generated [here](https://deep-fold.itch.io/space-background-generator)
-  * All other assets including images, sound effects, and background music were made by [GameSupplyGuy](https://gamesupply.itch.io/ultimate-space-game-mega-asset-package)
+  * Images, sound effects, and background music were made by [GameSupplyGuy](https://gamesupply.itch.io/ultimate-space-game-mega-asset-package)
