@@ -13,18 +13,20 @@ class Ship extends MovingObject {
       if (!pattern.onCooldown && this.inBounds(this.position)) {
         for (let i = 0; i < pattern.batchFireNum; i ++) {
           setTimeout(() => {
-            pattern.positionDeltas.forEach(delta => {
-              const [x, y] = this.position;
-              const [dx, dy] = delta;
-              const startPosition = [x + dx, y + dy];
+            if (this.health > 0) {
+              pattern.positionDeltas.forEach(delta => {
+                const [x, y] = this.position;
+                const [dx, dy] = delta;
+                const startPosition = [x + dx, y + dy];
 
-              const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
-              const projArgs = this.projectileArgs[pattern.projectileArgIndex];
-              projArgs.objArgs.position = startPosition;
+                const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
+                const projArgs = this.projectileArgs[pattern.projectileArgIndex];
+                projArgs.objArgs.position = startPosition;
 
-              new Projectile(projArgs);
-              this.playShootSound(projSound);
-            })
+                new Projectile(projArgs);
+                this.playShootSound(projSound);
+              })
+            }
           }, pattern.batchFireInterval * i);
         }
 
