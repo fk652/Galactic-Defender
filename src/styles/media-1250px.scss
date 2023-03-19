@@ -1,6 +1,7 @@
 @media screen and (max-width: 1250px) {
   .main-container {
     .header {
+      order: 1;
       padding: 10px;
       width: 680px;
 
@@ -29,11 +30,15 @@
     }
 
     .game-instructions {
+      order: 2;
+      margin-bottom: 10px;
       height: auto;
       justify-content: center;
       align-items: center;
 
       .instructions-container {
+        order: 2;
+
         flex-basis: 100%;
         justify-content: center;
 
@@ -53,6 +58,7 @@
       }
 
       ul {
+        order: 1;
         margin-bottom: 10px;
         li {
           margin: 5px 0 5px 0;
@@ -61,10 +67,12 @@
     }
 
     #game-view {
+      order: 4;
       margin: 10px 0 10px 0;
     }
 
     .game-information {
+      order: 3;
       flex-direction: column;
       align-items: center;
       height: 50px;
