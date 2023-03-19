@@ -23,21 +23,22 @@ class MovingObject {
   }
 
   collideCheck(otherObj) {
-    const thisHitboxes = this.getHitbox();
-    const otherHitboxes = otherObj.getHitbox();
-
-    const found = thisHitboxes.some((thisBox) => {
-      return otherHitboxes.some((otherBox) => {
-        return rectangleCollision(thisBox, otherBox);
+    const hitBoxCollisions = [];
+    this.getHitbox().forEach((thisBox, idx) => {
+      const collisionFound = otherObj.getHitbox().some(otherBox => { 
+        return rectangleCollision(thisBox, otherBox) 
       })
+      if (collisionFound) hitBoxCollisions.push(idx); 
     })
 
-    if (found) {
-      this.handleCollided(otherObj);
+    if (hitBoxCollisions.length > 0) {
+      // hitBoxCollisions will be used by subclasses with more complex logic
+      this.handleCollided(otherObj, hitBoxCollisions);
     }
   }
 
   handleCollided(otherObj) {
+    // will be overwritten by subclasses with more complex logic
     // two case: enemy/player to projectile, player to enemy
     const otherObjClass = otherObj.constructor.name;
 

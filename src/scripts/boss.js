@@ -17,8 +17,8 @@ class Boss extends Ship {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
-      velocity: [0, 1],
-      // velocity: [0, 5],
+      // velocity: [0, 1],
+      velocity: [0, 5],
       speed: 1,
       health: health,
       game: game,
@@ -32,7 +32,7 @@ class Boss extends Ship {
       objArgs: {
         velocity: [0, 8],
         speed: 8,
-        health: 1,
+        health: 2,
         game: game,
         width: 10,
         height: 40,
@@ -101,32 +101,15 @@ class Boss extends Ship {
     return [box1, box2, box3, box4];
   }
 
-  collideCheck(otherObj) {
-    const thisHitboxes = this.getHitbox();
-    const otherHitboxes = otherObj.getHitbox();
-
-    let hitboxesCollided = {};
-    thisHitboxes.forEach((thisBox, idx) => {
-      hitboxesCollided[idx] = false;
-      return otherHitboxes.forEach((otherBox) => {
-        if (rectangleCollision(thisBox, otherBox)) {
-          hitboxesCollided[idx] = true;
-        }
-      })
-    })
-
-    if (Object.values(hitboxesCollided).some((found => found))) {
-      this.handleCollided(otherObj, hitboxesCollided);
-    }
-  }
-
   handleCollided(otherObj, hitboxesCollided) {
     const otherObjClass = otherObj.constructor.name;
 
     if (otherObjClass === "Projectile") {
-      const damage = otherObj.health;
+      if (hitboxesCollided.includes(0)) {
+        const damage = otherObj.health;
+        this.damageTaken(damage);
+      }
       otherObj.remove();
-      if (hitboxesCollided[0]) this.damageTaken(damage);
     }
   }
 
