@@ -19,13 +19,13 @@ class Ship extends MovingObject {
                 const [dx, dy] = delta;
                 const startPosition = [x + dx, y + dy];
 
-                const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
                 const projArgs = this.projectileArgs[pattern.projectileArgIndex];
                 projArgs.objArgs.position = startPosition;
 
                 new Projectile(projArgs);
-                this.playShootSound(projSound);
               })
+              const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
+              this.playShootSound(projSound);
             }
           }, pattern.batchFireInterval * i);
         }
