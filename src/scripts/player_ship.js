@@ -4,11 +4,6 @@ import { vectorScale } from "./utils";
 
 class PlayerShip extends Ship {
   static SPEED = 5;
-  static UP_KEYS = ["ArrowUp", 'w']
-  static DOWN_KEYS = ["ArrowDown", 's']
-  static RIGHT_KEYS = ["ArrowRight", 'd']
-  static LEFT_KEYS = ["ArrowLeft", 'a']
-  static IGNORE_TARGETS = ["sound-on", "sound-off", "sound-container"]
   static MAX_HEALTH = 10;
   // static MAX_HEALTH = -2;
 
@@ -102,54 +97,6 @@ class PlayerShip extends Ship {
   handleBounds(newPosition) {
     if (this.inXBounds(newPosition[0])) this.position[0] = newPosition[0];
     if (this.inYBounds(newPosition[1])) this.position[1] = newPosition[1];
-  }
-
-  handleKeyDown(event) {
-    event.preventDefault();
-
-    if (PlayerShip.RIGHT_KEYS.includes(event.key)) this.keysPressed.right = true;
-    else if (PlayerShip.LEFT_KEYS.includes(event.key)) this.keysPressed.left = true;
-    else if (PlayerShip.UP_KEYS.includes(event.key)) this.keysPressed.up = true;
-    else if (PlayerShip.DOWN_KEYS.includes(event.key)) this.keysPressed.down = true;
-    else if (event.key === " ") this.keysPressed.shoot = true;
-  }
-  
-  handleKeyUp(event) {
-    if (event.key === " ") event.preventDefault();
-
-    if (PlayerShip.RIGHT_KEYS.includes(event.key)) this.keysPressed.right = false;
-    else if (PlayerShip.LEFT_KEYS.includes(event.key)) this.keysPressed.left = false;
-    else if (PlayerShip.UP_KEYS.includes(event.key)) this.keysPressed.up = false;
-    else if (PlayerShip.DOWN_KEYS.includes(event.key)) this.keysPressed.down = false;
-    else if (event.key === " ") this.keysPressed.shoot = false;
-  }
-
-  handleMouseDown(event) {
-    const parentId = event.target.parentNode.id;
-    if (!PlayerShip.IGNORE_TARGETS.includes(parentId)) this.keysPressed.shoot = true;
-  }
-
-  handleMouseUp(event) {
-    this.keysPressed.shoot = false;
-  }
-
-  bindControlHandlers() {
-    this.keyDownHandler = this.handleKeyDown.bind(this);
-    this.keyUpHandler = this.handleKeyUp.bind(this);
-    this.mouseDownHandler = this.handleMouseDown.bind(this);
-    this.mouseUpHandler = this.handleMouseUp.bind(this);
-
-    document.addEventListener("keydown", this.keyDownHandler);
-    document.addEventListener("keyup", this.keyUpHandler);
-    document.addEventListener("mousedown", this.mouseDownHandler);
-    document.addEventListener("mouseup", this.mouseUpHandler);
-  }
-
-  removeControlHandlers() {
-    document.removeEventListener("keydown", this.keyDownHandler);
-    document.removeEventListener("keyup", this.keyUpHandler);
-    document.removeEventListener("mousedown", this.mouseDownHandler);
-    document.removeEventListener("mouseup", this.mouseUpHandler);
   }
 
   damageTaken(damage) {

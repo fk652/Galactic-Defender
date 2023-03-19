@@ -2,6 +2,12 @@ import Game from "./game";
 import Boss from "./boss";
 
 class GameView {
+  static UP_KEYS = ["ArrowUp", 'w']
+  static DOWN_KEYS = ["ArrowDown", 's']
+  static RIGHT_KEYS = ["ArrowRight", 'd']
+  static LEFT_KEYS = ["ArrowLeft", 'a']
+  static IGNORE_TARGETS = ["sound-on", "sound-off", "sound-container"]
+
   constructor(canvas, ctx) {
     this.ctx = ctx;
     this.canvasWidth = canvas.width;
@@ -149,7 +155,7 @@ class GameView {
       this.ctx.fillText(message, this.canvasWidth/2, this.canvasHeight/2);
       this.messageDrawn = true;
       if (this.game.gameOver || this.game.win) {
-        this.game.player.removeControlHandlers();
+        this.removeControlHandlers();
         this.updateScore();
         setTimeout(this.drawRetryKey.bind(this, this.ctx), 3000)
       };
@@ -173,7 +179,7 @@ class GameView {
       this.game.sounds.switchBGM("waveBGM");
       this.game.startScreen = false;
       document.removeEventListener("keypress", this.startHandler)
-      this.game.player.bindControlHandlers();
+      this.bindControlHandlers();
       setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
       this.messageDrawn = false;
     }
@@ -189,10 +195,60 @@ class GameView {
     if (event.key) {
       document.removeEventListener("keypress", this.retryHandler);
       this.game.reset();
-      this.game.player.bindControlHandlers();
+      this.bindControlHandlers();
       setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
       this.messageDrawn = false;
     }
+  }
+
+  handleKeyDown(event) {
+    event.preventDefault();
+
+    if (GameView.RIGHT_KEYS.includes(event.key)) this.game.player.keysPressed.right = true;
+    else if (GameView.LEFT_KEYS.includes(event.key)) this.game.player.keysPressed.left = true;
+    else if (GameView.UP_KEYS.includes(event.key)) this.game.player.keysPressed.up = true;
+    else if (GameView.DOWN_KEYS.includes(event.key)) this.game.player.keysPressed.down = true;
+    else if (event.key === " ") this.game.player.keysPressed.shoot = true;
+  }
+  
+  handleKeyUp(event) {
+    if (event.key === " ") event.preventDefault();
+
+    if (GameView.RIGHT_KEYS.includes(event.key)) this.game.player.keysPressed.right = false;
+    else if (GameView.LEFT_KEYS.includes(event.key)) this.game.player.keysPressed.left = false;
+    else if (GameView.UP_KEYS.includes(event.key)) this.game.player.keysPressed.up = false;
+    else if (GameView.DOWN_KEYS.includes(event.key)) this.game.player.keysPressed.down = false;
+    else if (event.key === " ") this.game.player.keysPressed.shoot = false;
+  }
+
+  handleMouseDown(event) {
+    const parentId = event.target.parentNode.id;
+    if (!GameView.IGNORE_TARGETS.includes(parentId)) this.game.player.keysPressed.shoot = true;
+  }
+
+  handleMouseUp() {
+    this.game.player.keysPressed.shoot = false;
+  }
+
+  bindControlHandlers() {
+    console.log("add player controls");
+    this.keyDownHandler = this.handleKeyDown.bind(this);
+    this.keyUpHandler = this.handleKeyUp.bind(this);
+    this.mouseDownHandler = this.handleMouseDown.bind(this);
+    this.mouseUpHandler = this.handleMouseUp.bind(this);
+
+    document.addEventListener("keydown", this.keyDownHandler);
+    document.addEventListener("keyup", this.keyUpHandler);
+    document.addEventListener("mousedown", this.mouseDownHandler);
+    document.addEventListener("mouseup", this.mouseUpHandler);
+  }
+
+  removeControlHandlers() {
+    console.log("remove player controls");
+    document.removeEventListener("keydown", this.keyDownHandler);
+    document.removeEventListener("keyup", this.keyUpHandler);
+    document.removeEventListener("mousedown", this.mouseDownHandler);
+    document.removeEventListener("mouseup", this.mouseUpHandler);
   }
 }
 
