@@ -13,22 +13,23 @@ class MovingObject {
     this.height = argsObject["height"];
     this.image = argsObject["image"];
     this.type = argsObject["type"];
+    this.rotationAngle = argsObject["rotation"] || 0;
 
     this.id = this.game.idCounter++;
     this.game.allMovingObjects[this.type][this.id] = this;
   }
 
   draw(ctx) {
-    ctx.drawImage(this.image, this.position[0], this.position[1], this.width, this.height);
+    // ctx.drawImage(this.image, this.position[0], this.position[1], this.width, this.height);
 
-    // // rotation
-    // const [x, y] = this.position;
-    // ctx.save();
-    // ctx.translate(x + (this.width/2), y + (this.height/2));
-    // ctx.rotate((Math.PI / 180) * 90);
-    // ctx.translate(-x - (this.width/2), -y - (this.height/2));
-    // ctx.drawImage(this.image, x, y, this.width, this.height);
-    // ctx.restore();
+    // rotation
+    const [x, y] = this.position;
+    ctx.save();
+    ctx.translate(x + (this.width/2), y + (this.height/2));
+    ctx.rotate((Math.PI / 180) * this.rotationAngle);
+    ctx.translate(-x - (this.width/2), -y - (this.height/2));
+    ctx.drawImage(this.image, x, y, this.width, this.height);
+    ctx.restore();
   }
 
   collideCheck(otherObj) {
