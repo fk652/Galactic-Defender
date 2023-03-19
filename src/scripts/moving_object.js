@@ -24,10 +24,11 @@ class MovingObject {
 
     // rotation
     const [x, y] = this.position;
+    const [transX, transY] = [x + (this.width/2), y + (this.height/2)]
     ctx.save();
-    ctx.translate(x + (this.width/2), y + (this.height/2));
+    ctx.translate(transX, transY);
     ctx.rotate((Math.PI / 180) * this.rotationAngle);
-    ctx.translate(-x - (this.width/2), -y - (this.height/2));
+    ctx.translate(-transX, -transY);
     ctx.drawImage(this.image, x, y, this.width, this.height);
     ctx.restore();
   }
