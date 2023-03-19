@@ -191,14 +191,14 @@ $icon-background-color: black;
 
       #boss-health-bar {
         display: flex;
-        flex-direction: column;
+        // flex-direction: column;
         justify-content: center;
         align-content: flex-start;
         flex-wrap: wrap;
 
         .boss-health-point {
-          width: 30px;
-          height: 15px;
+          width: 15px;
+          height: 30px;
           background: $secondary-color;
           border: 3px ridge $main-color;
           animation: fadeIn 1s linear;

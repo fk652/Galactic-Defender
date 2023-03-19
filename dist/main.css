@@ -213,14 +213,13 @@ table {
 }
 .main-container .game-information #boss-info #boss-health-bar {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-content: flex-start;
   flex-wrap: wrap;
 }
 .main-container .game-information #boss-info #boss-health-bar .boss-health-point {
-  width: 30px;
-  height: 15px;
+  width: 15px;
+  height: 30px;
   background: gray;
   border: 3px ridge white;
   animation: fadeIn 1s linear;
