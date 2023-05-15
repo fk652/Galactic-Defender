@@ -12,3 +12,12 @@ body {
   background-image: url(../src/assets/body_background.png);
   background-repeat: repeat;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
