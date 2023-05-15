@@ -1,0 +1,68 @@
+@media screen and (max-width: 736px) {
+  .main-container {
+
+    .game-instructions {
+      .instructions-container {
+        justify-content: space-around;
+        
+        .keys-container {
+          .keys-icon {
+            margin-right: 10px;
+          }
+
+          .keys-text {
+            font-size: 20px;
+          }
+        }
+      }
+
+      ul {
+        li {
+          font-size: 20px;
+        }
+      }
+    }
+
+    #game-view {
+      width: calc(100% - 10px) !important;
+      height: auto !important;
+    }
+
+    .game-information {
+      flex-wrap: wrap;
+      font-size: 20px;
+
+      .score-container {
+        margin-right: 20px;
+
+        #score {
+          min-height: 12px;
+        }
+      }
+
+      .player-health {
+        margin-right: 20px;
+
+        #player-health-bar{
+          min-height: 15px;
+
+          .player-health-point {
+            height: 15px;
+            width: 8px;
+          }
+        }
+      }
+
+      #boss-info {
+        #boss-health-bar{
+          min-height: 15px;
+
+          .boss-health-point {
+            height: 15px;
+            width: 15px;
+          }
+        }
+      }
+    }
+  }
+}

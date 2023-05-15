@@ -86,6 +86,10 @@
         p {
           margin-bottom: 10px;
         }
+
+        #score {
+          min-height: 14px;
+        }
       }
   
       .player-health {
@@ -94,6 +98,8 @@
         text-align: start;
 
         #player-health-bar{
+          min-height: 15px;
+
           .player-health-point {
             height: 15px;
           }
@@ -107,6 +113,8 @@
 
         #boss-health-bar{
           flex-direction: row;
+          min-height: 15px;
+
           .boss-health-point {
             height: 15px;
             width: 20px;
