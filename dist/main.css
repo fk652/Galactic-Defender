@@ -103,14 +103,12 @@ table {
   margin: 0 10px 0 10px;
   background-image: url(../src/assets/images/game_background.png);
 }
-.main-container #game-view:hover {
-  cursor: none;
-}
 .main-container .game-instructions {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-content: center;
+  gap: 5px;
   font-size: 25px;
 }
 .main-container .game-instructions .instructions-container {
@@ -122,7 +120,7 @@ table {
   display: flex;
   align-items: center;
   flex-basis: 100%;
-  margin-bottom: 10px;
+  margin: 5px 0;
 }
 .main-container .game-instructions .instructions-container .keys-container #sound-icons-container {
   width: 40px;
@@ -137,10 +135,22 @@ table {
 .main-container .game-instructions .instructions-container .keys-container #sound-icons-container .sound-icon:hover {
   cursor: pointer;
 }
+.main-container .game-instructions .instructions-container .keys-container #touch-icons-container {
+  margin-right: 26px;
+}
+.main-container .game-instructions .instructions-container .keys-container #touch-icons-container #touch-on {
+  display: none;
+}
+.main-container .game-instructions .instructions-container .keys-container #touch-icons-container .touch-icon {
+  font-size: 25px;
+}
+.main-container .game-instructions .instructions-container .keys-container #touch-icons-container .touch-icon:hover {
+  cursor: pointer;
+}
 .main-container .game-instructions .instructions-container .keys-container .keys-icon {
   display: flex;
   justify-content: end;
-  flex-basis: 50%;
+  flex-basis: 45%;
   margin-right: 15px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .arrow-icons {
@@ -158,13 +168,17 @@ table {
   background-color: black;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-text {
-  flex-basis: 50%;
+  flex-basis: 60%;
+  font-size: 24px;
+}
+.main-container .game-instructions .instructions-container .keys-container:nth-of-type(2) {
+  margin-bottom: 20px;
 }
 .main-container .game-instructions ul {
   margin-left: 5px;
 }
 .main-container .game-instructions ul li {
-  margin: 20px 0;
+  margin-top: 15px;
   font-size: 20px;
 }
 .main-container .game-information {
@@ -291,17 +305,25 @@ table {
     margin-bottom: 5px;
     flex-basis: 100%;
     justify-content: center;
+    row-gap: 10px;
+    flex-wrap: wrap-reverse;
   }
   .main-container .game-instructions .instructions-container .keys-container {
-    flex-basis: 30%;
+    flex-basis: 35%;
     justify-content: center;
     margin-bottom: 0;
   }
-  .main-container .game-instructions .instructions-container .keys-container #sound-icons-container {
+  .main-container .game-instructions .instructions-container .keys-container #sound-icons-container, .main-container .game-instructions .instructions-container .keys-container #touch-icons-container {
     margin-right: 0;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon {
     flex-basis: auto;
+  }
+  .main-container .game-instructions .instructions-container .keys-container .keys-text {
+    flex-basis: unset;
+  }
+  .main-container .game-instructions .instructions-container .keys-container:nth-of-type(2) {
+    margin-bottom: 0;
   }
   .main-container .game-instructions ul {
     order: 1;
@@ -362,9 +384,6 @@ table {
   }
 }
 @media screen and (max-width: 736px) {
-  .main-container .game-instructions .instructions-container {
-    justify-content: space-around;
-  }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon {
     margin-right: 10px;
   }
@@ -431,6 +450,9 @@ table {
   }
   .main-container .game-instructions .instructions-container .keys-container #sound-icons-container .sound-icon {
     font-size: 30px;
+  }
+  .main-container .game-instructions .instructions-container .keys-container #touch-icons-container {
+    margin-right: 10px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-text {
     font-size: 16px;

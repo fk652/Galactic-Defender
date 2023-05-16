@@ -61,10 +61,6 @@ $icon-background-color: black;
     height: 550px;
     margin: 0 10px 0 10px;
     background-image: url(../src/assets/images/game_background.png);
-
-    &:hover {
-      cursor: none;
-    }
   }
 
   .game-instructions {
@@ -72,6 +68,7 @@ $icon-background-color: black;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: center;
+    gap: 5px;
     font-size: 25px;
 
     .instructions-container {
@@ -83,7 +80,7 @@ $icon-background-color: black;
         display: flex;
         align-items: center;
         flex-basis: 100%;
-        margin-bottom: 10px;
+        margin: 5px 0;
 
         #sound-icons-container {
           width: 40px;
@@ -102,10 +99,26 @@ $icon-background-color: black;
           }
         }
 
+        #touch-icons-container {
+          margin-right: 26px;
+          
+          #touch-on {
+            display: none;
+          }
+          
+          .touch-icon {
+            font-size: 25px;
+    
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+
         .keys-icon {
           display: flex;
           justify-content: end;
-          flex-basis: 50%;
+          flex-basis: 45%;
           margin-right: 15px;
 
           .arrow-icons {
@@ -126,15 +139,20 @@ $icon-background-color: black;
         }
 
         .keys-text {
-          flex-basis: 50%;
+          flex-basis: 60%;
+          font-size: 24px;
         }
+      }
+
+      .keys-container:nth-of-type(2) {
+        margin-bottom: 20px;
       }
     }
 
     ul {
       margin-left: 5px;
       li {
-        margin: 20px 0;
+        margin-top: 15px;
         font-size: 20px;
       }
     }

@@ -6,10 +6,18 @@ class GameView {
   static DOWN_KEYS = ["ArrowDown", 's']
   static RIGHT_KEYS = ["ArrowRight", 'd']
   static LEFT_KEYS = ["ArrowLeft", 'a']
-  static IGNORE_TARGETS = ["sound-on", "sound-off", "sound-icons-container"]
+  static IGNORE_TARGETS = [
+    "sound-on", 
+    "sound-off", 
+    "sound-icons-container", 
+    "touch-on", 
+    "touch-off", 
+    "touch-container"
+  ]
 
   constructor(canvas, ctx) {
     this.ctx = ctx;
+    this.canvas = canvas;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.game = new Game(canvas, this);
@@ -230,16 +238,33 @@ class GameView {
     this.game.player.keysPressed.shoot = false;
   }
 
+  handleMouseMove(event) {
+    const rect = this.canvas.getBoundingClientRect();
+    const xScale = this.canvas.width / rect.width;
+    const yScale = this.canvas.height / rect.height;
+    const x = (event.clientX - rect.left) * xScale;
+    const y = (event.clientY - rect.top) * yScale;
+    this.game.player.mousePosition = {x, y};
+  }
+
+  handleMouseOut() {
+    this.game.player.mousePosition = null;
+  }
+
   bindControlHandlers() {
     this.keyDownHandler = this.handleKeyDown.bind(this);
     this.keyUpHandler = this.handleKeyUp.bind(this);
     this.mouseDownHandler = this.handleMouseDown.bind(this);
     this.mouseUpHandler = this.handleMouseUp.bind(this);
+    this.mouseMoveHandler = this.handleMouseMove.bind(this);
+    this.mouseOutHandler = this.handleMouseOut.bind(this);
 
     document.addEventListener("keydown", this.keyDownHandler);
     document.addEventListener("keyup", this.keyUpHandler);
     document.addEventListener("mousedown", this.mouseDownHandler);
     document.addEventListener("mouseup", this.mouseUpHandler);
+    document.addEventListener("mousemove", this.mouseMoveHandler);
+    document.addEventListener("mouseout", this.mouseOutHandler);
   }
 
   removeControlHandlers() {
@@ -247,6 +272,8 @@ class GameView {
     document.removeEventListener("keyup", this.keyUpHandler);
     document.removeEventListener("mousedown", this.mouseDownHandler);
     document.removeEventListener("mouseup", this.mouseUpHandler);
+    document.removeEventListener("mousemove", this.mouseMoveHandler);
+    document.removeEventListener("mouseout", this.mouseOutHandler);
   }
 }
 

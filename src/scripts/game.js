@@ -7,6 +7,7 @@ class Game {
   static MAX_ENEMY_WAVE = 5;
 
   constructor(canvas, gameView) {
+    this.canvas = canvas;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.gameView = gameView;

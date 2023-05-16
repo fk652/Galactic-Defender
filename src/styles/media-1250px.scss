@@ -41,19 +41,29 @@
         margin-bottom: 5px;
         flex-basis: 100%;
         justify-content: center;
+        row-gap: 10px;
+        flex-wrap: wrap-reverse;
 
         .keys-container {
-          flex-basis: 30%;
+          flex-basis: 35%;
           justify-content: center;
           margin-bottom: 0;
 
-          #sound-icons-container {
+          #sound-icons-container, #touch-icons-container {
             margin-right: 0;
           }
 
           .keys-icon {
             flex-basis: auto;
           }
+
+          .keys-text {
+            flex-basis: unset;
+          }
+        }
+
+        .keys-container:nth-of-type(2) {
+          margin-bottom: 0;
         }
       }
 

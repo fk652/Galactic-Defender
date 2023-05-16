@@ -62,6 +62,8 @@ class PlayerShip extends Ship {
       shoot: false
     }
 
+    this.mousePosition = null; // {x: xValue, y: yValue}
+
     this.disabled = false;
     this.invincible = false;
   }
@@ -89,14 +91,35 @@ class PlayerShip extends Ship {
 
     if (this.disabled) {
       newVelocity[1] = 2;
+    } else if (this.mousePosition) {
+      const xDiff = this.mousePosition.x - this.position[0];
+      const yDiff = this.mousePosition.y - this.position[1];
+
+      if (xDiff > 0) {
+        newVelocity[0] += Math.min(this.speed, xDiff);
+      } else if (xDiff < 0) {
+        newVelocity[0] -= Math.min(this.speed, -xDiff);
+      }
+
+      if (yDiff > 0) {
+        newVelocity[1] += Math.min(this.speed, yDiff);
+      } else if (yDiff < 0) {
+        newVelocity[1] -= Math.min(this.speed, -yDiff);
+      }
+
+      if (newVelocity[0] && newVelocity[1]) {
+        const speed = (Math.abs(newVelocity[0]) + Math.abs(newVelocity[1])) / 2
+        newVelocity = vectorScale(newVelocity, speed);
+      }
     } else {
-      if (this.keysPressed.right) newVelocity[0] += PlayerShip.SPEED;
-      if (this.keysPressed.left) newVelocity[0] -= PlayerShip.SPEED;
-      if (this.keysPressed.up) newVelocity[1] -= PlayerShip.SPEED;
-      if (this.keysPressed.down) newVelocity[1] += PlayerShip.SPEED;
+      if (this.keysPressed.right) newVelocity[0] += this.speed;
+      if (this.keysPressed.left) newVelocity[0] -= this.speed;
+      if (this.keysPressed.up) newVelocity[1] -= this.speed;
+      if (this.keysPressed.down) newVelocity[1] += this.speed;
+
+      if (newVelocity[0] && newVelocity[1]) newVelocity = vectorScale(newVelocity, this.speed);
     }
 
-    if (newVelocity[0] && newVelocity[1]) newVelocity = vectorScale(newVelocity, this.speed);
     this.velocity = newVelocity;
   }
 
