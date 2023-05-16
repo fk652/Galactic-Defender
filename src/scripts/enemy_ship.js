@@ -5,7 +5,7 @@ import Explosion from "./explosion";
 class EnemyShip extends Ship {
   constructor(game, posX, speed, cooldown) {
     let image = document.createElement("img");
-    image.src = "src/assets/enemy1.png";
+    image.src = "src/assets/images/enemy1.png";
     let height = 40;
     let width = 46;
     let health = 1;
@@ -29,7 +29,7 @@ class EnemyShip extends Ship {
     }
 
     image = document.createElement("img");
-    image.src = "src/assets/enemy_projectile.png";
+    image.src = "src/assets/images/enemy_projectile.png";
 
     const projectileArgs = [{
       objArgs: {

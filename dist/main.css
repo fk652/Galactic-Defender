@@ -101,7 +101,7 @@ table {
   width: 700px;
   height: 550px;
   margin: 0 10px 0 10px;
-  background-image: url(../src/assets/game_background.png);
+  background-image: url(../src/assets/images/game_background.png);
 }
 .main-container #game-view:hover {
   cursor: none;
@@ -473,7 +473,7 @@ table {
 }
 
 body {
-  background-image: url(../src/assets/body_background.png);
+  background-image: url(../src/assets/images/body_background.png);
   background-repeat: repeat;
 }
 

@@ -4,9 +4,9 @@ class Explosion extends MovingObject {
   constructor(game, size, position, explosionType, velocityDelta) {
     const image = document.createElement("img");
     if (explosionType === "minor") {
-      image.src = "src/assets/explosion1.png";
+      image.src = "src/assets/images/explosion1.png";
     } else if (explosionType === "major" ) {
-      image.src = "src/assets/explosion2.png";
+      image.src = "src/assets/images/explosion2.png";
     }
 
     const argsObj = {
@@ -26,12 +26,12 @@ class Explosion extends MovingObject {
       this.maxFrames = 20;
       this.imgSize = 192;
       this.cutSize = 5;
-      image.src = "src/assets/explosion1.png";
+      image.src = "src/assets/images/explosion1.png";
     } else if (explosionType === "major" ) {
       this.maxFrames = 48;
       this.imgSize = 240;
       this.cutSize = 8;
-      image.src = "src/assets/explosion2.png";
+      image.src = "src/assets/images/explosion2.png";
     }
 
     this.frame = 0;

@@ -9,7 +9,7 @@ class PlayerShip extends Ship {
 
   constructor(game) {
     let image = document.createElement("img");
-    image.src = "src/assets/player1.png";
+    image.src = "src/assets/images/player1.png";
     let height = 48;
     let width = 37;
     const objArgs = {
@@ -25,7 +25,7 @@ class PlayerShip extends Ship {
     }
 
     image = document.createElement("img");
-    image.src = "src/assets/player_projectile.png";
+    image.src = "src/assets/images/player_projectile.png";
     const projectileArgs = [{
       objArgs: {
         velocity: [0, -10],

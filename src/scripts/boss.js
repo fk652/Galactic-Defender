@@ -8,7 +8,7 @@ class Boss extends Ship {
 
   constructor(game) {
     let image = document.createElement("img");
-    image.src = "src/assets/boss1.png";
+    image.src = "src/assets/images/boss1.png";
     let height = 220;
     let width = 250
     let health = Boss.MAX_HEALTH;
@@ -27,7 +27,7 @@ class Boss extends Ship {
     }
 
     image = document.createElement("img");
-    image.src = "src/assets/enemy_projectile.png";
+    image.src = "src/assets/images/enemy_projectile.png";
     const projectileArgs = [{
       objArgs: {
         velocity: [0, 8],

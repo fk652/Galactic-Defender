@@ -23,7 +23,7 @@ class GameView {
     this.enemiesRemainingSpan = document.getElementById("enemies-remaining");
 
     const backgroundImg = new Image();
-    backgroundImg.src = "src/assets/game_background.png";
+    backgroundImg.src = "src/assets/images/game_background.png";
     this.backgroundOptions = {
       img: backgroundImg,
       scale: 550 / backgroundImg.height,

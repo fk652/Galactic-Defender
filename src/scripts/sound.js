@@ -1,48 +1,48 @@
 class Sound {
   constructor(game) {
     this.waveBGM = document.createElement("audio");
-    this.waveBGM.src = "src/sounds/wave_bgm.mp3";
+    this.waveBGM.src = "src/assets/sounds/wave_bgm.mp3";
     this.waveBGM.preload = 'auto';
     this.waveBGM.loop = true;
 
     this.bossIncomingBGM = document.createElement("audio");
-    this.bossIncomingBGM.src = "src/sounds/boss_incoming_bgm.mp3";
+    this.bossIncomingBGM.src = "src/assets/sounds/boss_incoming_bgm.mp3";
     this.bossIncomingBGM.preload = 'auto';
     this.bossIncomingBGM.loop = true;
 
     this.bossBGM = document.createElement("audio");
-    this.bossBGM.src = "src/sounds/boss_bgm.mp3"
+    this.bossBGM.src = "src/assets/sounds/boss_bgm.mp3"
     this.bossBGM.preload = 'auto';
     this.bossBGM.loop = true;
 
     this.playerDeathSound = document.createElement("audio");
-    this.playerDeathSound.src = "src/sounds/player_death.wav"
+    this.playerDeathSound.src = "src/assets/sounds/player_death.wav"
     this.playerDeathSound.preload = 'auto';
     this.playerDeathSound.volume = 0.2;
 
     this.bossDeathSound = document.createElement("audio");
-    this.bossDeathSound.src = "src/sounds/boss_death.mp3"
+    this.bossDeathSound.src = "src/assets/sounds/boss_death.mp3"
     this.bossDeathSound.preload = 'auto';
 
     this.gameOverSound = document.createElement("audio");
-    this.gameOverSound.src = "src/sounds/game_over.mp3"
+    this.gameOverSound.src = "src/assets/sounds/game_over.mp3"
     this.gameOverSound.preload = 'auto';
 
     this.winSound = document.createElement("audio");
-    this.winSound.src = "src/sounds/win.mp3"
+    this.winSound.src = "src/assets/sounds/win.mp3"
     this.winSound.preload = 'auto';
     this.winSound.volume = 0.3;
 
     this.playerHurtSound = document.createElement("audio");
-    this.playerHurtSound.src = "src/sounds/player_hurt.wav"
+    this.playerHurtSound.src = "src/assets/sounds/player_hurt.wav"
     this.playerHurtSound.preload = 'auto';
 
     this.audioSources = {
-      defaultProjectile: "src/sounds/default_laser.wav",
-      playerProjectile: "src/sounds/player_laser.wav",
-      enemyProjectile: "src/sounds/enemy_laser.wav",
-      bossProjectile: "src/sounds/boss_projectile.wav",
-      explosion: "src/sounds/explosion.wav"
+      defaultProjectile: "src/assets/sounds/default_laser.wav",
+      playerProjectile: "src/assets/sounds/player_laser.wav",
+      enemyProjectile: "src/assets/sounds/enemy_laser.wav",
+      bossProjectile: "src/assets/sounds/boss_projectile.wav",
+      explosion: "src/assets/sounds/explosion.wav"
     }
 
     this.currentBGM = this.waveBGM;
