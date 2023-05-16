@@ -13,7 +13,7 @@ class Boss extends Ship {
     let width = 250
     let health = Boss.MAX_HEALTH;
     // let health = 1;
-    
+
     const objArgs = {
       width: width,
       height: height,
@@ -64,7 +64,7 @@ class Boss extends Ship {
       positionDeltas: [[75, 180], [width-88, 180]],
       batchFireNum: 1,
       batchFireInterval: 0,
-      cooldown: 3000,
+      cooldown: 2000,
       onCooldown: true,
       projectileArgIndex: 0
     },
@@ -72,7 +72,7 @@ class Boss extends Ship {
       positionDeltas: [[100, 160], [width - 110, 160]],
       batchFireNum: 1,
       batchFireInterval: 0,
-      cooldown: 4000,
+      cooldown: 2000,
       onCooldown: true,
       projectileArgIndex: 0
     }]
@@ -146,16 +146,10 @@ class Boss extends Ship {
   updateShootingPattern() {
     if (this.health === 10) {
       this.patternArgs[3].onCooldown = false;
-      // this.patternArgs[2].onCooldown = false;
-      // this.patternArgs[1].onCooldown = false;
-      // this.patternArgs[0].onCooldown = false;
     } else if (this.health === 15) {
       this.patternArgs[2].onCooldown = false;
-      // this.patternArgs[1].onCooldown = false;
-      // this.patternArgs[0].onCooldown = false;
     } else if (this.health === 18) {
       this.patternArgs[1].onCooldown = false;
-      // this.patternArgs[0].onCooldown = false;
     }
   }
 
