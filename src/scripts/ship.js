@@ -24,12 +24,13 @@ class Ship extends MovingObject {
 
                 new Projectile(projArgs);
               })
-              const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
-              this.playShootSound(projSound);
             }
           }, pattern.batchFireInterval * i);
         }
-
+        
+        const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
+        this.playShootSound(projSound);
+        
         pattern.onCooldown = true;
         const batchCooldownOffset = pattern.batchFireInterval * pattern.batchFireNum;
         setTimeout(this.resetCooldown.bind(this, idx), (pattern.cooldown + batchCooldownOffset));

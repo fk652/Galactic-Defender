@@ -13,6 +13,7 @@ class Boss extends Ship {
     let width = 250
     let health = Boss.MAX_HEALTH;
     // let health = 1;
+    
     const objArgs = {
       width: width,
       height: height,
@@ -32,7 +33,7 @@ class Boss extends Ship {
       objArgs: {
         velocity: [0, 8],
         speed: 8,
-        health: 2,
+        health: 2,  // boss damage
         game: game,
         width: 10,
         height: 40,
@@ -55,7 +56,7 @@ class Boss extends Ship {
       positionDeltas: [[60, 210], [width-76, 210]],
       batchFireNum: 1,
       batchFireInterval: 0,
-      cooldown: 1000,
+      cooldown: 2000,
       onCooldown: true,
       projectileArgIndex: 0
     },
@@ -63,7 +64,7 @@ class Boss extends Ship {
       positionDeltas: [[75, 180], [width-88, 180]],
       batchFireNum: 1,
       batchFireInterval: 0,
-      cooldown: 1000,
+      cooldown: 3000,
       onCooldown: true,
       projectileArgIndex: 0
     },
@@ -71,7 +72,7 @@ class Boss extends Ship {
       positionDeltas: [[100, 160], [width - 110, 160]],
       batchFireNum: 1,
       batchFireInterval: 0,
-      cooldown: 1000,
+      cooldown: 4000,
       onCooldown: true,
       projectileArgIndex: 0
     }]
@@ -125,6 +126,8 @@ class Boss extends Ship {
   }
 
   updateVelocity() {
+    if (this.movementDisabled) return 
+
     if (this.position[1] > 0) {
       this.speed = 1.5;
       if (this.velocity[0] === 0 || this.position[0] < 0) {
@@ -143,11 +146,21 @@ class Boss extends Ship {
   updateShootingPattern() {
     if (this.health === 10) {
       this.patternArgs[3].onCooldown = false;
+      // this.patternArgs[2].onCooldown = false;
+      // this.patternArgs[1].onCooldown = false;
+      // this.patternArgs[0].onCooldown = false;
     } else if (this.health === 15) {
       this.patternArgs[2].onCooldown = false;
+      // this.patternArgs[1].onCooldown = false;
+      // this.patternArgs[0].onCooldown = false;
     } else if (this.health === 18) {
       this.patternArgs[1].onCooldown = false;
+      // this.patternArgs[0].onCooldown = false;
     }
+  }
+
+  shootProjectile() {
+    if (!this.disabled) super.shootProjectile();
   }
 
   damageTaken(damage) {
@@ -161,9 +174,10 @@ class Boss extends Ship {
     this.game.score += 1000;
     this.disabled = true;
 
-    for (let i = 0; i < 20; i++) {
-      if (i % 4 === 0) setTimeout(() => this.game.sounds.add("explosion"), 300 * (i/4));
-      const randTime = Math.floor(Math.random() * (1200 - 100) + 100);
+    for (let i = 0; i < 30; i++) {
+      if (i % 5 === 0) setTimeout(() => this.game.sounds.add("explosion"), 500 * (i/5));
+      const timeDelay = i * 100;
+
       setTimeout(() => {
         const hitBoxes = this.getHitbox();
         const randHitBox = hitBoxes[Math.floor(Math.random()*hitBoxes.length)]
@@ -171,19 +185,25 @@ class Boss extends Ship {
         const randPosY = Math.floor(Math.random() * ((randHitBox.y + randHitBox.height) - randHitBox.y) + randHitBox.y);
         const dx = (this.velocity[0] < 0 ? 30 : 10)
         new Explosion(this.game, 80, [randPosX - dx, randPosY - 70], "minor", [0, 0.1]);
-      }, randTime);
+      }, timeDelay);
     }
+
+    setTimeout(() => {
+      this.velocity = [0,0];
+      this.speed = 0;
+      this.movementDisabled = true;
+    }, 3000);
     
     setTimeout(() => {
+      super.remove();
       this.game.sounds.playBossDeathSound();
       const multiplier = (this.velocity[0] < 0 ? 1 : -1);
       const posX = this.position[0]-(this.width/2);
       const posY = this.position[1]-(this.height/1.5);
       new Explosion(this.game, 500, [posX - 30, posY], "major", [0, 0]);
-      super.remove();
 
-      setTimeout(this.game.setWin.bind(this.game), 2500);
-    }, 1500)
+      setTimeout(this.game.setWin.bind(this.game), 3000);
+    }, 3500)
   }
 }
 
