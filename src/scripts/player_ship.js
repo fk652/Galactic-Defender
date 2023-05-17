@@ -61,10 +61,7 @@ class PlayerShip extends Ship {
       right: false,
       shoot: false
     }
-
-    this.mousePosition = null; // {x: xValue, y: yValue}
-    this.mouseFollow = false;
-
+    
     this.disabled = false;
     this.invincible = false;
   }
@@ -92,9 +89,9 @@ class PlayerShip extends Ship {
 
     if (this.disabled) {
       newVelocity[1] = 2;
-    } else if (this.mouseFollow && this.mousePosition) {
-      const xDiff = this.mousePosition.x - (this.position[0] + (this.width / 2));
-      const yDiff = this.mousePosition.y - (this.position[1] + (this.height / 2));
+    } else if (this.game.gameView.mouseFollow && this.game.gameView.mousePosition) {
+      const xDiff = this.game.gameView.mousePosition.x - (this.position[0] + (this.width / 2));
+      const yDiff = this.game.gameView.mousePosition.y - (this.position[1] + (this.height / 2));
       const deadzone = 1;
 
       if (xDiff > deadzone) {

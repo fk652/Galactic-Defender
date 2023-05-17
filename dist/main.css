@@ -100,6 +100,7 @@ table {
 .main-container #game-view {
   margin: 0 10px 0 10px;
   background-image: url(../src/assets/images/game_background.png);
+  touch-action: pan-y;
 }
 .main-container .game-instructions {
   display: flex;
@@ -532,14 +533,10 @@ table {
 body {
   background-image: url(../src/assets/images/body_background.png);
   background-repeat: repeat;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 body::-webkit-scrollbar {
   display: none;
-}
-
-body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  touch-action: none;
 }

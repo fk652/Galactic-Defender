@@ -42,6 +42,8 @@ class GameView {
 
     this.touchOnElement = document.getElementById("touch-on");
     this.touchOffElement = document.getElementById("touch-off");
+    this.mouseFollow = false;
+    this.mousePosition = null; // {x: xValue, y: yValue}
     this.bindMouseFollowListener();
     this.bindToggleKeybindListener();
 
@@ -263,15 +265,15 @@ class GameView {
     const yScale = this.canvas.height / rect.height;
     const x = (event.clientX - rect.left) * xScale;
     const y = (event.clientY - rect.top) * yScale;
-    this.game.player.mousePosition = {x, y};
+    this.mousePosition = {x, y};
   }
 
   handleMouseOut() {
-    this.game.player.mousePosition = null;
+    this.mousePosition = null;
   }
 
   handleMouseFollowToggle() {
-    if (this.game.player.mouseFollow) {
+    if (this.mouseFollow) {
       this.touchOnElement.style.display = 'none';
       this.touchOffElement.style.display = 'block';
     } else {
@@ -279,7 +281,7 @@ class GameView {
       this.touchOffElement.style.display = 'none';
     }
 
-    this.game.player.mouseFollow = !this.game.player.mouseFollow;
+    this.mouseFollow = !this.mouseFollow;
   }
 
   bindMouseFollowListener() {
