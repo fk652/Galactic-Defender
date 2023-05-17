@@ -57,8 +57,6 @@ $icon-background-color: black;
   }
 
   #game-view {
-    width: 700px;
-    height: 550px;
     margin: 0 10px 0 10px;
     background-image: url(../src/assets/images/game_background.png);
   }
@@ -66,7 +64,7 @@ $icon-background-color: black;
   .game-instructions {
     display: flex;
     flex-wrap: wrap;
-    // justify-content: space-around;
+    justify-content: space-around;
     align-content: start;
     gap: 5px;
     font-size: 25px;

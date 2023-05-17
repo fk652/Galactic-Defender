@@ -98,14 +98,13 @@ table {
   font-family: "Oswald", sans-serif;
 }
 .main-container #game-view {
-  width: 700px;
-  height: 550px;
   margin: 0 10px 0 10px;
   background-image: url(../src/assets/images/game_background.png);
 }
 .main-container .game-instructions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   align-content: start;
   gap: 5px;
   font-size: 25px;
@@ -426,8 +425,8 @@ table {
     font-size: 20px;
   }
   .main-container #game-view {
-    width: calc(100% - 10px) !important;
-    height: auto !important;
+    width: calc(100% - 10px);
+    height: auto;
   }
   .main-container .game-information {
     flex-wrap: wrap;
