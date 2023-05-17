@@ -59,7 +59,7 @@ $icon-background-color: black;
   #game-view {
     margin: 0 10px 0 10px;
     background-image: url(../src/assets/images/game_background.png);
-    touch-action: pan-y;
+    touch-action: none;
   }
 
   .game-instructions {

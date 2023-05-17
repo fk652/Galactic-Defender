@@ -100,7 +100,7 @@ table {
 .main-container #game-view {
   margin: 0 10px 0 10px;
   background-image: url(../src/assets/images/game_background.png);
-  touch-action: pan-y;
+  touch-action: none;
 }
 .main-container .game-instructions {
   display: flex;
