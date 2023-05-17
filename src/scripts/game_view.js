@@ -287,7 +287,7 @@ class GameView {
   handleToggleKeybinds(event) {
     if (event.key === " ") event.preventDefault();
     else if (event.key === "m") this.handleMouseFollowToggle();
-    else if (event.key === "k") this.game.sounds.handleSoundToggle(event);
+    else if (event.key === "k") this.game.sounds.handleSoundToggle();
   }
 
   bindToggleKeybindListener() {

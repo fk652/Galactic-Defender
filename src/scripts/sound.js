@@ -149,8 +149,7 @@ class Sound {
     soundContainer.addEventListener("click", this.handleSoundToggle.bind(this));
   }
 
-  handleSoundToggle(event) {
-    event.preventDefault();
+  handleSoundToggle() {
     if (this.toggle) {
       this.toggleOff()
       this.soundOnElement.style.display = 'none';
