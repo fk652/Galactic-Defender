@@ -4,12 +4,10 @@
     .game-instructions {
       .instructions-container {
         .keys-container {
+          flex-basis: 50%;
+
           .keys-icon {
             margin-right: 10px;
-          }
-
-          .keys-text {
-            font-size: 20px;
           }
         }
       }

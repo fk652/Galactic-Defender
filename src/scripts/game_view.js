@@ -40,6 +40,10 @@ class GameView {
       dy: .75
     }
 
+    this.touchOnElement = document.getElementById("touch-on");
+    this.touchOffElement = document.getElementById("touch-off");
+    this.bindMouseFollowListener();
+
     this.messageDrawn = false;
     this.bindStartHandler();
   }
@@ -152,16 +156,25 @@ class GameView {
   drawStartWinGameOver() {
     if (!this.messageDrawn) {
       const message = this.game.startScreen 
-                      ?  "Press any key to start"
+                      ?  ["Press any key or click here to", "START"]
                       : this.game.gameOver
                         ? "GAME OVER"
                         : "YOU WIN"
 
-      this.ctx.font = "48px roboto";
       this.ctx.textAlign = "center";
       this.ctx.fillStyle = "white";
-      this.ctx.fillText(message, this.canvasWidth/2, this.canvasHeight/2);
+
+      if (this.game.startScreen) {
+        this.ctx.font = "40px roboto";
+        this.ctx.fillText(message[0], this.canvasWidth/2, this.canvasHeight/2 - 50);
+        this.ctx.font = "48px roboto";
+        this.ctx.fillText(message[1], this.canvasWidth/2, this.canvasHeight/2);
+      } else {
+        this.ctx.font = "48px roboto";
+        this.ctx.fillText(message, this.canvasWidth/2, this.canvasHeight/2);
+      }
       this.messageDrawn = true;
+
       if (this.game.gameOver || this.game.win) {
         this.removeControlHandlers();
         this.updateScore();
@@ -172,41 +185,43 @@ class GameView {
 
   drawRetryKey() {
     this.ctx.font = "24px roboto";
-    this.ctx.fillText("(press any key to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
+    this.ctx.fillText("(press any key or click here to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
     this.bindRetryHandler();
   }
 
   bindStartHandler() {
     this.startHandler = this.handleStartKey.bind(this);
     document.addEventListener("keypress", this.startHandler);
+    this.canvas.addEventListener("click", this.startHandler);
   }
 
   handleStartKey(event) {
-    if (event.key === " ") event.preventDefault();
-    if (event.key) {
-      this.game.sounds.switchBGM("waveBGM");
-      this.game.startScreen = false;
-      document.removeEventListener("keypress", this.startHandler)
-      this.bindControlHandlers();
-      setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
-      this.messageDrawn = false;
-    }
+    if (event?.key === " ") event.preventDefault();
+
+    this.game.sounds.switchBGM("waveBGM");
+    this.game.startScreen = false;
+    document.removeEventListener("keypress", this.startHandler)
+    this.canvas.removeEventListener("click", this.startHandler)
+    this.bindControlHandlers();
+    setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
+    this.messageDrawn = false;
   }
 
   bindRetryHandler() {
     this.retryHandler = this.handleRetryKey.bind(this);
     document.addEventListener("keypress", this.retryHandler);
+    this.canvas.addEventListener("click", this.retryHandler);
   }
 
   handleRetryKey(event) {
-    if (event.key === " ") event.preventDefault();
-    if (event.key) {
-      document.removeEventListener("keypress", this.retryHandler);
-      this.game.reset();
-      this.bindControlHandlers();
-      setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
-      this.messageDrawn = false;
-    }
+    if (event?.key === " ") event.preventDefault();
+
+    document.removeEventListener("keypress", this.retryHandler);
+    this.canvas.removeEventListener("click", this.retryHandler);
+    this.game.reset();
+    this.bindControlHandlers();
+    setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
+    this.messageDrawn = false;
   }
 
   handleKeyDown(event) {
@@ -249,6 +264,23 @@ class GameView {
 
   handleMouseOut() {
     this.game.player.mousePosition = null;
+  }
+
+  handleMouseFollowToggle() {
+    if (this.game.player.mouseFollow) {
+      this.touchOnElement.style.display = 'none';
+      this.touchOffElement.style.display = 'block';
+    } else {
+      this.touchOnElement.style.display = 'block';
+      this.touchOffElement.style.display = 'none';
+    }
+
+    this.game.player.mouseFollow = !this.game.player.mouseFollow;
+  }
+
+  bindMouseFollowListener() {
+    const touchContainer = document.getElementById("touch-icons-container");
+    touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
   }
 
   bindControlHandlers() {

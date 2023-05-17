@@ -63,6 +63,7 @@ class PlayerShip extends Ship {
     }
 
     this.mousePosition = null; // {x: xValue, y: yValue}
+    this.mouseFollow = false;
 
     this.disabled = false;
     this.invincible = false;
@@ -91,24 +92,25 @@ class PlayerShip extends Ship {
 
     if (this.disabled) {
       newVelocity[1] = 2;
-    } else if (this.mousePosition) {
-      const xDiff = this.mousePosition.x - this.position[0];
-      const yDiff = this.mousePosition.y - this.position[1];
+    } else if (this.mouseFollow && this.mousePosition) {
+      const xDiff = this.mousePosition.x - (this.position[0] + (this.width / 2));
+      const yDiff = this.mousePosition.y - (this.position[1] + (this.height / 2));
+      const deadzone = 1;
 
-      if (xDiff > 0) {
+      if (xDiff > deadzone) {
         newVelocity[0] += Math.min(this.speed, xDiff);
-      } else if (xDiff < 0) {
+      } else if (xDiff < -deadzone) {
         newVelocity[0] -= Math.min(this.speed, -xDiff);
       }
 
-      if (yDiff > 0) {
+      if (yDiff > deadzone) {
         newVelocity[1] += Math.min(this.speed, yDiff);
-      } else if (yDiff < 0) {
+      } else if (yDiff < -deadzone) {
         newVelocity[1] -= Math.min(this.speed, -yDiff);
       }
 
       if (newVelocity[0] && newVelocity[1]) {
-        const speed = (Math.abs(newVelocity[0]) + Math.abs(newVelocity[1])) / 2
+        const speed = (Math.abs(newVelocity[0]) + Math.abs(newVelocity[1])) / 2;
         newVelocity = vectorScale(newVelocity, speed);
       }
     } else {
