@@ -45,6 +45,7 @@ class GameView {
     this.bindMouseFollowListener();
     this.bindToggleKeybindListener();
 
+    this.pause = false;
     this.messageDrawn = false;
     this.bindStartHandler();
   }
@@ -57,6 +58,8 @@ class GameView {
   animate(time) {
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
       this.drawStartWinGameOver();
+    } else if (this.pause) {
+
     } else {
       this.updateInformation();
       this.draw();
@@ -284,10 +287,17 @@ class GameView {
     touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
   }
 
+  handlePauseToggle() {
+    // add pause function to sounds later
+    // also pause all setTimeouts and setIntervals
+    this.pause = !this.pause;
+  }
+
   handleToggleKeybinds(event) {
     if (event.key === " ") event.preventDefault();
     else if (event.key === "m") this.handleMouseFollowToggle();
     else if (event.key === "k") this.game.sounds.handleSoundToggle();
+    else if (event.key === "p") this.handlePauseToggle();
   }
 
   bindToggleKeybindListener() {
