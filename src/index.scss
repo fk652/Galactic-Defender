@@ -20,4 +20,5 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  touch-action: none;
 }

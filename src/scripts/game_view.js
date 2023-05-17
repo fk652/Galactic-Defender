@@ -314,19 +314,19 @@ class GameView {
 
     document.addEventListener("keydown", this.keyDownHandler);
     document.addEventListener("keyup", this.keyUpHandler);
-    document.addEventListener("mousedown", this.mouseDownHandler);
-    document.addEventListener("mouseup", this.mouseUpHandler);
-    document.addEventListener("mousemove", this.mouseMoveHandler);
-    document.addEventListener("mouseout", this.mouseOutHandler);
+    document.addEventListener("pointerdown", this.mouseDownHandler);
+    document.addEventListener("pointerup", this.mouseUpHandler);
+    document.addEventListener("pointermove", this.mouseMoveHandler);
+    document.addEventListener("pointerout", this.mouseOutHandler);
   }
 
   removeControlHandlers() {
     document.removeEventListener("keydown", this.keyDownHandler);
     document.removeEventListener("keyup", this.keyUpHandler);
-    document.removeEventListener("mousedown", this.mouseDownHandler);
-    document.removeEventListener("mouseup", this.mouseUpHandler);
-    document.removeEventListener("mousemove", this.mouseMoveHandler);
-    document.removeEventListener("mouseout", this.mouseOutHandler);
+    document.removeEventListener("pointerdown", this.mouseDownHandler);
+    document.removeEventListener("pointerup", this.mouseUpHandler);
+    document.removeEventListener("pointermove", this.mouseMoveHandler);
+    document.removeEventListener("pointerout", this.mouseOutHandler);
   }
 }
 
