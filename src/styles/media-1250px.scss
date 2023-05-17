@@ -57,8 +57,32 @@
             flex-basis: auto;
           }
 
-          .keys-text {
+          .keys-text, .keys-text-container {
             flex-basis: unset;
+          }
+
+          .keys-text-container {
+            gap: 5px;
+
+            #sound-text {
+              min-width: 80px;
+            }
+
+            .keys-text:first-of-type {
+              flex-basis: unset;
+            }
+
+            .keys-text:last-of-type {
+              flex-basis: unset;
+            }
+          }
+        }
+
+        .keys-container:nth-of-type(1), 
+        .keys-container:nth-of-type(2) {
+          .keys-icon {
+            flex-basis: 0;
+            margin-right: 15px;
           }
         }
 

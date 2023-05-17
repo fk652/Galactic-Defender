@@ -66,8 +66,8 @@ $icon-background-color: black;
   .game-instructions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    align-content: center;
+    // justify-content: space-around;
+    align-content: start;
     gap: 5px;
     font-size: 25px;
 
@@ -138,14 +138,36 @@ $icon-background-color: black;
           }
         }
 
-        .keys-text {
-          flex-basis: 60%;
-          font-size: 24px;
+        .keys-text, .keys-text-container {
+          flex-basis: 55%;
+        }
+
+        .keys-text-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+
+          .keys-text:first-of-type {
+            flex-basis: 100%;
+          }
+
+          .keys-text:last-of-type {
+            flex-basis: 35%;
+          }
+        }
+      }
+
+      .keys-container:nth-of-type(1), 
+      .keys-container:nth-of-type(2) {
+        .keys-icon {
+          flex-basis: 33%;
+          margin-right: 10px;
         }
       }
 
       .keys-container:nth-of-type(2) {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
     }
 

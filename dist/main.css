@@ -106,8 +106,7 @@ table {
 .main-container .game-instructions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: center;
+  align-content: start;
   gap: 5px;
   font-size: 25px;
 }
@@ -167,12 +166,28 @@ table {
   font-size: 20px;
   background-color: black;
 }
-.main-container .game-instructions .instructions-container .keys-container .keys-text {
-  flex-basis: 60%;
-  font-size: 24px;
+.main-container .game-instructions .instructions-container .keys-container .keys-text, .main-container .game-instructions .instructions-container .keys-container .keys-text-container {
+  flex-basis: 55%;
+}
+.main-container .game-instructions .instructions-container .keys-container .keys-text-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.main-container .game-instructions .instructions-container .keys-container .keys-text-container .keys-text:first-of-type {
+  flex-basis: 100%;
+}
+.main-container .game-instructions .instructions-container .keys-container .keys-text-container .keys-text:last-of-type {
+  flex-basis: 35%;
+}
+.main-container .game-instructions .instructions-container .keys-container:nth-of-type(1) .keys-icon,
+.main-container .game-instructions .instructions-container .keys-container:nth-of-type(2) .keys-icon {
+  flex-basis: 33%;
+  margin-right: 10px;
 }
 .main-container .game-instructions .instructions-container .keys-container:nth-of-type(2) {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .main-container .game-instructions ul {
   margin-left: 5px;
@@ -319,8 +334,25 @@ table {
   .main-container .game-instructions .instructions-container .keys-container .keys-icon {
     flex-basis: auto;
   }
-  .main-container .game-instructions .instructions-container .keys-container .keys-text {
+  .main-container .game-instructions .instructions-container .keys-container .keys-text, .main-container .game-instructions .instructions-container .keys-container .keys-text-container {
     flex-basis: unset;
+  }
+  .main-container .game-instructions .instructions-container .keys-container .keys-text-container {
+    gap: 5px;
+  }
+  .main-container .game-instructions .instructions-container .keys-container .keys-text-container #sound-text {
+    min-width: 80px;
+  }
+  .main-container .game-instructions .instructions-container .keys-container .keys-text-container .keys-text:first-of-type {
+    flex-basis: unset;
+  }
+  .main-container .game-instructions .instructions-container .keys-container .keys-text-container .keys-text:last-of-type {
+    flex-basis: unset;
+  }
+  .main-container .game-instructions .instructions-container .keys-container:nth-of-type(1) .keys-icon,
+  .main-container .game-instructions .instructions-container .keys-container:nth-of-type(2) .keys-icon {
+    flex-basis: 0;
+    margin-right: 15px;
   }
   .main-container .game-instructions .instructions-container .keys-container:nth-of-type(2) {
     margin-bottom: 0;
@@ -447,6 +479,10 @@ table {
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-text {
     flex-basis: unset;
+    font-size: 16px;
+  }
+  .main-container .game-instructions .instructions-container .keys-container .keys-text-container #sound-text {
+    min-width: 55px;
   }
   .main-container .game-instructions .instructions-container .keys-container #sound-icons-container .sound-icon {
     font-size: 30px;
@@ -454,10 +490,10 @@ table {
   .main-container .game-instructions .instructions-container .keys-container #touch-icons-container {
     margin-right: 10px;
   }
-  .main-container .game-instructions .instructions-container .keys-container .keys-text {
-    font-size: 16px;
+  .main-container .game-instructions .instructions-container .keys-container:nth-of-type(1) .keys-icon {
+    margin-right: 5px;
   }
-  .main-container .game-instructions .keys-container:nth-of-type(2) .keys-icon {
+  .main-container .game-instructions .instructions-container .keys-container:nth-of-type(2) .keys-icon {
     margin-right: 0;
   }
   .main-container .game-instructions ul li {
