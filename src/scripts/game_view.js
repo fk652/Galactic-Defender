@@ -43,6 +43,7 @@ class GameView {
     this.touchOnElement = document.getElementById("touch-on");
     this.touchOffElement = document.getElementById("touch-off");
     this.bindMouseFollowListener();
+    this.bindToggleKeybindListener();
 
     this.messageDrawn = false;
     this.bindStartHandler();
@@ -281,6 +282,16 @@ class GameView {
   bindMouseFollowListener() {
     const touchContainer = document.getElementById("touch-icons-container");
     touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
+  }
+
+  handleToggleKeybinds(event) {
+    if (event.key === " ") event.preventDefault();
+    else if (event.key === "m") this.handleMouseFollowToggle();
+    else if (event.key === "k") this.game.sounds.handleSoundToggle(event);
+  }
+
+  bindToggleKeybindListener() {
+    document.addEventListener("keydown", this.handleToggleKeybinds.bind(this));
   }
 
   bindControlHandlers() {
