@@ -267,7 +267,6 @@ table {
   display: flex;
   justify-content: center;
   align-content: flex-start;
-  flex-wrap: wrap;
   min-height: 30px;
 }
 .main-container .game-information #boss-info #boss-health-bar .boss-health-point {
@@ -441,8 +440,9 @@ table {
   .main-container .game-information #boss-info {
     flex-direction: column;
     align-items: flex-start;
+    justify-content: start;
     margin-bottom: 10px;
-    width: 255px;
+    width: 260px;
   }
   .main-container .game-information #boss-info #boss-health-bar {
     flex-direction: row;
@@ -490,7 +490,7 @@ table {
     width: 8px;
   }
   .main-container .game-information #boss-info {
-    width: 205px;
+    width: 210px;
   }
   .main-container .game-information #boss-info #boss-health-bar {
     min-height: 15px;
@@ -561,7 +561,7 @@ table {
     width: 5px;
   }
   .main-container .game-information #boss-info {
-    width: 155px;
+    width: 160px;
   }
   .main-container .game-information #boss-info #boss-health-bar {
     min-height: 10px;

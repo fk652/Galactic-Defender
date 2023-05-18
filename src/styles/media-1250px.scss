@@ -174,8 +174,9 @@
       #boss-info {
         flex-direction: column;
         align-items: flex-start;
+        justify-content: start;
         margin-bottom: 10px;
-        width: 255px;
+        width: 260px;
 
         #boss-health-bar{
           flex-direction: row;
