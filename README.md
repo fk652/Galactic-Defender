@@ -159,7 +159,7 @@ ___
 * [ ] Enemy variety with different movement and shooting patterns.
 * [ ] Indestructable obstacles like asteroids that the player must avoid.
 * [ ] Multiple levels with different backgrounds and final bosses. Player must then beat all levels to win the game.
-* [ ] Player can also control the ship with mouse movements.
+* [x] Player can also control the ship with mouse and touch movements.
 
 ## Credits
 
