@@ -60,6 +60,7 @@ $icon-background-color: black;
     margin: 0 10px 0 10px;
     background-image: url(../src/assets/images/game_background.png);
     touch-action: none;
+    cursor: crosshair;
   }
 
   .game-instructions {
@@ -67,13 +68,29 @@ $icon-background-color: black;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: start;
-    gap: 5px;
     font-size: 25px;
 
     .instructions-container {
       display: flex;
       flex-wrap: wrap;
       flex-basis: 100%;
+
+      .settings-container {
+        display: flex;
+        flex-basis: 100%;
+        flex-direction: column;
+
+        .keys-container{
+          .keys-icon {
+            flex-basis: 33%;
+            justify-content: end;
+          }
+        }
+
+        .keys-container:last-of-type {
+          margin: 10px 0;
+        }
+      }
 
       .keys-container {
         display: flex;
@@ -114,10 +131,26 @@ $icon-background-color: black;
           }
         }
 
+        #pause-icons-container {
+          margin-right: 26px;
+          
+          #pause-on {
+            display: none;
+          }
+          
+          .pause-icon {
+            font-size: 25px;
+    
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+
         .keys-icon {
           display: flex;
-          justify-content: end;
-          flex-basis: 45%;
+          justify-content: center;
+          flex-basis: 55%;
           margin-right: 15px;
 
           .arrow-icons {
@@ -137,15 +170,16 @@ $icon-background-color: black;
           }
         }
 
-        .keys-text, .keys-text-container {
+        .keys-text {
           flex-basis: 55%;
+          font-size: 22px;
         }
 
         .keys-text-container {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 10px;
+          flex-basis: 55%;
 
           .keys-text:first-of-type {
             flex-basis: 100%;
@@ -156,24 +190,12 @@ $icon-background-color: black;
           }
         }
       }
-
-      .keys-container:nth-of-type(1), 
-      .keys-container:nth-of-type(2) {
-        .keys-icon {
-          flex-basis: 33%;
-          margin-right: 10px;
-        }
-      }
-
-      .keys-container:nth-of-type(2) {
-        margin-bottom: 10px;
-      }
     }
 
     ul {
       margin-left: 5px;
       li {
-        margin-top: 15px;
+        margin-top: 10px;
         font-size: 20px;
       }
     }
@@ -182,6 +204,7 @@ $icon-background-color: black;
   .game-information {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;

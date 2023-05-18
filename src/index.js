@@ -41,9 +41,9 @@ soundsUrls.forEach((url, i) => {
   preloadedSounds[i].src = url;
 })
 
-window.addEventListener("load", () => {
+// window.addEventListener("load", () => {
   window.canvas = document.getElementById("game-view");
   window.ctx = canvas.getContext("2d");
   const view = new GameView(canvas, ctx);
   view.start()
-});
+// });

@@ -4,7 +4,7 @@
     .game-instructions {
       .instructions-container {
         .keys-container {
-          flex-basis: 50%;
+          flex-basis: 45%;
 
           .keys-icon {
             margin-right: 10px;
@@ -14,7 +14,7 @@
 
       ul {
         li {
-          font-size: 20px;
+          font-size: 18px;
         }
       }
     }
@@ -27,17 +27,16 @@
     .game-information {
       flex-wrap: wrap;
       font-size: 20px;
+      column-gap: 20px;
 
       .score-container {
-        margin-right: 20px;
-
         #score {
           min-height: 12px;
         }
       }
 
       .player-health {
-        margin-right: 20px;
+        width: 130px;
 
         #player-health-bar{
           min-height: 15px;
@@ -50,6 +49,8 @@
       }
 
       #boss-info {
+        width: 200px;
+
         #boss-health-bar{
           min-height: 15px;
 

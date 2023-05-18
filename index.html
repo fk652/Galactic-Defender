@@ -48,7 +48,7 @@
           <span id="score"></span>
         </div>
 
-        <div class="break"></div>
+        <!-- <div class="break"></div> -->
 
         <div class="player-health">
           <p>Player Health</p>
@@ -61,7 +61,7 @@
             <p>Remaining:</p>
           </div>
 
-          <div class="break"></div>
+          <!-- <div class="break"></div> -->
 
           <div class="wave-numbers">
             <span id="wave-number"></span>
@@ -79,37 +79,56 @@
 
       <aside class="game-instructions">
         <div class="instructions-container">
-          <div class="keys-container">
-            <div class="keys-icon">
-              <div id="sound-icons-container">
-                <div id="sound-on" class="sound-icon">
-                  <i class="fa fa-volume-up"></i>
-                </div>
-                <div id="sound-off" class="sound-icon">
-                  <i class="fa fa-volume-off"></i>
+          <div class="settings-container">
+            <div class="keys-container">
+              <div class="keys-icon">
+                <div id="touch-icons-container">
+                  <div id="touch-on" class="touch-icon">
+                    <i class="fa fa-check-square"></i>
+                  </div>
+                  <div id="touch-off" class="touch-icon">
+                    <i class="fa fa-square"></i>
+                  </div>
                 </div>
               </div>
+              <div class="keys-text-container">
+                <p id="touch-text" class="keys-text">mouse follow</p>
+                <p class="keys-text">(M)</p>
+              </div>
             </div>
-            <div class="keys-text-container">
-              <p id="sound-text" class="keys-text">muted</p>
-              <p class="keys-text">(K)</p>
-            </div>
-          </div>
 
-          <div class="keys-container">
-            <div class="keys-icon">
-              <div id="touch-icons-container">
-                <div id="touch-on" class="touch-icon">
-                  <i class="fa fa-check-square"></i>
-                </div>
-                <div id="touch-off" class="touch-icon">
-                  <i class="fa fa-square"></i>
+            <div class="keys-container">
+              <div class="keys-icon">
+                <div id="sound-icons-container">
+                  <div id="sound-on" class="sound-icon">
+                    <i class="fa fa-volume-up"></i>
+                  </div>
+                  <div id="sound-off" class="sound-icon">
+                    <i class="fa fa-volume-off"></i>
+                  </div>
                 </div>
               </div>
+              <div class="keys-text-container">
+                <p id="sound-text" class="keys-text">muted</p>
+                <p class="keys-text">(K)</p>
+              </div>
             </div>
-            <div class="keys-text-container">
-              <p class="keys-text">mouse follow</p>
-              <p class="keys-text">(M)</p>
+
+            <div class="keys-container">
+              <div class="keys-icon">
+                <div id="pause-icons-container">
+                  <div id="pause-on" class="pause-icon">
+                    <i class="fa fa-play"></i>
+                  </div>
+                  <div id="pause-off" class="pause-icon">
+                    <i class="fa fa-pause"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="keys-text-container">
+                <p id="pause-text" class="keys-text">pause</p>
+                <p class="keys-text">(P)</p>
+              </div>
             </div>
           </div>
 

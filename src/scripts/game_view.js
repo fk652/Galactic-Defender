@@ -47,9 +47,27 @@ class GameView {
     this.bindMouseFollowListener();
     this.bindToggleKeybindListener();
 
+    this.pauseOnElement = document.getElementById("pause-on");
+    this.pauseOffElement = document.getElementById("pause-off");
+    this.pauseText = document.getElementById("pause-text");
     this.pause = false;
     this.messageDrawn = false;
     this.bindStartHandler();
+
+    document.addEventListener("visibilitychange", () => {
+      if (
+        document.hidden && 
+        !(this.game.startScreen || this.game.gameOver || this.game.win) && 
+        !this.pause
+      ) {
+        this.handlePauseToggle();
+      }
+    });
+
+    if (( 'ontouchstart' in window ) || ( navigator.maxTouchPoints > 0 ) || ( navigator.msMaxTouchPoints > 0 )) {
+      document.getElementById("touch-text").innerText = "touch follow"
+      this.handleMouseFollowToggle();
+    }
   }
 
   start() {
@@ -189,6 +207,13 @@ class GameView {
     }
   }
 
+  drawPause() {
+    this.ctx.textAlign = "center";
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "48px roboto";
+    this.ctx.fillText("PAUSED", this.canvasWidth/2, this.canvasHeight/2);
+  }
+
   drawRetryKey() {
     this.ctx.font = "24px roboto";
     this.ctx.fillText("(press any key or click here to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
@@ -287,11 +312,27 @@ class GameView {
   bindMouseFollowListener() {
     const touchContainer = document.getElementById("touch-icons-container");
     touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
+
+    const pauseContainer = document.getElementById("pause-icons-container");
+    pauseContainer.addEventListener("click", this.handlePauseToggle.bind(this));
   }
 
   handlePauseToggle() {
     // add pause function to sounds later
     // also pause all setTimeouts and setIntervals
+    if (this.game.startScreen || this.game.gameOver || this.game.win) return;
+
+    if (this.pause) {
+      this.pauseOnElement.style.display = 'none';
+      this.pauseOffElement.style.display = 'block';
+      this.pauseText.innerText = 'pause';
+    } else {
+      this.pauseOnElement.style.display = 'block';
+      this.pauseOffElement.style.display = 'none';
+      this.pauseText.innerText = 'play';
+      this.drawPause();
+    }
+
     this.pause = !this.pause;
   }
 

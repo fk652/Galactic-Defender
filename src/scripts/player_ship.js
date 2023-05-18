@@ -92,7 +92,7 @@ class PlayerShip extends Ship {
     } else if (this.game.gameView.mouseFollow && this.game.gameView.mousePosition) {
       const xDiff = this.game.gameView.mousePosition.x - (this.position[0] + (this.width / 2));
       const yDiff = this.game.gameView.mousePosition.y - (this.position[1] + (this.height / 2));
-      const deadzone = 1;
+      const deadzone = 2;
 
       if (xDiff > deadzone) {
         newVelocity[0] += Math.min(this.speed, xDiff);
