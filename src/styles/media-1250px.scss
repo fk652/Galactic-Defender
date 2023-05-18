@@ -77,6 +77,10 @@
 
           .keys-icon {
             flex-basis: auto;
+
+            .spacebar {
+              margin-left: 0;
+            }
           }
 
           .keys-text {
@@ -148,11 +152,11 @@
         align-items: start; 
 
         p {
-          margin-bottom: 10px;
+          margin-bottom: 8px;
         }
 
         #score {
-          min-height: 14px;
+          min-height: 24px;
         }
       }
   
@@ -163,7 +167,7 @@
         width: 155px;
 
         #player-health-bar{
-          min-height: 15px;
+          min-height: 21px;
 
           .player-health-point {
             height: 15px;

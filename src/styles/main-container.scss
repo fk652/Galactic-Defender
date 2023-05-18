@@ -150,8 +150,9 @@ $icon-background-color: black;
         .keys-icon {
           display: flex;
           justify-content: center;
-          flex-basis: 55%;
-          margin-right: 15px;
+          align-items: center;
+          flex-basis: 80%;
+          margin-right: 5px;
 
           .arrow-icons {
             display: flex;
@@ -162,11 +163,21 @@ $icon-background-color: black;
   
           .spacebar {
             border: 3px solid $main-color;
-            padding-bottom: 6px;
-            width: 80px;
+            padding: 0 4px 4px 4px;
+            width: 70px;
+            height: 22px;
             text-align: center;
-            font-size: 20px;
+            font-size: 18px;
             background-color: $icon-background-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            margin-left: 10px;
+          }
+
+          .mouse-click {
+            width: 30px;
           }
         }
 
@@ -234,7 +245,7 @@ $icon-background-color: black;
       #player-health-bar {
         display: flex;
         align-content: flex-start;
-        min-height: 20px;
+        min-height: 26px;
 
         .player-health-point {
           width: 10px;
@@ -262,7 +273,7 @@ $icon-background-color: black;
         justify-content: center;
         align-content: flex-start;
         // flex-wrap: wrap;
-        min-height: 30px;
+        min-height: 36px;
 
         .boss-health-point {
           width: 15px;
@@ -288,6 +299,8 @@ $icon-background-color: black;
         justify-content: space-around;
         margin-left: 10px;
         margin-top: 4px;
+        min-width: 25px;
+
         span:first-child {
           margin-bottom: 5px;
         }
