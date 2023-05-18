@@ -172,30 +172,41 @@ table {
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  flex-basis: 80%;
-  margin-right: 5px;
+  flex-basis: 160%;
+  margin: 0 5px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .arrow-icons {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   width: 75px;
+  height: 50px;
+  margin-right: 5px;
+}
+.main-container .game-instructions .instructions-container .keys-container .keys-icon .keyboard-key {
+  border: 3px solid white;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .spacebar {
   border: 3px solid white;
   padding: 0 4px 4px 4px;
-  width: 70px;
-  height: 22px;
+  width: 60px;
+  height: 20px;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 5px;
-  margin-left: 10px;
+  margin-left: 1px;
+  margin-right: 28px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .mouse-click {
   width: 30px;
@@ -362,7 +373,7 @@ table {
   }
   .main-container .game-instructions .instructions-container .settings-container .keys-container .keys-icon {
     flex-basis: 0;
-    margin-right: 15px;
+    margin-right: 18px;
   }
   .main-container .game-instructions .instructions-container .settings-container .keys-container:last-of-type {
     margin: 5px 0 0 0;
@@ -379,9 +390,11 @@ table {
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon {
     flex-basis: auto;
+    margin-left: 0;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .spacebar {
     margin-left: 0;
+    margin-right: 5px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-text {
     font-size: 20px;
@@ -397,9 +410,10 @@ table {
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-text-container #pause-text {
     width: 50px;
+    margin-right: 5px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-text-container #touch-text {
-    width: 45px;
+    width: 50px;
     margin-right: 10px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-text-container .keys-text:first-of-type {
@@ -476,7 +490,7 @@ table {
     flex-basis: 45%;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon {
-    margin-right: 10px;
+    margin-right: 5px;
   }
   .main-container .game-instructions ul li {
     font-size: 18px;
@@ -536,18 +550,27 @@ table {
     justify-content: center;
     align-items: center;
     width: 65px;
+    height: 40px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .arrow-icons i:nth-of-type(3) {
     margin: 0 2px;
   }
+  .main-container .game-instructions .instructions-container .keys-container .keys-icon .keyboard-key {
+    font-size: 10px;
+    width: 14px;
+    height: 14px;
+    margin-right: 2px;
+  }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .spacebar {
-    width: 50px;
-    height: 18px;
-    font-size: 14px;
+    width: 45px;
+    height: 14px;
+    font-size: 12px;
     padding-bottom: 3px;
+    margin-left: 1px;
+    margin-right: 28px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .mouse-click {
-    width: 26px;
+    width: 24px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-text {
     flex-basis: unset;
@@ -558,6 +581,12 @@ table {
   }
   .main-container .game-instructions .instructions-container .keys-container #sound-icons-container .sound-icon {
     font-size: 30px;
+  }
+  .main-container .game-instructions .instructions-container #shoot, .main-container .game-instructions .instructions-container #move {
+    flex-basis: 100%;
+  }
+  .main-container .game-instructions .instructions-container #shoot .keys-icon {
+    width: 135px;
   }
   .main-container .game-instructions ul li {
     font-size: 16px;

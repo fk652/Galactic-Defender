@@ -55,7 +55,7 @@
 
             .keys-icon {
               flex-basis: 0;
-              margin-right: 15px;
+              margin-right: 18px;
             }
           }
   
@@ -77,9 +77,11 @@
 
           .keys-icon {
             flex-basis: auto;
+            margin-left: 0;
 
             .spacebar {
               margin-left: 0;
+              margin-right: 5px;
             }
           }
 
@@ -100,10 +102,11 @@
 
             #pause-text {
               width: 50px;
+              margin-right: 5px;
             }
 
             #touch-text {
-              width: 45px;
+              width: 50px;
               margin-right: 10px;
             }
 
