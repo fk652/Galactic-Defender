@@ -84,6 +84,7 @@ $icon-background-color: black;
           .keys-icon {
             flex-basis: 33%;
             justify-content: end;
+            margin-right: 20px;
           }
         }
 
@@ -151,8 +152,9 @@ $icon-background-color: black;
           display: flex;
           justify-content: start;
           align-items: center;
-          flex-basis: 160%;
-          margin: 0 5px;
+          flex-basis: 120%;
+          // margin: 0 5px;
+          margin-left: 5px;
 
           .arrow-icons {
             display: flex;
@@ -194,7 +196,7 @@ $icon-background-color: black;
         }
 
         .keys-text {
-          flex-basis: 55%;
+          flex-basis: 35%;
           font-size: 22px;
         }
 
@@ -209,7 +211,7 @@ $icon-background-color: black;
           }
 
           .keys-text:last-of-type {
-            flex-basis: 35%;
+            flex-basis: 50%;
           }
         }
       }

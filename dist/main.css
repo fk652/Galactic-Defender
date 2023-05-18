@@ -123,6 +123,7 @@ table {
 .main-container .game-instructions .instructions-container .settings-container .keys-container .keys-icon {
   flex-basis: 33%;
   justify-content: end;
+  margin-right: 20px;
 }
 .main-container .game-instructions .instructions-container .settings-container .keys-container:last-of-type {
   margin: 10px 0;
@@ -174,8 +175,8 @@ table {
   display: flex;
   justify-content: start;
   align-items: center;
-  flex-basis: 160%;
-  margin: 0 5px;
+  flex-basis: 120%;
+  margin-left: 5px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .arrow-icons {
   display: flex;
@@ -212,7 +213,7 @@ table {
   width: 30px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-text {
-  flex-basis: 55%;
+  flex-basis: 35%;
   font-size: 22px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-text-container {
@@ -225,7 +226,7 @@ table {
   flex-basis: 100%;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-text-container .keys-text:last-of-type {
-  flex-basis: 35%;
+  flex-basis: 50%;
 }
 .main-container .game-instructions ul {
   margin-left: 5px;
