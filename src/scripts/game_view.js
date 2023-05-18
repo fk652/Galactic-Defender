@@ -170,7 +170,7 @@ class GameView {
   switchGameInformation() {
     if (this.game.bossFight) {
       this.waveInfo.style.display = "none";
-      this.bossInfo.style.display = "flex";
+      this.bossInfo.style.display = "block";
     } else {
       this.waveInfo.style.display = "flex";
       this.bossInfo.style.display = "none";

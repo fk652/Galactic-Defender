@@ -1,19 +1,36 @@
 @media screen and (max-width: 480px) {
   .main-container {
+    .header {
+      .project-title {
+        font-size: 30px;
+      }
+
+      .dev-name {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .nav-links {
+        a {
+          margin: 0 5px;
+          i {
+            font-size: 16px;
+          }
+        }
+      }
+    }
 
     .game-instructions {
       .instructions-container {
         justify-content: space-around;
         
         .settings-container {
-          padding: 0 10px;
-          column-gap: 30px;
+          padding: 0 5px;
+          column-gap: 5px;
           
           .keys-container {
-            .keys-text-container {
-              #touch-text {
-                margin-right: 5px;
-              }
+            .keys-icon {
+              margin-right: 10px;
             }
           }
 
@@ -67,15 +84,47 @@
           .keys-text-container {
             #sound-text {
               width: 55px;
+              margin-right: 0;
+            }
+
+            #touch-text {
+              width: 40px;
+              margin-right: 5px;
+            }
+
+            #pause-text {
+              width: 35px;
+              margin-right: 5px;
             }
           }
 
-          #sound-icons-container .sound-icon {
-            font-size: 30px;
+          #sound-icons-container {
+            width: 32px;
+
+            .sound-icon {
+              font-size: 24px;
+            }
+          }
+
+          #touch-icons-container {
+            .touch-icon {
+              font-size: 18px;
+            }
+          }
+
+          #pause-icons-container {
+            .pause-icon {
+              font-size: 18px;
+            }
           }
         }
 
+        #touch {
+          margin-right: 5px;
+        }
+        
         #shoot, #move {
+          justify-content: center;
           flex-basis: 100%;
         }
 
@@ -86,26 +135,27 @@
 
       ul {
         li {
-          font-size: 16px;
+          font-size: 14px;
         }
       }
     }
 
     .game-information {
-      font-size: 16px;
+      font-size: 14px;
       column-gap: 10px;
 
       .score-container {
         #score {
-          min-height: 10px;
+          min-height: 16px;
         }
       }
 
       .player-health {
-        width: 105px;
+        width: 100px;
+        margin-bottom: 0;
 
         #player-health-bar{
-          min-height: 10px;
+          min-height: 16px;
 
           .player-health-point {
             height: 10px;
@@ -116,9 +166,10 @@
 
       #boss-info {
         width: 160px;
+        margin-bottom: 0;
 
         #boss-health-bar{
-          min-height: 10px;
+          min-height: 16px;
 
           .boss-health-point {
             height: 10px;

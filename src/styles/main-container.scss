@@ -277,17 +277,19 @@ $icon-background-color: black;
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-
+      
       p {
         margin: 10px 0;
+        text-align: center;
       }
-
+      
       #boss-health-bar {
         display: flex;
-        justify-content: center;
+        justify-content: start;
         align-content: flex-start;
         // flex-wrap: wrap;
         min-height: 36px;
+        width: 200px;
 
         .boss-health-point {
           width: 15px;
@@ -303,21 +305,13 @@ $icon-background-color: black;
       display: flex;
       align-items: center;
 
-      .wave-text p {
+      .wave-text p, .wave-numbers p {
         margin: 5px 0;
       }
 
       .wave-numbers {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
         margin-left: 10px;
-        margin-top: 4px;
         min-width: 25px;
-
-        span:first-child {
-          margin-bottom: 5px;
-        }
       }
     }
   }

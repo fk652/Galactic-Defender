@@ -26,7 +26,7 @@
     aside {
       flex-basis: 690px;
       height: auto;
-      min-height: 75px;
+      min-height: 70px;
     }
 
     .game-instructions {
@@ -42,20 +42,22 @@
         flex-basis: 100%;
         justify-content: center;
         row-gap: 10px;
+        column-gap: 20px;
         flex-wrap: wrap-reverse;
 
         .settings-container {
           flex-direction: row;
-          justify-content: start;
+          justify-content: space-evenly;
           flex-wrap: wrap;
           column-gap: 15px;
   
           .keys-container{
             flex-basis: 30%;
+            justify-content: center;
 
             .keys-icon {
               flex-basis: 0;
-              margin-right: 18px;
+              margin-right: 15px;
             }
           }
   
@@ -78,6 +80,7 @@
           .keys-icon {
             flex-basis: auto;
             margin-left: 0;
+            margin-right: 5px;
 
             .spacebar {
               margin-left: 0;
@@ -91,17 +94,17 @@
 
           .keys-text, .keys-text-container {
             flex-basis: unset;
+            margin-bottom: 2px;
           }
 
           .keys-text-container {
-            gap: 5px;
-
             #sound-text {
               width: 65px;
+              margin-right: 5px;
             }
 
             #pause-text {
-              width: 50px;
+              width: 45px;
               margin-right: 5px;
             }
 
@@ -153,21 +156,26 @@
         display: flex;
         flex-direction: column;
         align-items: start; 
+        margin-bottom: 0;
 
         p {
-          margin-bottom: 8px;
+          margin: 5px 0 10px 0;
         }
 
         #score {
-          min-height: 24px;
+          min-height: 21px;
         }
       }
   
       .player-health {
         // margin-right: 30px;
-        margin-bottom: 10px;
+        margin-bottom: 0;
         text-align: start;
         width: 155px;
+
+        p {
+          margin: 5px 0 10px 0;
+        }
 
         #player-health-bar{
           min-height: 21px;
@@ -179,15 +187,18 @@
       }
 
       #boss-info {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: start;
-        margin-bottom: 10px;
+        margin-bottom: 0;
         width: 260px;
+
+        p {
+          text-align: start;
+          margin: 4px 0 9px 0;
+        }
 
         #boss-health-bar{
           flex-direction: row;
-          min-height: 15px;
+          justify-content: start;
+          min-height: 21px;
 
           .boss-health-point {
             height: 15px;
@@ -199,6 +210,18 @@
       #wave-info {
         display: flex;
         align-items: center;
+
+        .wave-text p:first-of-type {
+          margin: 10px 0;
+        }
+
+        .wave-numbers p {
+          margin: 5px 0;
+        }
+
+        .wave-numbers p:first-of-type {
+          margin: 10px 0;
+        }
       }
     }
   }
