@@ -168,13 +168,13 @@ class Boss extends Ship {
     this.game.score += 1000;
     this.disabled = true;
 
-    for (let i = 0; i < 30; i++) {
-      if (i % 5 === 0) setTimeout(() => this.game.sounds.add("explosion"), 500 * (i/5));
-      const timeDelay = i * 100;
+    for (let i = 0; i < 20; i++) {
+      const timeDelay = i * 200;
+      if (i % 2 === 0) setTimeout(() => this.game.sounds.add("explosion"), timeDelay);
 
       setTimeout(() => {
         const hitBoxes = this.getHitbox();
-        const randHitBox = hitBoxes[Math.floor(Math.random()*hitBoxes.length)]
+        const randHitBox = hitBoxes[i % hitBoxes.length]
         const randPosX = Math.floor(Math.random() * ((randHitBox.x + randHitBox.width) - randHitBox.x) + randHitBox.x);
         const randPosY = Math.floor(Math.random() * ((randHitBox.y + randHitBox.height) - randHitBox.y) + randHitBox.y);
         const dx = (this.velocity[0] < 0 ? 30 : 10)
@@ -182,22 +182,22 @@ class Boss extends Ship {
       }, timeDelay);
     }
 
-    setTimeout(() => {
-      this.velocity = [0,0];
-      this.speed = 0;
-      this.movementDisabled = true;
-    }, 3000);
+    // setTimeout(() => {
+    //   this.velocity = [0,0];
+    //   this.speed = 0;
+    //   this.movementDisabled = true;
+    // }, 3000);
     
     setTimeout(() => {
-      super.remove();
       this.game.sounds.playBossDeathSound();
       const multiplier = (this.velocity[0] < 0 ? 1 : -1);
       const posX = this.position[0]-(this.width/2);
       const posY = this.position[1]-(this.height/1.5);
       new Explosion(this.game, 500, [posX - 30, posY], "major", [0, 0]);
+      super.remove();
 
       setTimeout(this.game.setWin.bind(this.game), 3000);
-    }, 3500)
+    }, 4500)
   }
 }
 
