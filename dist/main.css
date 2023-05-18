@@ -430,7 +430,7 @@ table {
   .main-container .game-information .player-health {
     margin-bottom: 10px;
     text-align: start;
-    width: 150px;
+    width: 155px;
   }
   .main-container .game-information .player-health #player-health-bar {
     min-height: 15px;
@@ -442,7 +442,7 @@ table {
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 10px;
-    width: 250px;
+    width: 255px;
   }
   .main-container .game-information #boss-info #boss-health-bar {
     flex-direction: row;
@@ -480,7 +480,7 @@ table {
     min-height: 12px;
   }
   .main-container .game-information .player-health {
-    width: 130px;
+    width: 135px;
   }
   .main-container .game-information .player-health #player-health-bar {
     min-height: 15px;
@@ -490,7 +490,7 @@ table {
     width: 8px;
   }
   .main-container .game-information #boss-info {
-    width: 200px;
+    width: 205px;
   }
   .main-container .game-information #boss-info #boss-health-bar {
     min-height: 15px;
@@ -551,7 +551,7 @@ table {
     min-height: 10px;
   }
   .main-container .game-information .player-health {
-    width: 100px;
+    width: 105px;
   }
   .main-container .game-information .player-health #player-health-bar {
     min-height: 10px;
@@ -561,7 +561,7 @@ table {
     width: 5px;
   }
   .main-container .game-information #boss-info {
-    width: 150px;
+    width: 155px;
   }
   .main-container .game-information #boss-info #boss-health-bar {
     min-height: 10px;
