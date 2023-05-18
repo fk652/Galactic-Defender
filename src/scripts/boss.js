@@ -182,11 +182,11 @@ class Boss extends Ship {
       }, timeDelay);
     }
 
-    // setTimeout(() => {
-    //   this.velocity = [0,0];
-    //   this.speed = 0;
-    //   this.movementDisabled = true;
-    // }, 3000);
+    setTimeout(() => {
+      this.velocity = [0,0];
+      this.speed = 0;
+      this.movementDisabled = true;
+    }, 4000);
     
     setTimeout(() => {
       this.game.sounds.playBossDeathSound();
@@ -196,7 +196,7 @@ class Boss extends Ship {
       new Explosion(this.game, 500, [posX - 30, posY], "major", [0, 0]);
       super.remove();
 
-      setTimeout(this.game.setWin.bind(this.game), 3000);
+      setTimeout(this.game.setWin.bind(this.game), 3500);
     }, 4500)
   }
 }
