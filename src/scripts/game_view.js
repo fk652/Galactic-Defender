@@ -2,10 +2,13 @@ import Game from "./game";
 import Boss from "./boss";
 
 class GameView {
+  // player movement keybind mappings
   static UP_KEYS = ["ArrowUp", 'w']
   static DOWN_KEYS = ["ArrowDown", 's']
   static RIGHT_KEYS = ["ArrowRight", 'd']
   static LEFT_KEYS = ["ArrowLeft", 'a']
+
+  // prevent shooting when clicking these html elements
   static IGNORE_TARGETS = [
     "sound-on", 
     "sound-off", 
@@ -44,30 +47,16 @@ class GameView {
     this.touchOffElement = document.getElementById("touch-off");
     this.mouseFollow = false;
     this.mousePosition = null; // {x: xValue, y: yValue}
-    this.bindMouseFollowListener();
-    this.bindToggleKeybindListener();
-
+    
     this.pauseOnElement = document.getElementById("pause-on");
     this.pauseOffElement = document.getElementById("pause-off");
     this.pauseText = document.getElementById("pause-text");
     this.pause = false;
+
+    this.bindSettingListeners();
+
     this.messageDrawn = false;
     this.bindStartHandler();
-
-    document.addEventListener("visibilitychange", () => {
-      if (
-        document.hidden && 
-        !(this.game.startScreen || this.game.gameOver || this.game.win) && 
-        !this.pause
-      ) {
-        this.handlePauseToggle();
-      }
-    });
-
-    if (( 'ontouchstart' in window ) || ( navigator.maxTouchPoints > 0 ) || ( navigator.msMaxTouchPoints > 0 )) {
-      document.getElementById("touch-text").innerText = "touch follow"
-      this.handleMouseFollowToggle();
-    }
   }
 
   start() {
@@ -170,7 +159,7 @@ class GameView {
   switchGameInformation() {
     if (this.game.bossFight) {
       this.waveInfo.style.display = "none";
-      this.bossInfo.style.display = "block";
+      this.bossInfo.style.display = "flex";
     } else {
       this.waveInfo.style.display = "flex";
       this.bossInfo.style.display = "none";
@@ -309,14 +298,6 @@ class GameView {
     this.mouseFollow = !this.mouseFollow;
   }
 
-  bindMouseFollowListener() {
-    const touchContainer = document.getElementById("touch-icons-container");
-    touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
-
-    const pauseContainer = document.getElementById("pause-icons-container");
-    pauseContainer.addEventListener("click", this.handlePauseToggle.bind(this));
-  }
-
   handlePauseToggle() {
     // add pause function to sounds later
     // also pause all setTimeouts and setIntervals
@@ -336,15 +317,36 @@ class GameView {
     this.pause = !this.pause;
   }
 
-  handleToggleKeybinds(event) {
+  handleSettingKeybinds(event) {
     if (event.key === " ") event.preventDefault();
     else if (event.key === "m") this.handleMouseFollowToggle();
     else if (event.key === "k") this.game.sounds.handleSoundToggle();
     else if (event.key === "p") this.handlePauseToggle();
   }
 
-  bindToggleKeybindListener() {
-    document.addEventListener("keydown", this.handleToggleKeybinds.bind(this));
+  handleVisibilityChange() {
+    if (
+      document.hidden && 
+      !(this.game.startScreen || this.game.gameOver || this.game.win) && 
+      !this.pause
+    ) {
+      this.handlePauseToggle();
+    }
+  }
+
+  bindSettingListeners() {
+    document.addEventListener("keydown", this.handleSettingKeybinds.bind(this));
+
+    const touchContainer = document.getElementById("touch-icons-container");
+    touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
+    if (( 'ontouchstart' in window ) || ( navigator.maxTouchPoints > 0 ) || ( navigator.msMaxTouchPoints > 0 )) {
+      document.getElementById("touch-text").innerText = "touch follow"
+      this.handleMouseFollowToggle();
+    }
+
+    const pauseContainer = document.getElementById("pause-icons-container");
+    pauseContainer.addEventListener("click", this.handlePauseToggle.bind(this));
+    document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this));
   }
 
   bindControlHandlers() {

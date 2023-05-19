@@ -13,6 +13,7 @@
       .nav-links {
         a {
           margin: 0 5px;
+          
           i {
             font-size: 16px;
           }
@@ -22,19 +23,16 @@
 
     .game-instructions {
       .instructions-container {
-        justify-content: space-around;
+        column-gap: 10px;
         
         .settings-container {
-          padding: 0 5px;
-          column-gap: 5px;
+          column-gap: 10px;
           
-          .keys-container {
-            .keys-icon {
-              margin-right: 10px;
-            }
+          .keys-container > .keys-icon {
+            margin-right: 10px;
           }
 
-          .keys-container:nth-of-type(2) .keys-icon {
+          .keys-container:nth-of-type(2) > .keys-icon {
             margin-right: 0;
           }
         }
@@ -42,7 +40,6 @@
         .keys-container {
           .keys-icon {
             font-size: 20px;
-            margin-right: 5px;
 
             .arrow-icons {
               justify-content: center;
@@ -67,8 +64,6 @@
               height: 14px;
               font-size: 12px;
               padding-bottom: 3px;
-              margin-left: 1px;
-              margin-right: 28px;
             }
 
             .mouse-click {
@@ -77,24 +72,20 @@
           }
 
           .keys-text {
-            flex-basis: unset;
-            font-size: 16px;
+            font-size: 14px;
           }
 
           .keys-text-container {
             #sound-text {
-              width: 55px;
-              margin-right: 0;
+              width: 50px;
             }
 
             #touch-text {
               width: 40px;
-              margin-right: 5px;
             }
 
             #pause-text {
               width: 35px;
-              margin-right: 5px;
             }
           }
 
@@ -106,37 +97,15 @@
             }
           }
 
-          #touch-icons-container {
-            .touch-icon {
-              font-size: 18px;
-            }
+          #touch-icons-container .touch-icon,
+          #pause-icons-container .pause-icon {
+            font-size: 18px;
           }
-
-          #pause-icons-container {
-            .pause-icon {
-              font-size: 18px;
-            }
-          }
-        }
-
-        #touch {
-          margin-right: 5px;
-        }
-        
-        #shoot, #move {
-          justify-content: center;
-          flex-basis: 100%;
-        }
-
-        #shoot .keys-icon {
-          width: 135px;
         }
       }
 
-      ul {
-        li {
-          font-size: 14px;
-        }
+      ul > li {
+        font-size: 14px;
       }
     }
 
@@ -145,16 +114,18 @@
       column-gap: 10px;
 
       .score-container {
+        gap: 5px;
+
         #score {
           min-height: 16px;
         }
       }
 
       .player-health {
-        width: 100px;
-        margin-bottom: 0;
+        gap: 5px;
 
         #player-health-bar{
+          width: 100px;
           min-height: 16px;
 
           .player-health-point {
@@ -165,10 +136,10 @@
       }
 
       #boss-info {
-        width: 160px;
-        margin-bottom: 0;
+        gap: 5px;
 
         #boss-health-bar{
+          width: 150px;
           min-height: 16px;
 
           .boss-health-point {
@@ -176,6 +147,10 @@
             width: 10px;
           }
         }
+      }
+
+      #wave-info > .wave-text, .wave-numbers {
+        gap: 5px;
       }
     }
   }

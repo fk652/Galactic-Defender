@@ -6,7 +6,7 @@
       width: 680px;
 
       .project-title {
-        font-size: 35px;
+        font-size: 45px;
       }
 
       .dev-name {
@@ -16,6 +16,7 @@
       .nav-links {
         a {
           margin: 0 10px 0 10px;
+
           i {
             font-size: 25px;
           }
@@ -24,9 +25,9 @@
     }
 
     aside {
-      flex-basis: 690px;
+      padding: 10px;
+      flex-basis: 680px;
       height: auto;
-      min-height: 70px;
     }
 
     .game-instructions {
@@ -35,10 +36,10 @@
       height: auto;
       justify-content: center;
       align-items: center;
+      row-gap: 10px;
 
       .instructions-container {
         order: 2;
-        margin-bottom: 5px;
         flex-basis: 100%;
         justify-content: center;
         row-gap: 10px;
@@ -51,25 +52,20 @@
           flex-wrap: wrap;
           column-gap: 15px;
   
-          .keys-container{
-            flex-basis: 30%;
-            justify-content: center;
-
-            .keys-icon {
-              flex-basis: 0;
-              margin-right: 15px;
-            }
+          .keys-container > .keys-icon {
+            margin-right: 15px;
           }
-  
+
           .keys-container:last-of-type {
-            margin: 5px 0 0 0;
+            margin: 0;
           }
         }
 
         .keys-container {
-          flex-basis: 30%;
+          flex-basis: auto;
           justify-content: center;
-          margin-bottom: 0;
+          column-gap: 5px;
+          margin: 0;
 
           #sound-icons-container, 
           #touch-icons-container, 
@@ -79,12 +75,10 @@
 
           .keys-icon {
             flex-basis: auto;
-            margin-left: 0;
-            margin-right: 5px;
+            margin: 0;
 
             .spacebar {
-              margin-left: 0;
-              margin-right: 5px;
+              margin: 0;
             }
           }
 
@@ -99,22 +93,15 @@
 
           .keys-text-container {
             #sound-text {
-              width: 65px;
-              margin-right: 5px;
+              width: 70px;
             }
 
             #pause-text {
-              width: 45px;
-              margin-right: 5px;
+              width: 50px;
             }
 
             #touch-text {
-              width: 50px;
-              margin-right: 10px;
-            }
-
-            .keys-text:first-of-type {
-              flex-basis: unset;
+              width: 55px;
             }
 
             .keys-text:last-of-type {
@@ -126,59 +113,42 @@
 
       ul {
         order: 1;
-        margin-bottom: 10px;
+        margin: 0;
+
         li {
-          margin: 5px 0 5px 0;
+          margin: 0 0 10px 0;
         }
       }
     }
 
     #game-view {
       order: 4;
-      margin: 10px 0 10px 0;
+      margin: 10px 0 0 0;
     }
 
     .game-information {
       order: 3;
       flex-direction: row;
       justify-content: center;
-      align-items: center;
+      align-items: start;
       column-gap: 30px;
-      // height: 50px;
-      padding-top: 0;
+      row-gap: 10px;
       font-size: 20px;
 
       .score-container {
-        // margin-right: 30px;
-        // margin-top: 30px;
-        // min-width: 100px;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: start; 
-        margin-bottom: 0;
-
-        p {
-          margin: 5px 0 10px 0;
-        }
+        align-items: start;
+        gap: 8px;
 
         #score {
-          min-height: 21px;
+          min-height: 20px;
         }
       }
   
       .player-health {
-        // margin-right: 30px;
-        margin-bottom: 0;
-        text-align: start;
-        width: 155px;
-
-        p {
-          margin: 5px 0 10px 0;
-        }
-
-        #player-health-bar{
-          min-height: 21px;
+        align-items: start;
+        
+        #player-health-bar {
+          min-height: 20px;
 
           .player-health-point {
             height: 15px;
@@ -187,18 +157,11 @@
       }
 
       #boss-info {
-        margin-bottom: 0;
-        width: 260px;
-
-        p {
-          text-align: start;
-          margin: 4px 0 9px 0;
-        }
-
+        align-items: start;
+        
         #boss-health-bar{
-          flex-direction: row;
-          justify-content: start;
-          min-height: 21px;
+          width: 200px;
+          min-height: 20px;
 
           .boss-health-point {
             height: 15px;
@@ -207,21 +170,8 @@
         }
       }
   
-      #wave-info {
-        display: flex;
-        align-items: center;
-
-        .wave-text p:first-of-type {
-          margin: 10px 0;
-        }
-
-        .wave-numbers p {
-          margin: 5px 0;
-        }
-
-        .wave-numbers p:first-of-type {
-          margin: 10px 0;
-        }
+      #wave-info > .wave-text, .wave-numbers {
+        gap: 8px;
       }
     }
   }
