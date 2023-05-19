@@ -460,7 +460,7 @@ table {
     height: 15px;
     width: 20px;
   }
-  .main-container .game-information #wave-info > .wave-text, .main-container .game-information .wave-numbers {
+  .main-container .game-information #wave-info .wave-text, .main-container .game-information #wave-info .wave-numbers {
     gap: 8px;
   }
 }

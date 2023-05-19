@@ -171,8 +171,10 @@
         }
       }
   
-      #wave-info > .wave-text, .wave-numbers {
-        gap: 8px;
+      #wave-info {
+        .wave-text, .wave-numbers {
+          gap: 8px;
+        }
       }
     }
   }
