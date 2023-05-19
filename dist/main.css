@@ -184,10 +184,11 @@ table {
   flex-wrap: wrap;
   justify-content: space-around;
   width: 75px;
-  height: 50px;
+  height: 48px;
+  font-size: 24px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .keyboard-key {
-  border: 3px solid white;
+  border: 2px solid white;
   background-color: black;
   font-size: 12px;
   display: flex;
@@ -197,7 +198,7 @@ table {
   height: 18px;
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .spacebar {
-  border: 3px solid white;
+  border: 2px solid white;
   padding: 0 4px 4px 4px;
   width: 60px;
   height: 20px;
@@ -516,14 +517,12 @@ table {
   .main-container .game-instructions .instructions-container .settings-container .keys-container:nth-of-type(2) > .keys-icon {
     margin-right: 0;
   }
-  .main-container .game-instructions .instructions-container .keys-container .keys-icon {
-    font-size: 19px;
-  }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .arrow-icons {
     justify-content: center;
     align-items: center;
     width: 58px;
     height: 38px;
+    font-size: 20px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .arrow-icons i:nth-of-type(3) {
     margin: 0 2px;
@@ -532,7 +531,6 @@ table {
     font-size: 9px;
     width: 14px;
     height: 14px;
-    border-width: 2px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .keyboard-key:nth-of-type(4) {
     margin: 0 2px;
@@ -542,7 +540,6 @@ table {
     height: 15px;
     font-size: 10px;
     padding-bottom: 1px;
-    border-width: 2px;
   }
   .main-container .game-instructions .instructions-container .keys-container .keys-icon .mouse-click {
     width: 20px;
