@@ -166,6 +166,7 @@ $icon-background-color: black;
   
           .keyboard-key {
             border: 3px solid $main-color;
+            background-color: $icon-background-color;
             font-size: 12px;
             display: flex;
             justify-content: center;
@@ -191,6 +192,7 @@ $icon-background-color: black;
 
           .mouse-click {
             width: 30px;
+            background-color: $icon-background-color;
           }
         }
 

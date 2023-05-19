@@ -29,7 +29,7 @@
           column-gap: 10px;
           
           .keys-container > .keys-icon {
-            margin-right: 10px;
+            margin-right: 0;
           }
 
           .keys-container:nth-of-type(2) > .keys-icon {
@@ -39,13 +39,13 @@
 
         .keys-container {
           .keys-icon {
-            font-size: 20px;
+            font-size: 19px;
 
             .arrow-icons {
               justify-content: center;
               align-items: center;
-              width: 65px;
-              height: 40px;
+              width: 58px;
+              height: 38px;
 
               i:nth-of-type(3) {
                 margin: 0 2px;
@@ -53,21 +53,26 @@
             }
 
             .keyboard-key {
-              font-size: 10px;
+              font-size: 9px;
               width: 14px;
               height: 14px;
-              margin-right: 2px;
+              border-width: 2px;
+            }
+
+            .keyboard-key:nth-of-type(4) {
+              margin: 0 2px;
             }
 
             .spacebar {
-              width: 45px;
-              height: 14px;
-              font-size: 12px;
-              padding-bottom: 3px;
+              width: 40px;
+              height: 15px;
+              font-size: 10px;
+              padding-bottom: 1px;
+              border-width: 2px;
             }
 
             .mouse-click {
-              width: 24px;
+              width: 20px;
             }
           }
 
@@ -81,25 +86,30 @@
             }
 
             #touch-text {
-              width: 40px;
+              width: 38px;
             }
 
             #pause-text {
-              width: 35px;
+              width: 34px;
             }
           }
 
           #sound-icons-container {
-            width: 32px;
+            width: 26px;
 
             .sound-icon {
-              font-size: 24px;
+              font-size: 22px;
             }
           }
 
           #touch-icons-container .touch-icon,
           #pause-icons-container .pause-icon {
-            font-size: 18px;
+            font-size: 16px;
+          }
+
+          #touch-icons-container,
+          #pause-icons-container {
+            width: 15px;
           }
         }
       }
@@ -118,6 +128,7 @@
 
         #score {
           min-height: 16px;
+          min-width: 60px;
         }
       }
 
@@ -149,8 +160,10 @@
         }
       }
 
-      #wave-info > .wave-text, .wave-numbers {
-        gap: 5px;
+      #wave-info {
+        .wave-text, .wave-numbers {
+          gap: 5px;
+        }
       }
     }
   }
