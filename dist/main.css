@@ -189,6 +189,7 @@ table {
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .keyboard-key {
   border: 2px solid white;
+  border-radius: 3px;
   background-color: black;
   font-size: 12px;
   display: flex;
@@ -199,6 +200,7 @@ table {
 }
 .main-container .game-instructions .instructions-container .keys-container .keys-icon .spacebar {
   border: 2px solid white;
+  border-radius: 3px;
   padding: 0 4px 4px 4px;
   width: 60px;
   height: 20px;

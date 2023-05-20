@@ -167,6 +167,7 @@ $icon-background-color: black;
   
           .keyboard-key {
             border: 2px solid $main-color;
+            border-radius: 3px;
             background-color: $icon-background-color;
             font-size: 12px;
             display: flex;
@@ -178,6 +179,7 @@ $icon-background-color: black;
 
           .spacebar {
             border: 2px solid $main-color;
+            border-radius: 3px;
             padding: 0 4px 4px 4px;
             width: 60px;
             height: 20px;
