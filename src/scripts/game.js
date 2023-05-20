@@ -36,6 +36,7 @@ class Game {
 
     this.player = new PlayerShip(this);
     this.bossFight = false;
+    this.boss = null;
     this.sounds = new Sound(this);
   }
 
@@ -173,7 +174,7 @@ class Game {
     };
 
     this.player = new PlayerShip(this);
-
+    this.boss = null;
     this.bossFight = false;
     this.gameView.switchGameInformation();
 

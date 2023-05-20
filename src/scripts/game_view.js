@@ -15,7 +15,10 @@ class GameView {
     "sound-icons-container", 
     "touch-on", 
     "touch-off", 
-    "touch-container"
+    "touch-container",
+    "pause-on", 
+    "pause-off", 
+    "pause-container"
   ]
 
   constructor(canvas, ctx) {
@@ -66,6 +69,7 @@ class GameView {
 
   animate(time) {
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
+      if (this.pause) this.handlePauseToggle();
       this.drawStartWinGameOver();
     } else if (this.pause) {
 
@@ -301,7 +305,12 @@ class GameView {
   handlePauseToggle() {
     // add pause function to sounds later
     // also pause all setTimeouts and setIntervals
-    if (this.game.startScreen || this.game.gameOver || this.game.win) return;
+    if ((this.game.startScreen || this.game.gameOver || this.game.win || 
+        this.game.player?.health <= 0 || this.game.boss?.health <= 0) && 
+        !this.pause
+    ) {
+      return;
+    }
 
     if (this.pause) {
       this.pauseOnElement.style.display = 'none';
