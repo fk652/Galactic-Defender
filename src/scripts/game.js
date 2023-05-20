@@ -2,6 +2,7 @@ import PlayerShip from "./player_ship";
 import EnemyShip from "./enemy_ship";
 import Boss from "./boss";
 import Sound from "./sound";
+import Timer from "./timer";
 
 class Game {
   static MAX_ENEMY_WAVE = 5;
@@ -25,6 +26,8 @@ class Game {
     this.startScreen = true;
 
     this.idCounter = 1;
+
+    this.timers = {};
     
     this.allMovingObjects = {
       player: {},
@@ -45,6 +48,14 @@ class Game {
     this.setEnemies();
     this.moveObjects(timeDelta);
     this.shootProjectiles();
+  }
+
+  pauseTimers() {
+    Object.values(this.timers).forEach(timer => timer.pause());
+  }
+
+  resumeTimers() {
+    Object.values(this.timers).forEach(timer => timer.resume());
   }
 
   moveObjects(timeDelta) {
@@ -117,7 +128,7 @@ class Game {
 
       this.addEnemyOnCooldown = true;
       const randTimeOut = Math.random() * (3000 - 1000) + 1000;
-      setTimeout(this.resetAddEnemyCooldown.bind(this), randTimeOut);
+      new Timer(this, this.resetAddEnemyCooldown.bind(this), randTimeOut);
     }
   }
 
@@ -164,6 +175,8 @@ class Game {
     this.gameOver = false;
     this.win = false;
     this.startScreen = false;
+
+    this.timers = {};
 
     this.allMovingObjects = {
       player: {},

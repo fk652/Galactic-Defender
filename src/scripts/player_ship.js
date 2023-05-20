@@ -1,5 +1,6 @@
 import Ship from "./ship";
 import Explosion from "./explosion";
+import Timer from "./timer";
 import { vectorScale } from "./utils";
 
 class PlayerShip extends Ship {
@@ -136,7 +137,7 @@ class PlayerShip extends Ship {
       super.damageTaken(damage);
       this.invincible = true;
       this.game.sounds.playPlayerHurtSound();
-      setTimeout(this.resetInvincibility.bind(this), 1000);
+      new Timer(this.game, this.resetInvincibility.bind(this), 1000);
     }
   }
 
@@ -144,13 +145,13 @@ class PlayerShip extends Ship {
     if (!this.disabled) { 
       this.disabled = true;
 
-      setTimeout(() => {
+      new Timer(this.game, () => {
         const posX = this.position[0] - 40;
         const posY = this.position[1] - 20;
         new Explosion(this.game, 100, [posX, posY], "major", [0, 0]);
         super.remove();
         this.game.sounds.playPlayerDeathSound();
-        setTimeout(this.game.setGameOver.bind(this.game), 3000);
+        new Timer(this.game, this.game.setGameOver.bind(this.game), 3000);
       }, 1000)
     }
   }

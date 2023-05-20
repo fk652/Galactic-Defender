@@ -1,5 +1,6 @@
 import MovingObject from "./moving_object";
 import Projectile from "./projectile";
+import Timer from "./timer";
 
 class Ship extends MovingObject {
   constructor(objArgs, projectileArgs, patternArgs) {
@@ -12,7 +13,7 @@ class Ship extends MovingObject {
     this.patternArgs.forEach((pattern, idx) => {
       if (!pattern.onCooldown && this.inBounds(this.position)) {
         for (let i = 0; i < pattern.batchFireNum; i ++) {
-          setTimeout(() => {
+          new Timer(this.game, () => {
             if (this.health > 0) {
               pattern.positionDeltas.forEach(delta => {
                 const [x, y] = this.position;
@@ -33,7 +34,7 @@ class Ship extends MovingObject {
         
         pattern.onCooldown = true;
         const batchCooldownOffset = pattern.batchFireInterval * pattern.batchFireNum;
-        setTimeout(this.resetCooldown.bind(this, idx), (pattern.cooldown + batchCooldownOffset));
+        new Timer(this.game, this.resetCooldown.bind(this, idx), (pattern.cooldown + batchCooldownOffset));
       }
     })
   }

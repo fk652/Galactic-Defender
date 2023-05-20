@@ -305,18 +305,17 @@ class GameView {
   handlePauseToggle() {
     // add pause function to sounds later
     // also pause all setTimeouts and setIntervals
-    if ((this.game.startScreen || this.game.gameOver || this.game.win || 
-        this.game.player?.health <= 0 || this.game.boss?.health <= 0) && 
-        !this.pause
-    ) {
+    if ((this.game.startScreen || this.game.gameOver || this.game.win) && !this.pause) {
       return;
     }
 
     if (this.pause) {
+      this.game.resumeTimers();
       this.pauseOnElement.style.display = 'none';
       this.pauseOffElement.style.display = 'block';
       this.pauseText.innerText = 'pause';
     } else {
+      this.game.pauseTimers();
       this.pauseOnElement.style.display = 'block';
       this.pauseOffElement.style.display = 'none';
       this.pauseText.innerText = 'play';
