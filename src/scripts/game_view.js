@@ -55,6 +55,7 @@ class GameView {
     this.pauseOffElement = document.getElementById("pause-off");
     this.pauseText = document.getElementById("pause-text");
     this.pause = false;
+    this.toggleSound = false;
 
     this.bindSettingListeners();
 
@@ -339,6 +340,14 @@ class GameView {
       !this.pause
     ) {
       this.handlePauseToggle();
+    }
+
+    if (document.hidden && this.game.sounds.toggle) {
+      this.game.sounds.handleSoundToggle();
+      this.toggleSound = true;
+    } else if (!document.hidden && this.toggleSound) {
+      this.game.sounds.handleSoundToggle();
+      this.toggleSound = false;
     }
   }
 
