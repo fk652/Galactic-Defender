@@ -61,6 +61,10 @@ $icon-background-color: black;
     background-image: url(../src/assets/images/game_background.png);
     touch-action: none;
     cursor: crosshair;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .game-instructions {

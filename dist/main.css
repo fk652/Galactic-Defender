@@ -20,6 +20,9 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  -webkit-user-select: inherit;
+  -ms-user-select: inherit;
+  user-select: inherit;
 }
 
 article, aside, details, figcaption, figure,
@@ -102,6 +105,9 @@ table {
   background-image: url(../src/assets/images/game_background.png);
   touch-action: none;
   cursor: crosshair;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .main-container .game-instructions {
   display: flex;
