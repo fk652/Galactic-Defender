@@ -52,8 +52,9 @@ class GameView {
 
   animate(time) {
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
+      if (this.pause) this.handlePauseToggle();
       this.drawStartWinGameOver();
-    } else {
+    } else if (!this.pause) {
       this.updateInformation();
       this.draw();
       const timeDelta = time - this.lastTime;
@@ -64,12 +65,33 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
+  draw() {
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.drawBackground();
+
+    for (let key in this.game.allMovingObjects) {
+      Object.values(this.game.allMovingObjects[key]).forEach(obj => obj.draw(this.ctx));
+    }
+  }
+
+  updateInformation() {
+    this.updateScore();
+    this.updateHealthBar('player');
+
+    if (this.game.bossFight) {
+      this.updateHealthBar('boss');
+    } else {
+      this.waveSpan.innerText = this.game.enemyWave;
+      this.enemiesRemainingSpan.innerText = this.game.enemiesRemaining;
+    }
+  }
+
   ...
 
 }
 ```
 
-The Game step function applies game logic to determine the next state of the game such as where objects are positioned next, what enemies and projectiles are to be added or removed, collision detection.
+The Game step function applies game logic to determine the next state of the game such as where objects are positioned next, what enemies and projectiles are to be added or removed, and collision detection.
 
 ```javascript
 class Game {

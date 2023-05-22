@@ -72,9 +72,7 @@ class GameView {
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
       if (this.pause) this.handlePauseToggle();
       this.drawStartWinGameOver();
-    } else if (this.pause) {
-
-    } else {
+    } else if (!this.pause) {
       this.updateInformation();
       this.draw();
       const timeDelta = time - this.lastTime;
@@ -87,7 +85,6 @@ class GameView {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
     this.drawBackground();
 
     for (let key in this.game.allMovingObjects) {

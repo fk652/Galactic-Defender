@@ -46,7 +46,8 @@ class Sound {
     }
 
     this.currentBGM = this.waveBGM;
-    this.currentSounds = [];
+    this.soundId = 0;
+    this.currentSounds = {};
     this.toggle = false;
     this.game = game;
 
@@ -59,7 +60,6 @@ class Sound {
   switchBGM(key) {
     this.currentBGM.pause();
     this.currentBGM.currentTime = 0;
-
     this.currentBGM = this[key];
     if (this.toggle) this.currentBGM.play();
   }
@@ -105,14 +105,18 @@ class Sound {
     if (this.toggle) {
       const newAudio = document.createElement("audio");
       newAudio.src = this.audioSources[audioSourceKey];
+
       if (audioSourceKey === "enemyProjectile") newAudio.volume = 0.02;
-      this.currentSounds.push(newAudio);
-      newAudio.play();
+
+      const id = this.soundId++
+      this.currentSounds[id] = newAudio;
+      newAudio.onended = () => delete this.currentSounds[id];
+      newAudio.play().then(() => { if(!this.toggle) newAudio.pause() });
     }
   }
 
-  clear() {
-    this.currentSounds = this.currentSounds.filter(sound => !sound.ended);
+  isPlaying(audio) {
+    return audio.currentTime > 0 && !audio.paused && !audio.ended;
   }
 
   reset() {
@@ -140,8 +144,10 @@ class Sound {
     this.bossBGM.pause();
     this.bossBGM.currentTime = 0;
 
-    this.currentSounds.forEach(sound => sound.pause());
-    this.currentSounds = [];
+    Object.values(this.currentSounds).forEach(sound => {
+      if (this.isPlaying(sound)) sound.pause();
+    });
+    this.currentSounds = {};
   }
 
   bindToggleListener() {

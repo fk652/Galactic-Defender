@@ -9,6 +9,8 @@ class EnemyShip extends Ship {
     let height = 40;
     let width = 46;
     let health = 1;
+    let projectileDmg = 1;
+    // let projectileDmg = 10;
 
     if (posX < 0 - width) {
       posX = 0;
@@ -35,7 +37,7 @@ class EnemyShip extends Ship {
       objArgs: {
         velocity: [0, 8],
         speed: 8,
-        health: 1,
+        health: projectileDmg,
         game: game,
         width: 5,
         height: 20,
