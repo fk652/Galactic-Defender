@@ -55,8 +55,8 @@ class GameView {
       if (this.pause) this.handlePauseToggle();
       this.drawStartWinGameOver();
     } else if (!this.pause) {
-      this.updateInformation();
       this.draw();
+      this.updateGameInfo();
       const timeDelta = time - this.lastTime;
       this.game.step(timeDelta);
     }
@@ -74,8 +74,8 @@ class GameView {
     }
   }
 
-  updateInformation() {
     this.updateScore();
+  updateGameInfo() {
     this.updateHealthBar('player');
 
     if (this.game.bossFight) {

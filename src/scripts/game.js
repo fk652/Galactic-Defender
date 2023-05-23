@@ -4,36 +4,45 @@ import Boss from "./boss";
 import Sound from "./sound";
 import Timer from "./timer";
 
+// Game class handles overall game state logic
 class Game {
   static MAX_ENEMY_WAVE = 5;
 
   constructor(canvas, gameView) {
+    // game view and canvas
     this.canvas = canvas;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.gameView = gameView;
 
+    // enemy wave and count
     this.enemyWave = 0;
     // this.enemyWave = 5;
     this.addEnemyOnCooldown = true;
     this.addedEnemies = 0;
     this.enemiesRemaining = 0;
     this.enemyWaveCount = 0;
+
     this.score = 0;
     
+    // start/win/game over flags
     this.gameOver = false;
     this.win = false;
     this.startScreen = true;
 
+    // all timers and moving objects are keyed with unique ids
+    // id is also stored in the timers and objects themselves
+    // allows for quick deletion
     this.idCounter = 1;
 
+    // contains all current setTimeouts, wrapped in a Timer class
     this.timers = {};
-    
+
+    // contains all objects in current state of game
     this.allMovingObjects = {
       player: {},
       enemies: {},
       projectiles: {},
-      particles: {},
       explosions: {}
     };
 
@@ -182,7 +191,6 @@ class Game {
       player: {},
       enemies: {},
       projectiles: {},
-      particles: {},
       explosions: {}
     };
 

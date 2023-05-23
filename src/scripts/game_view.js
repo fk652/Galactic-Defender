@@ -1,6 +1,7 @@
 import Game from "./game";
 import Boss from "./boss";
 
+// GameView handles anything canvas/html related, and event handlers
 class GameView {
   // player movement keybind mappings
   static UP_KEYS = ["ArrowUp", 'w']
@@ -22,12 +23,14 @@ class GameView {
   ]
 
   constructor(canvas, ctx) {
+    // game and canvas
     this.ctx = ctx;
     this.canvas = canvas;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.game = new Game(canvas, this);
 
+    // html game info elements that get updated throughout the game
     this.scoreSpan = document.getElementById("score");
     this.playerHealthBar = document.getElementById("player-health-bar");
     this.bossHealthBar = document.getElementById("boss-health-bar");
@@ -36,21 +39,25 @@ class GameView {
     this.waveSpan = document.getElementById("wave-number");
     this.enemiesRemainingSpan = document.getElementById("enemies-remaining");
 
+    // moving background in the canvas element
+    // x, y are the background position offsets as it moves (only y changes)
+    // dy controls change in speed
     const backgroundImg = new Image();
     backgroundImg.src = "src/assets/images/game_background.png";
     this.backgroundOptions = {
       img: backgroundImg,
-      scale: 550 / backgroundImg.height,
       x: 0,
       y: 0,
-      dy: .75
+      dy: 1
     }
 
+    // mouse follow options
     this.touchOnElement = document.getElementById("touch-on");
     this.touchOffElement = document.getElementById("touch-off");
     this.mouseFollow = false;
     this.mousePosition = null; // {x: xValue, y: yValue}
     
+    // pause options
     this.pauseOnElement = document.getElementById("pause-on");
     this.pauseOffElement = document.getElementById("pause-off");
     this.pauseText = document.getElementById("pause-text");
@@ -59,22 +66,30 @@ class GameView {
 
     this.bindSettingListeners();
 
+    // to control only drawing start, win, and game over messages once;
     this.messageDrawn = false;
+
     this.bindStartHandler();
   }
 
+  // starts drawing the game through recursive animationFrame calls to draw the next frame
   start() {
     this.lastTime = 0;
     requestAnimationFrame(this.animate.bind(this));
   }
 
+  // draw start, win, game over screen
+  // or if playing, draw the next state of the game and update html game info elements
+  // when paused, nothing gets drawn or updated while time keeps moving along
+  // time delta is used to smooth out gameplay movements as fps changes
+  // animate will always be recursively calling so the game is ready to be played at any time
   animate(time) {
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
       if (this.pause) this.handlePauseToggle();
       this.drawStartWinGameOver();
     } else if (!this.pause) {
-      this.updateInformation();
       this.draw();
+      this.updateGameInfo();
       const timeDelta = time - this.lastTime;
       this.game.step(timeDelta);
     }
@@ -83,6 +98,9 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
+  // clear the canvas and draw the next frame
+  // includes new background and object positions
+  // each game object has its own draw function in the MovingObject class
   draw() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.drawBackground();
@@ -92,29 +110,27 @@ class GameView {
     }
   }
 
+  // moving the canvas background vertically downwards
   drawBackground() {
     const img = this.backgroundOptions.img;
-    const scale = this.backgroundOptions.scale;
-    let imgW = img.width;
-    let imgH = img.height;
-    const x = this.backgroundOptions.x;
 
-    if (imgH * scale > this.canvasHeight) this.backgroundOptions.y = this.canvasHeight - imgH;
-
-    if (imgH * scale <= this.canvasHeight) {
-      if (this.backgroundOptions.y > this.canvasHeight) this.backgroundOptions.y = -imgH + this.backgroundOptions.y;
-      if (this.backgroundOptions.y > 0) this.ctx.drawImage(img, x, -imgH + this.backgroundOptions.y, imgW, imgH);
-      if (this.backgroundOptions.y - imgH > 0) this.ctx.drawImage(img, x, -imgH * 2 + this.backgroundOptions.y, imgW, imgH);
-    } else {
-      if (this.backgroundOptions.y > this.canvasHeight) this.backgroundOptions.y = this.canvasHeight - imgH;
-      if (this.backgroundOptions.y > this.canvasHeight - imgH) this.ctx.drawImage(img, x, this.backgroundOptions.y - imgH + 1, imgW, imgH);
+    // if end is reached, reset image back to beginning
+    if (this.backgroundOptions.y > this.canvasHeight) {
+      this.backgroundOptions.y = -img.height + this.backgroundOptions.y;
     }
 
-    this.ctx.drawImage(img, x, this.backgroundOptions.y, imgW, imgH);
+    // if looping around, cut remaining end and draw below new
+    if (this.backgroundOptions.y > 0) {
+      this.ctx.drawImage(img, this.backgroundOptions.x, -img.height + this.backgroundOptions.y, img.width, img.height);
+    }
+
+    // draw background and then update new position
+    this.ctx.drawImage(img, this.backgroundOptions.x, this.backgroundOptions.y, img.width, img.height);
     this.backgroundOptions.y += this.backgroundOptions.dy;
   }
 
-  updateInformation() {
+  // update game info html elements
+  updateGameInfo() {
     this.updateScore();
     this.updateHealthBar('player');
 
@@ -130,6 +146,7 @@ class GameView {
     this.scoreSpan.innerText = this.game.score;
   }
 
+  // update either boss or player hp
   updateHealthBar(type) {
     let obj, healthBar;
     if (type === 'player') {
@@ -158,6 +175,7 @@ class GameView {
     }
   }
 
+  // switch between boss and enemy wave html elements 
   switchGameInformation() {
     if (this.game.bossFight) {
       this.waveInfo.style.display = "none";
@@ -168,6 +186,9 @@ class GameView {
     }
   }
 
+  // draw start/win/game over messages, once
+  // start message is only seen once at initial game load
+  // also remove player controls
   drawStartWinGameOver() {
     if (!this.messageDrawn) {
       const message = this.game.startScreen 
@@ -198,6 +219,7 @@ class GameView {
     }
   }
 
+  // draw pause text
   drawPause() {
     this.ctx.textAlign = "center";
     this.ctx.fillStyle = "white";
@@ -205,18 +227,14 @@ class GameView {
     this.ctx.fillText("PAUSED", this.canvasWidth/2, this.canvasHeight/2);
   }
 
+  // draw smaller retry text under win/game over, after a short while
   drawRetryKey() {
     this.ctx.font = "24px roboto";
     this.ctx.fillText("(press any key or click here to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
     this.bindRetryHandler();
   }
 
-  bindStartHandler() {
-    this.startHandler = this.handleStartKey.bind(this);
-    document.addEventListener("keypress", this.startHandler);
-    this.canvas.addEventListener("click", this.startHandler);
-  }
-
+  // starting game
   handleStartKey(event) {
     if (event?.key === " ") event.preventDefault();
 
@@ -229,12 +247,13 @@ class GameView {
     this.messageDrawn = false;
   }
 
-  bindRetryHandler() {
-    this.retryHandler = this.handleRetryKey.bind(this);
-    document.addEventListener("keypress", this.retryHandler);
-    this.canvas.addEventListener("click", this.retryHandler);
+  bindStartHandler() {
+    this.startHandler = this.handleStartKey.bind(this);
+    document.addEventListener("keypress", this.startHandler);
+    this.canvas.addEventListener("click", this.startHandler);
   }
 
+  // retry on win/game over
   handleRetryKey(event) {
     if (event?.key === " ") event.preventDefault();
 
@@ -246,6 +265,106 @@ class GameView {
     this.messageDrawn = false;
   }
 
+  bindRetryHandler() {
+    this.retryHandler = this.handleRetryKey.bind(this);
+    document.addEventListener("keypress", this.retryHandler);
+    this.canvas.addEventListener("click", this.retryHandler);
+  }
+
+  // mouse/touch follow movements
+  handleMouseMove(event) {
+    const rect = this.canvas.getBoundingClientRect();
+    const xScale = this.canvas.width / rect.width;
+    const yScale = this.canvas.height / rect.height;
+    const x = (event.clientX - rect.left) * xScale;
+    const y = (event.clientY - rect.top) * yScale;
+    this.mousePosition = {x, y};
+  }
+
+  handleMouseOut() {
+    this.mousePosition = null;
+  }
+
+  handleMouseFollowToggle() {
+    if (this.mouseFollow) {
+      this.touchOnElement.style.display = 'none';
+      this.touchOffElement.style.display = 'block';
+    } else {
+      this.touchOnElement.style.display = 'block';
+      this.touchOffElement.style.display = 'none';
+    }
+
+    this.mouseFollow = !this.mouseFollow;
+  }
+
+  // pause/unpause
+  handlePauseToggle() {
+    // add pause function to sounds later
+    // also pause all setTimeouts and setIntervals
+    if ((this.game.startScreen || this.game.gameOver || this.game.win) && !this.pause) {
+      return;
+    }
+
+    if (this.pause) {
+      this.game.resumeTimers();
+      this.pauseOnElement.style.display = 'none';
+      this.pauseOffElement.style.display = 'block';
+      this.pauseText.innerText = 'pause';
+    } else {
+      this.game.pauseTimers();
+      this.pauseOnElement.style.display = 'block';
+      this.pauseOffElement.style.display = 'none';
+      this.pauseText.innerText = 'play';
+      this.drawPause();
+    }
+
+    this.pause = !this.pause;
+  }
+
+  // pause and mute when tabbed out or game is out of focus
+  handleVisibilityChange() {
+    if (
+      document.hidden && 
+      !(this.game.startScreen || this.game.gameOver || this.game.win) && 
+      !this.pause
+    ) {
+      this.handlePauseToggle();
+    }
+
+    if (document.hidden && this.game.sounds.toggle) {
+      this.game.sounds.handleSoundToggle();
+      this.toggleSound = true;
+    } else if (!document.hidden && this.toggleSound) {
+      this.game.sounds.handleSoundToggle();
+      this.toggleSound = false;
+    }
+  }
+
+  // setting keybinds
+  handleSettingKeybinds(event) {
+    if (event.key === " ") event.preventDefault();
+    else if (event.key === "m") this.handleMouseFollowToggle();
+    else if (event.key === "k") this.game.sounds.handleSoundToggle();
+    else if (event.key === "p") this.handlePauseToggle();
+  }
+
+  // bind all setting related handlers (pause/unpause, mouse/touch follow, mute/unmute)
+  bindSettingListeners() {
+    document.addEventListener("keydown", this.handleSettingKeybinds.bind(this));
+
+    const touchContainer = document.getElementById("touch-icons-container");
+    touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
+    if (( 'ontouchstart' in window ) || ( navigator.maxTouchPoints > 0 ) || ( navigator.msMaxTouchPoints > 0 )) {
+      document.getElementById("touch-text").innerText = "touch follow"
+      this.handleMouseFollowToggle();
+    }
+
+    const pauseContainer = document.getElementById("pause-icons-container");
+    pauseContainer.addEventListener("click", this.handlePauseToggle.bind(this));
+    document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this));
+  }
+
+  // player controls
   handleKeyDown(event) {
     event.preventDefault();
 
@@ -273,94 +392,6 @@ class GameView {
 
   handleMouseUp() {
     this.game.player.keysPressed.shoot = false;
-  }
-
-  handleMouseMove(event) {
-    const rect = this.canvas.getBoundingClientRect();
-    const xScale = this.canvas.width / rect.width;
-    const yScale = this.canvas.height / rect.height;
-    const x = (event.clientX - rect.left) * xScale;
-    const y = (event.clientY - rect.top) * yScale;
-    this.mousePosition = {x, y};
-  }
-
-  handleMouseOut() {
-    this.mousePosition = null;
-  }
-
-  handleMouseFollowToggle() {
-    if (this.mouseFollow) {
-      this.touchOnElement.style.display = 'none';
-      this.touchOffElement.style.display = 'block';
-    } else {
-      this.touchOnElement.style.display = 'block';
-      this.touchOffElement.style.display = 'none';
-    }
-
-    this.mouseFollow = !this.mouseFollow;
-  }
-
-  handlePauseToggle() {
-    // add pause function to sounds later
-    // also pause all setTimeouts and setIntervals
-    if ((this.game.startScreen || this.game.gameOver || this.game.win) && !this.pause) {
-      return;
-    }
-
-    if (this.pause) {
-      this.game.resumeTimers();
-      this.pauseOnElement.style.display = 'none';
-      this.pauseOffElement.style.display = 'block';
-      this.pauseText.innerText = 'pause';
-    } else {
-      this.game.pauseTimers();
-      this.pauseOnElement.style.display = 'block';
-      this.pauseOffElement.style.display = 'none';
-      this.pauseText.innerText = 'play';
-      this.drawPause();
-    }
-
-    this.pause = !this.pause;
-  }
-
-  handleSettingKeybinds(event) {
-    if (event.key === " ") event.preventDefault();
-    else if (event.key === "m") this.handleMouseFollowToggle();
-    else if (event.key === "k") this.game.sounds.handleSoundToggle();
-    else if (event.key === "p") this.handlePauseToggle();
-  }
-
-  handleVisibilityChange() {
-    if (
-      document.hidden && 
-      !(this.game.startScreen || this.game.gameOver || this.game.win) && 
-      !this.pause
-    ) {
-      this.handlePauseToggle();
-    }
-
-    if (document.hidden && this.game.sounds.toggle) {
-      this.game.sounds.handleSoundToggle();
-      this.toggleSound = true;
-    } else if (!document.hidden && this.toggleSound) {
-      this.game.sounds.handleSoundToggle();
-      this.toggleSound = false;
-    }
-  }
-
-  bindSettingListeners() {
-    document.addEventListener("keydown", this.handleSettingKeybinds.bind(this));
-
-    const touchContainer = document.getElementById("touch-icons-container");
-    touchContainer.addEventListener("click", this.handleMouseFollowToggle.bind(this));
-    if (( 'ontouchstart' in window ) || ( navigator.maxTouchPoints > 0 ) || ( navigator.msMaxTouchPoints > 0 )) {
-      document.getElementById("touch-text").innerText = "touch follow"
-      this.handleMouseFollowToggle();
-    }
-
-    const pauseContainer = document.getElementById("pause-icons-container");
-    pauseContainer.addEventListener("click", this.handlePauseToggle.bind(this));
-    document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this));
   }
 
   bindControlHandlers() {
