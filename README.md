@@ -2,11 +2,7 @@
 
 ## [Click here to play](https://fk652.github.io/Galactic-Defender/)
 
-___
-
 ## Background
-
-___
 
 Galactic Defender is a galaxy shooter game, based off the classic [Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders) and [Galaga](https://en.wikipedia.org/wiki/Galaga) games. The main gameplay involves the player controlling a ship that moves around in a fixed 2d screen and shoots down enemy ships/aliens, while also avoiding enemies and their projectiles.
 
@@ -22,8 +18,6 @@ It's game over if the player loses all their health points (HP) before defeating
 
 ## Instructions
 
-___
-
 Controls are simply arrow keys (or WASD) to move in any direction, spacebar (or left click) to shoot (can be held down to continously shoot).
 
 Setting options include a toggle mute, pause, and mouse/touch follow mode.
@@ -31,11 +25,9 @@ Setting options include a toggle mute, pause, and mouse/touch follow mode.
 The player ship will automatically follow a mouse or touch point if follow mode is enabled.
 Touch follow is automatically enabled at the start if a touch screen device is detected.
 
-<img src="./src/assets/screenshots/controls.png" height="500">
+<img src="./src/assets/screenshots/controls.png" height="300">
 
 ## Functionality & MVPs
-
-___
 
 * [x] The player can move anywhere across the game screen using WASD or arrow keys and can shoot projectiles with spacebar or left click.
 * [x] All enemies spawn in from the top of the game screen, move from top to bottom, and shoot projectiles.
@@ -45,8 +37,6 @@ ___
 * [x] Player can retry on win or lose.
 
 ## How the game is being rendered
-
-___
 
 The GameView animate function updates and draws the current state of the game on canvas using requestAnimationFrame
 
@@ -117,8 +107,6 @@ class Game {
 
 ## Wireframe
 
-___
-
 ![wireframe diagram](./src/assets/screenshots/Wireframe.png)
 
 * Nav links include a link to this project's Github repo and my LinkedIn.
@@ -128,16 +116,12 @@ ___
 
 ## Technologies, Libraries, APIs
 
-___
-
 * This project is written with HTML, CSS, and JavaScript.
 * Canvas API to render the game.
 * npm to manage project dependencies.
 * Webpack and Babel to bundle and transpile the source JavaScript code.
 
 ## Implementation Timeline
-
-___
 
 * Thursday (March 11):
   * Planning and research. Setup project, work on setting up the HTML page and Canvas game screen.
@@ -156,8 +140,6 @@ ___
 
 ## Bonus features
 
-___
-
 * [x] Music and sound effects, with the option to mute.
 * [x] Scrolling background that moves along with the game.
 * [ ] Player can collect upgrades, dropped randomly from destroyed enemies, that will improve their shooting pattern and damage.
@@ -167,8 +149,6 @@ ___
 * [x] Player can also control the ship with mouse and touch movements.
 
 ## Credits
-
-___
 
 * All assets were provided as free open source material from [itch.io](https://itch.io/)
   * Game backgrounds were generated [here](https://deep-fold.itch.io/space-background-generator)
