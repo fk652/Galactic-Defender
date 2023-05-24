@@ -8,6 +8,7 @@ class Projectile extends MovingObject {
     this.origin = args.origin;
   }
 
+  // projectiles are also removed when they collide with ships, handled by Ship objects
   handleBounds(newPosition) {
     if (!this.inBounds(newPosition)) {
       super.remove();

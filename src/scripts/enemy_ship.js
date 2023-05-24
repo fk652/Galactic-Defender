@@ -4,6 +4,7 @@ import Explosion from "./explosion";
 
 class EnemyShip extends Ship {
   constructor(game, posX, speed, cooldown) {
+    // Ship/MovingObject related arguments
     let image = document.createElement("img");
     image.src = "src/assets/images/enemy1.png";
     let height = 40;
@@ -12,6 +13,7 @@ class EnemyShip extends Ship {
     let projectileDmg = 1;
     // let projectileDmg = 10;
 
+    // in case the random position clips the ship image out of bounds
     if (posX < 0 - width) {
       posX = 0;
     } else if (posX > game.canvasWidth - width) {
@@ -30,9 +32,9 @@ class EnemyShip extends Ship {
       type: "enemies"
     }
 
+    // Projectile related arguments
     image = document.createElement("img");
     image.src = "src/assets/images/enemy_projectile.png";
-
     const projectileArgs = [{
       objArgs: {
         velocity: [0, 8],
@@ -48,6 +50,7 @@ class EnemyShip extends Ship {
       projectileSound: "enemyProjectile"
     }]
 
+    // projectile pattern
     const patternArgs = [{
       positionDeltas: [[width/(2.25), 10]],
       batchFireNum: 1,
@@ -60,6 +63,8 @@ class EnemyShip extends Ship {
     super(objArgs, projectileArgs, patternArgs);
   }
 
+  // enemy ships simply move from top to bottom
+  // removed once they get below the screen
   handleBounds(newPosition) {
     if (!this.inUpperYHeightBounds(newPosition[1])) {
       this.remove();

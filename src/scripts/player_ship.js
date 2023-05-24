@@ -9,7 +9,7 @@ class PlayerShip extends Ship {
   // static MAX_HEALTH = -2;
 
   constructor(game) {
-    // ship image and MovingObject variables
+    // Ship/MovingObject related arguments
     let image = document.createElement("img");
     image.src = "src/assets/images/player1.png";
     let height = 48;
@@ -26,7 +26,7 @@ class PlayerShip extends Ship {
       type: "player"
     }
 
-    // projectile image and variables
+    // Projectile related arguments
     image = document.createElement("img");
     image.src = "src/assets/images/player_projectile.png";
     const projectileArgs = [{
@@ -44,7 +44,7 @@ class PlayerShip extends Ship {
       projectileSound: "playerProjectile"
     }]
 
-    // projectile patterns
+    // projectile pattern
     const patternArgs = [{
       positionDeltas: [[width/(2.3), 0]],
       batchFireNum: 1,

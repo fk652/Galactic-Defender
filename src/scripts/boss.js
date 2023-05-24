@@ -8,12 +8,15 @@ class Boss extends Ship {
   static MAX_HEALTH = 20;
 
   constructor(game) {
+    // Ship/Moving Object related arguments
     let image = document.createElement("img");
     image.src = "src/assets/images/boss1.png";
     let height = 220;
     let width = 250
     let health = Boss.MAX_HEALTH;
     // let health = 1;
+    let projectileDmg = 2;
+    // let projectileDmg = 10;
 
     const objArgs = {
       width: width,
@@ -28,13 +31,14 @@ class Boss extends Ship {
       type: "enemies"
     }
 
+    // Projectile related arguments
     image = document.createElement("img");
     image.src = "src/assets/images/enemy_projectile.png";
     const projectileArgs = [{
       objArgs: {
         velocity: [0, 8],
         speed: 8,
-        health: 2,  // boss damage
+        health: projectileDmg,
         game: game,
         width: 10,
         height: 40,
@@ -45,6 +49,7 @@ class Boss extends Ship {
       projectileSound: "bossProjectile"
     }]
 
+    // boss projectile patterns, to be activated based on boss phase
     const patternArgs = [{
       positionDeltas: [[18, 200], [width-32, 200]],
       batchFireNum: 1,
@@ -81,8 +86,8 @@ class Boss extends Ship {
     super(objArgs, projectileArgs, patternArgs);
   }
 
+  // box1 is the weakspot
   getHitbox() {
-    // weakspot
     const box1 = {
       x: this.position[0] + 85,
       y: this.position[1] + 90,
@@ -114,6 +119,7 @@ class Boss extends Ship {
     return [box1, box2, box3, box4];
   }
 
+  // only takes damage if weakpoint hit (index 0 is the hitbox1 weakpoint)
   handleCollided(otherObj, hitboxesCollided) {
     const otherObjClass = otherObj.constructor.name;
 
@@ -126,6 +132,8 @@ class Boss extends Ship {
     }
   }
 
+  // Boss will slowly move down center from the top during cutscene
+  // then move side to side throughout the fight at normal speed 
   updateVelocity() {
     if (this.movementDisabled) return 
 
@@ -144,6 +152,7 @@ class Boss extends Ship {
     }
   }
 
+  // Boss shooting patterns updated based on health remaining
   updateShootingPattern() {
     if (this.health === 10) {
       this.patternArgs[3].onCooldown = false;
@@ -165,10 +174,13 @@ class Boss extends Ship {
     }
   }
 
+  // Boss death animations plays alot of minor explosions and ends with big finale explosion
+  // Then proceeds to game win after a delay
   remove() {
     this.game.score += 1000;
     this.disabled = true;
 
+    // minor explosions
     for (let i = 0; i < 20; i++) {
       const timeDelay = i * 200;
       if (i % 2 === 0) new Timer(this.game, () => this.game.sounds.add("explosion"), timeDelay);
@@ -183,12 +195,14 @@ class Boss extends Ship {
       }, timeDelay);
     }
 
+    // stop for final explosion
     new Timer(this.game, () => {
       this.velocity = [0,0];
       this.speed = 0;
       this.movementDisabled = true;
     }, 4000);
     
+    // final explosion and start timer for setting game win
     new Timer(this.game, () => {
       this.game.sounds.playBossDeathSound();
       const multiplier = (this.velocity[0] < 0 ? 1 : -1);
