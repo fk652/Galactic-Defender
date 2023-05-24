@@ -1,6 +1,8 @@
 import { rectangleCollision } from "./utils";
 
+// MovingObject is the top parent class for ships, projectiles, explosions, etc.
 class MovingObject {
+  // for smoothing gameplay based on fps
   static NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
   constructor(argsObject) {
@@ -33,24 +35,28 @@ class MovingObject {
     ctx.restore();
   }
 
+  // checks collisions against all hitboxes of the object
+  // rectangleCollision is a utility function for mathematically determining collisions
+  // hitBoxCollisions is used by subclasses with more complex logic
   collideCheck(otherObj) {
     const hitBoxCollisions = [];
+
     this.getHitbox().forEach((thisBox, idx) => {
       const collisionFound = otherObj.getHitbox().some(otherBox => { 
         return rectangleCollision(thisBox, otherBox) 
       })
+
       if (collisionFound) hitBoxCollisions.push(idx); 
     })
 
     if (hitBoxCollisions.length > 0) {
-      // hitBoxCollisions will be used by subclasses with more complex logic
       this.handleCollided(otherObj, hitBoxCollisions);
     }
   }
 
+  // will be overwritten by subclasses with more complex logic
+  // two cases: enemy/player to projectile, player to enemy
   handleCollided(otherObj) {
-    // will be overwritten by subclasses with more complex logic
-    // two case: enemy/player to projectile, player to enemy
     const otherObjClass = otherObj.constructor.name;
 
     if (otherObjClass === "Projectile") {
@@ -91,12 +97,12 @@ class MovingObject {
   }
 
   handleBounds(newPosition) {
-    // to be changed in most sub classes
+    // to be changed in sub classes as needed
     this.position = newPosition;
   }
 
   updateVelocity() {
-    // to be implemented in sub classes
+    // to be implemented in sub classes as needed
   }
 
   inUpperYHeightBounds(y) {

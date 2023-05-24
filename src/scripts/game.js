@@ -9,13 +9,11 @@ class Game {
   static MAX_ENEMY_WAVE = 5;
 
   constructor(canvas, gameView) {
-    // game view and canvas
     this.canvas = canvas;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.gameView = gameView;
 
-    // enemy wave and count
     this.enemyWave = 0;
     // this.enemyWave = 5;
     this.addEnemyOnCooldown = true;
@@ -24,22 +22,13 @@ class Game {
     this.enemyWaveCount = 0;
 
     this.score = 0;
-    
-    // start/win/game over flags
     this.gameOver = false;
     this.win = false;
     this.startScreen = true;
 
-    // all timers and moving objects are keyed with unique ids
-    // id is also stored in the timers and objects themselves
-    // allows for quick deletion, handled within the objects themselves
+    // all moving objects and timers have a unique game id
     this.idCounter = 1;
-
-    // contains all current setTimeouts, wrapped in a Timer class
-    // used for pausing/unpausing setTimeouts
     this.timers = {};
-
-    // contains all objects in current state of game
     this.allMovingObjects = {
       player: {},
       enemies: {},
@@ -47,14 +36,11 @@ class Game {
       explosions: {}
     };
 
-    // the player
     this.player = new PlayerShip(this);
-
-    // the boss
     this.bossFight = false;
     this.boss = null;
 
-    // contains all sounds in the game
+    // all sounds in the game handled with the Sound class
     this.sounds = new Sound(this);
   }
 
@@ -66,8 +52,6 @@ class Game {
     this.shootProjectiles();
   }
 
-  // pausing and resuming timers
-  // called in GameView handlePause()
   pauseTimers() {
     Object.values(this.timers).forEach(timer => timer.pause());
   }
@@ -76,7 +60,7 @@ class Game {
     Object.values(this.timers).forEach(timer => timer.resume());
   }
 
-  // call move for all MovingObject objects )ships, projectiles, explosions)
+  // call move() for all MovingObject objects
   moveObjects(timeDelta) {
     for (let key in this.allMovingObjects) {
       Object.values(this.allMovingObjects[key]).forEach(obj => obj.move(timeDelta));
@@ -89,11 +73,8 @@ class Game {
     Object.values(this.allMovingObjects.enemies).forEach(enemy => enemy.shootProjectile());
   }
 
-  // check collisions between players, ships, and projectiles
+  // first check projectile collisions, then check player to enemy ship collisions
   checkCollisions() {
-    // first check projectile collisions
-      // player projectiles vs enemies
-      // enemy projectiles vs player
     Object.values(this.allMovingObjects.projectiles).forEach(projectile => {
       if (projectile.origin === "player") {
         Object.values(this.allMovingObjects.enemies).forEach(enemy => {
@@ -104,7 +85,6 @@ class Game {
       }
     })
     
-    // next check collision between player and enemy ships
     Object.values(this.allMovingObjects.enemies).forEach(enemy => {
       this.player.collideCheck(enemy);
     })
@@ -117,11 +97,10 @@ class Game {
     }
   }
 
-  // place enemies
+  // next wave if 0 enemies remaining, activate boss fight if last wave finished
+    // increased enemies per wave
+    // multiply score by remaining player health, and then heal player
   setEnemies() {
-    // next wave if 0 enemies remaining, activate boss fight if last wave finished
-      // increased enemies per wave
-      // multiply score by remaining player health, and heal player
     if (this.enemiesRemaining === 0) {
       if (this.enemyWave < Game.MAX_ENEMY_WAVE) {
         this.enemyWave += 1;
@@ -136,8 +115,7 @@ class Game {
       }
     }
 
-    // enemies are placed in clusters of 3 to 10 at different intervals
-    // remaining enemies decremented in EnemyShip remove()
+    // throught a wave, enemies are placed in clusters of 3 to 10 at different intervals
     if (!this.addEnemyOnCooldown) {
       const remaining = this.enemyWaveCount - this.addedEnemies;
 
@@ -150,7 +128,6 @@ class Game {
       this.addedEnemies += numNewEnemies;
 
       // randomize position, speed, and shoot cooldown for each enemy
-      // MovingObjects add themselves to the Game state in their constructors
       for (let i = 0; i < numNewEnemies; i++) {
         const randPosX = Math.floor(Math.random() * this.canvasWidth);
         const randSpeed = Math.random() * (5 - 2) + 2;
@@ -158,8 +135,7 @@ class Game {
         new EnemyShip(this, randPosX, randSpeed, randCooldown);
       }
 
-      // set cooldown before adding next group of enemies
-      // set a Timer to reset cooldown flag in 1 to 3 seconds
+      // set cooldown before adding next group of enemies, reset flag in 1 to 3 seconds
       this.addEnemyOnCooldown = true;
       const randTimeOut = Math.random() * (3000 - 1000) + 1000;
       new Timer(this, this.resetAddEnemyCooldown.bind(this), randTimeOut);
@@ -170,7 +146,6 @@ class Game {
     this.addEnemyOnCooldown = false;
   }
 
-  // creates Boss object, sets boss flags, and updates sounds and info
   // waits for all player projectiles to clear, and temporarily disable player (for cutscene to play) 
   // also heal player and update score
   setBoss() {
@@ -185,7 +160,6 @@ class Game {
     }
   }
 
-  // win, game over, reset handling
   setWin() {
     if (!this.gameOver) {
       this.score *= this.player.health;

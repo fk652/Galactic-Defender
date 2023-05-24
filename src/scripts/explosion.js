@@ -1,5 +1,7 @@
 import MovingObject from "./moving_object";
 
+// Explosion class handles different explosion types
+// minor for enemy ships, major for player and boss death
 class Explosion extends MovingObject {
   constructor(game, size, position, explosionType, velocityDelta) {
     const image = document.createElement("img");
@@ -26,18 +28,17 @@ class Explosion extends MovingObject {
       this.maxFrames = 20;
       this.imgSize = 192;
       this.cutSize = 5;
-      image.src = "src/assets/images/explosion1.png";
     } else if (explosionType === "major" ) {
       this.maxFrames = 48;
       this.imgSize = 240;
       this.cutSize = 8;
-      image.src = "src/assets/images/explosion2.png";
     }
 
     this.frame = 0;
     this.velocityDelta = velocityDelta;
   }
 
+  // explosions are animated sprites with multiple frames
   draw(ctx) {
     const yOffset = Math.floor(this.frame/this.cutSize);
     const xOffset = this.frame % this.cutSize;

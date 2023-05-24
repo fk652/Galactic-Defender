@@ -1,6 +1,7 @@
 import MovingObject from "./moving_object";
 
 class Projectile extends MovingObject {
+  // Projectile health determines damage dealt
   constructor(args) {
     args.objArgs.type = "projectiles";
     super(args.objArgs);

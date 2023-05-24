@@ -1,3 +1,4 @@
+// Sound class creates and handles all game sounds
 class Sound {
   constructor(game) {
     this.waveBGM = document.createElement("audio");
@@ -57,6 +58,7 @@ class Sound {
     this.bindToggleListener();
   }
 
+  // switching the background music
   switchBGM(key) {
     this.currentBGM.pause();
     this.currentBGM.currentTime = 0;
@@ -88,6 +90,7 @@ class Sound {
     if (this.toggle) this.playerHurtSound.play();
   }
 
+  // sound toggling
   toggleOff() {
     this.currentBGM.pause();
     this.reset();
@@ -101,6 +104,7 @@ class Sound {
     this.toggle = true;
   }
 
+  // adding projectile and explosion sounds, to be called in other classes as needed
   add(audioSourceKey) {
     if (this.toggle) {
       const newAudio = document.createElement("audio");
@@ -115,6 +119,7 @@ class Sound {
     }
   }
 
+  // only pause when playing, to avoid asynchronous play() issues
   isPlaying(audio) {
     return audio.currentTime > 0 && !audio.paused && !audio.ended;
   }

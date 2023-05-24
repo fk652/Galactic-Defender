@@ -23,7 +23,6 @@ class GameView {
   ]
 
   constructor(canvas, ctx) {
-    // game and canvas
     this.ctx = ctx;
     this.canvas = canvas;
     this.canvasWidth = canvas.width;
@@ -64,11 +63,10 @@ class GameView {
     this.pause = false;
     this.toggleSound = false;
 
-    this.bindSettingListeners();
-
-    // to control only drawing start, win, and game over messages once;
+    // only want to draw start, win, and game over messages once;
     this.messageDrawn = false;
 
+    this.bindSettingListeners();
     this.bindStartHandler();
   }
   
@@ -79,11 +77,7 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
-  // draw start, win, game over screen
-  // or if playing, draw the next state of the game and update html game info elements
-  // when paused, nothing gets drawn or updated while time keeps moving along
-  // time delta is used to smooth out gameplay movements as fps changes
-  // animate will always be recursively calling so the game is ready to be played at any time
+  // draw next state of the game, or start/win/game over message
   animate(time) {
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
       if (this.pause) this.handlePauseToggle();
@@ -99,9 +93,7 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
-  // clear the canvas and draw the next frame
-  // includes new background and object positions
-  // each game object has its own draw function in the MovingObject class
+  // draw all game objects and moved background
   draw() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.drawBackground();
@@ -187,9 +179,7 @@ class GameView {
     }
   }
 
-  // draw start/win/game over messages, once
-  // start message is only seen once at initial game load
-  // also remove player controls
+  // draw start/win/game over message once and remove player controls
   drawStartWinGameOver() {
     if (!this.messageDrawn) {
       const message = this.game.startScreen 
@@ -300,8 +290,6 @@ class GameView {
 
   // pause/unpause
   handlePauseToggle() {
-    // add pause function to sounds later
-    // also pause all setTimeouts and setIntervals
     if ((this.game.startScreen || this.game.gameOver || this.game.win) && !this.pause) {
       return;
     }
@@ -365,9 +353,7 @@ class GameView {
     document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this));
   }
 
-  // player controls
-  // arrow/wasd to move
-  // spacebar to shoot
+  // player controls (arrow/wasd to move, spacebar to shoot)
   handleKeyDown(event) {
     event.preventDefault();
 

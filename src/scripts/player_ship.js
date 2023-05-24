@@ -9,6 +9,7 @@ class PlayerShip extends Ship {
   // static MAX_HEALTH = -2;
 
   constructor(game) {
+    // ship image and MovingObject variables
     let image = document.createElement("img");
     image.src = "src/assets/images/player1.png";
     let height = 48;
@@ -25,6 +26,7 @@ class PlayerShip extends Ship {
       type: "player"
     }
 
+    // projectile image and variables
     image = document.createElement("img");
     image.src = "src/assets/images/player_projectile.png";
     const projectileArgs = [{
@@ -42,6 +44,7 @@ class PlayerShip extends Ship {
       projectileSound: "playerProjectile"
     }]
 
+    // projectile patterns
     const patternArgs = [{
       positionDeltas: [[width/(2.3), 0]],
       batchFireNum: 1,
@@ -55,6 +58,7 @@ class PlayerShip extends Ship {
 
     super(objArgs, projectileArgs, patternArgs);
 
+    // player controlled movements
     this.keysPressed = {
       up: false,
       down: false,
@@ -67,6 +71,7 @@ class PlayerShip extends Ship {
     this.invincible = false;
   }
 
+  // player ship unique hitboxes
   getHitbox() {
     const box1 = {
       x: this.position[0] + (this.width / 3),
@@ -85,12 +90,16 @@ class PlayerShip extends Ship {
     return [box1, box2];
   }
 
+  // velocity updated based on player controlled movements
   updateVelocity() {
     let newVelocity = [0, 0];
 
+    // when disabled, player auto moves downwards
     if (this.disabled) {
       newVelocity[1] = 2;
     } else if (this.game.gameView.mouseFollow && this.game.gameView.mousePosition) {
+      // mouse/touch controlled movement handling
+      // movement is smoothed out for finer controls
       const xDiff = this.game.gameView.mousePosition.x - (this.position[0] + (this.width / 2));
       const yDiff = this.game.gameView.mousePosition.y - (this.position[1] + (this.height / 2));
       const deadzone = 2;
@@ -112,6 +121,7 @@ class PlayerShip extends Ship {
         newVelocity = vectorScale(newVelocity, speed);
       }
     } else {
+      // keyboard controlled movement handling
       if (this.keysPressed.right) newVelocity[0] += this.speed;
       if (this.keysPressed.left) newVelocity[0] -= this.speed;
       if (this.keysPressed.up) newVelocity[1] -= this.speed;
@@ -123,15 +133,18 @@ class PlayerShip extends Ship {
     this.velocity = newVelocity;
   }
 
+  // shooting also controlled by player
   shootProjectile() {
     if (this.keysPressed.shoot && !this.disabled) super.shootProjectile();
   }
 
+  // player must be within game screen at all times
   handleBounds(newPosition) {
     if (this.inXBounds(newPosition[0])) this.position[0] = newPosition[0];
     if (this.inYBounds(newPosition[1])) this.position[1] = newPosition[1];
   }
 
+  // player gets 1 sec of invicibility after taking damage
   damageTaken(damage) {
     if (!this.invincible) {
       super.damageTaken(damage);
@@ -141,6 +154,11 @@ class PlayerShip extends Ship {
     }
   }
 
+  resetInvincibility() {
+    this.invincible = false;
+  }
+
+  // player unique death animation, and activates game over logic
   remove() {
     if (!this.disabled) { 
       this.disabled = true;
@@ -154,10 +172,6 @@ class PlayerShip extends Ship {
         new Timer(this.game, this.game.setGameOver.bind(this.game), 3000);
       }, 1000)
     }
-  }
-
-  resetInvincibility() {
-    this.invincible = false;
   }
 }
 
