@@ -12,11 +12,11 @@ Galactic Defender is a galaxy shooter game, based off the classic [Space Invader
 
 In Galactic Defender the player's goal is to survive waves of enemies.
 
-![enemy wave screenshot](./src/assets/screenshots/enemy_wave.png)
+<img src="./src/assets/screenshots/enemy_wave.png" height="500">
 
 ...and defeat the boss at the end.
 
-![boss fight screenshot](./src/assets/screenshots/boss_fight.png)
+<img src="./src/assets/screenshots/boss_fight.png" height="500">
 
 It's game over if the player loses all their health points (HP) before defeating the boss. Enemies also have their own HP that must be depleted to be destroyed, with scaling difficulty.
 
@@ -24,9 +24,14 @@ It's game over if the player loses all their health points (HP) before defeating
 
 ___
 
-Controls are simply arrow keys (or WASD) to move in any direction, spacebar (or left click) to shoot (can be held down to continously shoot), and a clickable toggle mute button.
+Controls are simply arrow keys (or WASD) to move in any direction, spacebar (or left click) to shoot (can be held down to continously shoot).
 
-![instructions screenshot](./src/assets/screenshots/game_instructions.png)
+Setting options include a toggle mute, pause, and mouse/touch follow mode.
+
+The player ship will automatically follow a mouse or touch point if follow mode is enabled.
+Touch follow is automatically enabled at the start if a touch screen device is detected.
+
+<img src="./src/assets/screenshots/controls.png" height="500">
 
 ## Functionality & MVPs
 
