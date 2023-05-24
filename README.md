@@ -65,52 +65,12 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
-  draw() {
-    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    this.drawBackground();
-
-    for (let key in this.game.allMovingObjects) {
-      Object.values(this.game.allMovingObjects[key]).forEach(obj => obj.draw(this.ctx));
-    }
-  }
-
-    this.updateScore();
-  updateGameInfo() {
-    this.updateHealthBar('player');
-
-    if (this.game.bossFight) {
-      this.updateHealthBar('boss');
-    } else {
-      this.waveSpan.innerText = this.game.enemyWave;
-      this.enemiesRemainingSpan.innerText = this.game.enemiesRemaining;
-    }
-  }
-
   ...
 
 }
 ```
 
-The Game step function applies game logic to determine the next state of the game such as where objects are positioned next, what enemies and projectiles are to be added or removed, and collision detection.
-
-```javascript
-class Game {
-
-  ...
-
-  step(timeDelta) {
-    this.checkCollisions();
-    this.setEnemies();
-    this.moveObjects(timeDelta);
-    this.shootProjectiles();
-  }
-
-  ...
-
-}
-```
-
-The GameView draw function then clears the canvas screen and redraws all objects contained in the game.allMovingObjects attribute, at their newest positions.
+The GameView draw function clears the canvas screen and redraws all objects contained in the game.allMovingObjects attribute, at their newest positions.
 
 ```javascript
 class GameView {
@@ -119,12 +79,30 @@ class GameView {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
     this.drawBackground();
 
     for (let key in this.game.allMovingObjects) {
       Object.values(this.game.allMovingObjects[key]).forEach(obj => obj.draw(this.ctx));
     }
+  }
+
+  ...
+
+}
+```
+
+The Game step function applies game logic to determine the next state of the game such as where objects are positioned next, placing/removing enemies and projectiles, and collision detection.
+
+```javascript
+class Game {
+
+  ...
+
+  step(timeDelta) {
+    this.checkCollisions();
+    if (!this.bossFight) this.setEnemies();
+    this.moveObjects(timeDelta);
+    this.shootProjectiles();
   }
 
   ...
@@ -147,7 +125,7 @@ ___
 
 ___
 
-* This project will be written with HTML, CSS, and JavaScript.
+* This project is written with HTML, CSS, and JavaScript.
 * Canvas API to render the game.
 * npm to manage project dependencies.
 * Webpack and Babel to bundle and transpile the source JavaScript code.

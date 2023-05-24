@@ -71,10 +71,11 @@ class GameView {
 
     this.bindStartHandler();
   }
-
-  // starts drawing the game through recursive animationFrame calls to draw the next frame
+  
+  // starts up the animate recursive call loop, and draws initial background
   start() {
     this.lastTime = 0;
+    this.drawBackground();
     requestAnimationFrame(this.animate.bind(this));
   }
 
@@ -365,6 +366,8 @@ class GameView {
   }
 
   // player controls
+  // arrow/wasd to move
+  // spacebar to shoot
   handleKeyDown(event) {
     event.preventDefault();
 
@@ -385,6 +388,7 @@ class GameView {
     else if (event.key === " ") this.game.player.keysPressed.shoot = false;
   }
 
+  // mouse click/hold to shoot
   handleMouseDown(event) {
     const parentId = event.target.parentNode.id;
     if (!GameView.IGNORE_TARGETS.includes(parentId)) this.game.player.keysPressed.shoot = true;
