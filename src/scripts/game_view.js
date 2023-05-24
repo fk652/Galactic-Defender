@@ -46,8 +46,8 @@ class GameView {
     this.backgroundOptions = {
       img: backgroundImg,
       x: 0,
-      y: 0,
-      dy: 1
+      y: 700,
+      dy: 0.5
     }
 
     // mouse follow options
@@ -137,7 +137,7 @@ class GameView {
     this.ctx.fillText("PAUSED", this.canvasWidth/2, this.canvasHeight/2);
   }
 
-  // draw all game objects and moving background
+  // draw moving background and then all game objects
   draw() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.drawBackground();
