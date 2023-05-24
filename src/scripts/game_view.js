@@ -93,92 +93,6 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
-  // draw all game objects and moved background
-  draw() {
-    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    this.drawBackground();
-
-    for (let key in this.game.allMovingObjects) {
-      Object.values(this.game.allMovingObjects[key]).forEach(obj => obj.draw(this.ctx));
-    }
-  }
-
-  // moving the canvas background vertically downwards
-  drawBackground() {
-    const img = this.backgroundOptions.img;
-
-    // if end is reached, reset image back to beginning
-    if (this.backgroundOptions.y > this.canvasHeight) {
-      this.backgroundOptions.y = -img.height + this.backgroundOptions.y;
-    }
-
-    // if looping around, cut remaining end and draw below new
-    if (this.backgroundOptions.y > 0) {
-      this.ctx.drawImage(img, this.backgroundOptions.x, -img.height + this.backgroundOptions.y, img.width, img.height);
-    }
-
-    // draw background and then update new position
-    this.ctx.drawImage(img, this.backgroundOptions.x, this.backgroundOptions.y, img.width, img.height);
-    this.backgroundOptions.y += this.backgroundOptions.dy;
-  }
-
-  // update game info html elements
-  updateGameInfo() {
-    this.updateScore();
-    this.updateHealthBar('player');
-
-    if (this.game.bossFight) {
-      this.updateHealthBar('boss');
-    } else {
-      this.waveSpan.innerText = this.game.enemyWave;
-      this.enemiesRemainingSpan.innerText = this.game.enemiesRemaining;
-    }
-  }
-
-  updateScore() {
-    this.scoreSpan.innerText = this.game.score;
-  }
-
-  // update either boss or player hp
-  updateHealthBar(type) {
-    let obj, healthBar;
-    if (type === 'player') {
-      obj = this.game.player;
-      healthBar = this.playerHealthBar;
-    } else {
-      obj = this.game.boss;
-      healthBar = this.bossHealthBar;
-    }
-    let health = obj.health;
-
-    const healthPoint = document.createElement("li");
-    healthPoint.setAttribute("class", `${type}-health-point`);
-
-    if (type === 'boss') health = Math.ceil(health / (Boss.MAX_HEALTH / 10));
-
-    if (healthBar.children.length < health) {
-      for (let i = 0; i < health - healthBar.children.length; i++) {
-        healthBar.appendChild(healthPoint);
-      }
-    } else if ((healthBar.children.length > health)) {
-      for (let i = 0; i < healthBar.children.length - health; i++) {
-        const lastChild = healthBar.lastChild;
-        if (lastChild) healthBar.removeChild(healthBar.lastChild);
-      }
-    }
-  }
-
-  // switch between boss and enemy wave html elements 
-  switchGameInformation() {
-    if (this.game.bossFight) {
-      this.waveInfo.style.display = "none";
-      this.bossInfo.style.display = "flex";
-    } else {
-      this.waveInfo.style.display = "flex";
-      this.bossInfo.style.display = "none";
-    }
-  }
-
   // draw start/win/game over message once and remove player controls
   drawStartWinGameOver() {
     if (!this.messageDrawn) {
@@ -210,7 +124,12 @@ class GameView {
     }
   }
 
-  // draw pause text
+  drawRetryKey() {
+    this.ctx.font = "24px roboto";
+    this.ctx.fillText("(press any key or click here to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
+    this.bindRetryHandler();
+  }
+
   drawPause() {
     this.ctx.textAlign = "center";
     this.ctx.fillStyle = "white";
@@ -218,14 +137,93 @@ class GameView {
     this.ctx.fillText("PAUSED", this.canvasWidth/2, this.canvasHeight/2);
   }
 
-  // draw smaller retry text under win/game over, after a short while
-  drawRetryKey() {
-    this.ctx.font = "24px roboto";
-    this.ctx.fillText("(press any key or click here to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
-    this.bindRetryHandler();
+  // draw all game objects and moving background
+  draw() {
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.drawBackground();
+
+    for (let key in this.game.allMovingObjects) {
+      Object.values(this.game.allMovingObjects[key]).forEach(obj => obj.draw(this.ctx));
+    }
   }
 
-  // starting game
+  // canvas background moves vertically downward
+  drawBackground() {
+    const img = this.backgroundOptions.img;
+
+    // if end is reached, reset image back to beginning
+    if (this.backgroundOptions.y > this.canvasHeight) {
+      this.backgroundOptions.y = -img.height + this.backgroundOptions.y;
+    }
+
+    // if looping around, cut remaining end and draw below new
+    if (this.backgroundOptions.y > 0) {
+      this.ctx.drawImage(img, this.backgroundOptions.x, -img.height + this.backgroundOptions.y, img.width, img.height);
+    }
+
+    // draw background and then update new position
+    this.ctx.drawImage(img, this.backgroundOptions.x, this.backgroundOptions.y, img.width, img.height);
+    this.backgroundOptions.y += this.backgroundOptions.dy;
+  }
+
+  // updates all game info related html elements
+  updateGameInfo() {
+    this.updateScore();
+    this.updateHealthBar('player');
+
+    if (this.game.bossFight) {
+      this.updateHealthBar('boss');
+    } else {
+      this.waveSpan.innerText = this.game.enemyWave;
+      this.enemiesRemainingSpan.innerText = this.game.enemiesRemaining;
+    }
+  }
+
+  updateScore() {
+    this.scoreSpan.innerText = this.game.score;
+  }
+
+  // updates either boss or player hp
+  updateHealthBar(type) {
+    let obj, healthBar;
+    if (type === 'player') {
+      obj = this.game.player;
+      healthBar = this.playerHealthBar;
+    } else {
+      obj = this.game.boss;
+      healthBar = this.bossHealthBar;
+    }
+    let health = obj.health;
+
+    const healthPoint = document.createElement("li");
+    healthPoint.setAttribute("class", `${type}-health-point`);
+
+    if (type === 'boss') health = Math.ceil(health / (Boss.MAX_HEALTH / 10));
+
+    if (healthBar.children.length < health) {
+      for (let i = 0; i < health - healthBar.children.length; i++) {
+        healthBar.appendChild(healthPoint);
+      }
+    } else if ((healthBar.children.length > health)) {
+      for (let i = 0; i < healthBar.children.length - health; i++) {
+        const lastChild = healthBar.lastChild;
+        if (lastChild) healthBar.removeChild(healthBar.lastChild);
+      }
+    }
+  }
+
+  // switches between boss and enemy wave html elements 
+  switchGameInformation() {
+    if (this.game.bossFight) {
+      this.waveInfo.style.display = "none";
+      this.bossInfo.style.display = "flex";
+    } else {
+      this.waveInfo.style.display = "flex";
+      this.bossInfo.style.display = "none";
+    }
+  }
+
+  // start playing the game
   handleStartKey(event) {
     if (event?.key === " ") event.preventDefault();
 
@@ -329,7 +327,7 @@ class GameView {
     }
   }
 
-  // setting keybinds
+  // setting option keybinds
   handleSettingKeybinds(event) {
     if (event.key === " ") event.preventDefault();
     else if (event.key === "m") this.handleMouseFollowToggle();
@@ -337,7 +335,7 @@ class GameView {
     else if (event.key === "p") this.handlePauseToggle();
   }
 
-  // bind all setting related handlers (pause/unpause, mouse/touch follow, mute/unmute)
+  // binds all setting related handlers (pause/unpause, mouse/touch follow, mute/unmute)
   bindSettingListeners() {
     document.addEventListener("keydown", this.handleSettingKeybinds.bind(this));
 
