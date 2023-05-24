@@ -27,6 +27,11 @@ class Timer {
     this.startTime = Date.now();
     this.timeoutId = setTimeout(this.timerCallback.bind(this), this.delay)
   }
+
+  clear() {
+    clearTimeout(this.timeoutId);
+    delete this.game.timers[this.id];
+  }
 }
 
 export default Timer;

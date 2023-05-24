@@ -6,7 +6,6 @@ import { vectorScale } from "./utils";
 class PlayerShip extends Ship {
   static SPEED = 5;
   static MAX_HEALTH = 10;
-  // static MAX_HEALTH = -2;
 
   constructor(game) {
     // Ship/MovingObject related arguments
@@ -49,10 +48,9 @@ class PlayerShip extends Ship {
       positionDeltas: [[width/(2.3), 0]],
       batchFireNum: 1,
       batchFireInterval: 0,
-      // batchFireNum: 3,
-      // batchFireInterval: 75,
       cooldown: 250,
       onCooldown: false,
+      timer: null,
       projectileArgIndex: 0
     }]
 

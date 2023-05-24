@@ -35,7 +35,7 @@ class Ship extends MovingObject {
             }
           }, pattern.batchFireInterval * i);
         }
-        
+
         // play projectile sound
         const projSound = this.projectileArgs[pattern.projectileArgIndex].projectileSound;
         this.playShootSound(projSound);
@@ -43,7 +43,7 @@ class Ship extends MovingObject {
         // set cooldown and start timer to reset it
         pattern.onCooldown = true;
         const batchCooldownOffset = pattern.batchFireInterval * pattern.batchFireNum;
-        new Timer(this.game, this.resetCooldown.bind(this, idx), (pattern.cooldown + batchCooldownOffset));
+        pattern.timer = new Timer(this.game, this.resetCooldown.bind(this, idx), (pattern.cooldown + batchCooldownOffset));
       }
     })
   }
@@ -54,6 +54,7 @@ class Ship extends MovingObject {
 
   resetCooldown(index) {
     this.patternArgs[index].onCooldown = false;
+    this.patternArgs[index].timer = null;
   }
 
   damageTaken(damage) {

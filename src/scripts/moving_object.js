@@ -67,7 +67,7 @@ class MovingObject {
       const damage = 1;
       this.damageTaken(damage);
     } else if (otherObjClass === "Boss") {
-      const damage = 2;
+      const damage = 3;
       this.damageTaken(damage);
     }
   }

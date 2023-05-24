@@ -5,7 +5,7 @@ import Timer from "./timer";
 import { rectangleCollision } from "./utils";
 
 class Boss extends Ship {
-  static MAX_HEALTH = 20;
+  static MAX_HEALTH = 50;
 
   constructor(game) {
     // Ship/Moving Object related arguments
@@ -14,16 +14,13 @@ class Boss extends Ship {
     let height = 220;
     let width = 250
     let health = Boss.MAX_HEALTH;
-    // let health = 1;
     let projectileDmg = 2;
-    // let projectileDmg = 10;
 
     const objArgs = {
       width: width,
       height: height,
       position: [(game.canvasWidth/2) - (width/2), 0 - (height*2)],
       velocity: [0, 1],
-      // velocity: [0, 5],
       speed: 1,
       health: health,
       game: game,
@@ -56,30 +53,34 @@ class Boss extends Ship {
       batchFireInterval: 0,
       cooldown: 1000,
       onCooldown: true,
+      timer: null,
       projectileArgIndex: 0
     },
     {
       positionDeltas: [[60, 210], [width-76, 210]],
-      batchFireNum: 1,
-      batchFireInterval: 0,
+      batchFireNum: 2,
+      batchFireInterval: 150,
       cooldown: 2000,
       onCooldown: true,
+      timer: null,
       projectileArgIndex: 0
     },
     {
       positionDeltas: [[75, 180], [width-88, 180]],
-      batchFireNum: 1,
-      batchFireInterval: 0,
-      cooldown: 2000,
+      batchFireNum: 2,
+      batchFireInterval: 150,
+      cooldown: 1000,
       onCooldown: true,
+      timer: null,
       projectileArgIndex: 0
     },
     {
       positionDeltas: [[100, 160], [width - 110, 160]],
-      batchFireNum: 1,
-      batchFireInterval: 0,
+      batchFireNum: 3,
+      batchFireInterval: 150,
       cooldown: 2000,
       onCooldown: true,
+      timer: null,
       projectileArgIndex: 0
     }]
 
@@ -154,11 +155,23 @@ class Boss extends Ship {
 
   // Boss shooting patterns updated based on health remaining
   updateShootingPattern() {
-    if (this.health === 10) {
-      this.patternArgs[3].onCooldown = false;
-    } else if (this.health === 15) {
+    if (this.health === 20) {
+      this.patternArgs[0].timer?.clear();
+      this.patternArgs[1].timer?.clear();
+      this.patternArgs[2].timer?.clear();
+      this.patternArgs[0].onCooldown = false;
+      this.patternArgs[1].onCooldown = false;
       this.patternArgs[2].onCooldown = false;
-    } else if (this.health === 18) {
+      this.patternArgs[3].onCooldown = false;
+    } else if (this.health === 30) {
+      this.patternArgs[0].timer?.clear();
+      this.patternArgs[1].timer?.clear();
+      this.patternArgs[0].onCooldown = false;
+      this.patternArgs[1].onCooldown = false;
+      this.patternArgs[2].onCooldown = false;
+    } else if (this.health === 40) {
+      this.patternArgs[0].timer?.clear();
+      this.patternArgs[0].onCooldown = false;
       this.patternArgs[1].onCooldown = false;
     }
   }

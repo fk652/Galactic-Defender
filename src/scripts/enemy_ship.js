@@ -11,7 +11,6 @@ class EnemyShip extends Ship {
     let width = 46;
     let health = 1;
     let projectileDmg = 1;
-    // let projectileDmg = 10;
 
     // in case the random position clips the ship image out of bounds
     if (posX < 0 - width) {
@@ -57,6 +56,7 @@ class EnemyShip extends Ship {
       batchFireInterval: 0,
       cooldown: cooldown,
       onCooldown: false,
+      timer: null,
       projectileArgIndex: 0
     }]
 
