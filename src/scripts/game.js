@@ -163,14 +163,14 @@ class Game {
     if (!this.gameOver) {
       this.score *= this.player.health;
       this.win = true;
-      this.sounds.playWinSound();
+      this.sounds.playMajorSound("win");
     }
   }
 
   setGameOver() {
     if (!this.win) {
       this.gameOver = true;
-      this.sounds.playGameOverSound();
+      this.sounds.playMajorSound("gameOver");
     }
   }
 
@@ -202,6 +202,7 @@ class Game {
 
     this.sounds.reset();
     this.sounds.switchBGM("waveBGM");
+    this.sounds.playMajorSound(null);
   }
 }
 

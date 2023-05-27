@@ -144,10 +144,10 @@ class PlayerShip extends Ship {
 
   // player gets 1 sec of invicibility after taking damage
   damageTaken(damage) {
-    if (!this.invincible) {
+    if (!this.invincible && this.health >= 0) {
       super.damageTaken(damage);
       this.invincible = true;
-      this.game.sounds.playPlayerHurtSound();
+      this.game.sounds.playMajorSound("playerHurt");
       new Timer(this.game, this.resetInvincibility.bind(this), 1000);
     }
   }
@@ -166,7 +166,7 @@ class PlayerShip extends Ship {
         const posY = this.position[1] - 20;
         new Explosion(this.game, 100, [posX, posY], "major", [0, 0]);
         super.remove();
-        this.game.sounds.playPlayerDeathSound();
+        this.game.sounds.playMajorSound("playerDeath");
         new Timer(this.game, this.game.setGameOver.bind(this.game), 3000);
       }, 1000)
     }

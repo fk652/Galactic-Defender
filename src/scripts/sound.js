@@ -3,68 +3,34 @@ class Sound {
   constructor(game) {
     this.audioCtx = new AudioContext();
     
-    this.waveBGM = document.createElement("audio");
-    this.waveBGM.src = "src/assets/sounds/wave_bgm.mp3";
-    this.waveBGM.preload = 'auto';
-    this.waveBGM.loop = true;
-    this.waveBGMCtx = this.audioCtx.createMediaElementSource(this.waveBGM);
-    this.waveBGMCtx.connect(this.audioCtx.destination);
+    this.waveBGM = "src/assets/sounds/wave_bgm.mp3";
+    this.bossIncomingBGM = "src/assets/sounds/boss_incoming_bgm.mp3";
+    this.bossBGM = "src/assets/sounds/boss_bgm.mp3";
 
-    this.bossIncomingBGM = document.createElement("audio");
-    this.bossIncomingBGM.src = "src/assets/sounds/boss_incoming_bgm.mp3";
-    this.bossIncomingBGM.preload = 'auto';
-    this.bossIncomingBGM.loop = true;
-    this.bossIncomingBGMCtx = this.audioCtx.createMediaElementSource(this.bossIncomingBGM);
-    this.bossIncomingBGMCtx.connect(this.audioCtx.destination);
+    this.currentBGM = document.createElement("audio");
+    this.currentBGM.src = this.waveBGM;
+    this.currentBGM.loop = true;
+    this.currentBGMCtx = this.audioCtx.createMediaElementSource(this.currentBGM);
+    this.currentBGMCtx.connect(this.audioCtx.destination);
+    
+    this.playerDeath = "src/assets/sounds/player_death.wav";
+    this.bossDeath = "src/assets/sounds/boss_death.mp3";
+    this.gameOver = "src/assets/sounds/game_over.mp3";
+    this.win = "src/assets/sounds/win.mp3";
+    this.playerHurt = "src/assets/sounds/player_hurt.wav";
 
-    this.bossBGM = document.createElement("audio");
-    this.bossBGM.src = "src/assets/sounds/boss_bgm.mp3"
-    this.bossBGM.preload = 'auto';
-    this.bossBGM.loop = true;
-    this.bossBGMCtx = this.audioCtx.createMediaElementSource(this.bossBGM);
-    this.bossBGMCtx.connect(this.audioCtx.destination);
+    this.majorSound = document.createElement("audio");
+    this.majorSound.src = "";
+    this.majorSound.onended = () => this.majorSound.src = "";
+    this.majorSoundCtx = this.audioCtx.createMediaElementSource(this.majorSound);
+    this.majorSoundCtx.connect(this.audioCtx.destination);
 
-    this.playerDeathSound = document.createElement("audio");
-    this.playerDeathSound.src = "src/assets/sounds/player_death.wav"
-    this.playerDeathSound.preload = 'auto';
-    this.playerDeathSound.volume = 0.2;
-    this.playerDeathSoundCtx = this.audioCtx.createMediaElementSource(this.playerDeathSound);
-    this.playerDeathSoundCtx.connect(this.audioCtx.destination);
+    this.defaultProjectile = "src/assets/sounds/default_laser.wav";
+    this.playerProjectile = "src/assets/sounds/player_laser.wav";
+    this.enemyProjectile = "src/assets/sounds/enemy_laser.wav";
+    this.bossProjectile = "src/assets/sounds/boss_projectile.wav";
+    this.explosion = "src/assets/sounds/explosion.wav";
 
-    this.bossDeathSound = document.createElement("audio");
-    this.bossDeathSound.src = "src/assets/sounds/boss_death.mp3"
-    this.bossDeathSound.preload = 'auto';
-    this.bossDeathSoundCtx = this.audioCtx.createMediaElementSource(this.bossDeathSound);
-    this.bossDeathSoundCtx.connect(this.audioCtx.destination);
-
-    this.gameOverSound = document.createElement("audio");
-    this.gameOverSound.src = "src/assets/sounds/game_over.mp3"
-    this.gameOverSound.preload = 'auto';
-    this.gameOverSoundCtx = this.audioCtx.createMediaElementSource(this.gameOverSound);
-    this.gameOverSoundCtx.connect(this.audioCtx.destination);
-
-    this.winSound = document.createElement("audio");
-    this.winSound.src = "src/assets/sounds/win.mp3"
-    this.winSound.preload = 'auto';
-    this.winSound.volume = 0.3;
-    this.winSoundCtx = this.audioCtx.createMediaElementSource(this.winSound);
-    this.winSoundCtx.connect(this.audioCtx.destination);
-
-    this.playerHurtSound = document.createElement("audio");
-    this.playerHurtSound.src = "src/assets/sounds/player_hurt.wav"
-    this.playerHurtSound.preload = 'auto';
-    this.playerHurtSoundCtx = this.audioCtx.createMediaElementSource(this.playerHurtSound);
-    this.playerHurtSoundCtx.connect(this.audioCtx.destination);
-
-    this.audioSources = {
-      defaultProjectile: "src/assets/sounds/default_laser.wav",
-      playerProjectile: "src/assets/sounds/player_laser.wav",
-      enemyProjectile: "src/assets/sounds/enemy_laser.wav",
-      bossProjectile: "src/assets/sounds/boss_projectile.wav",
-      explosion: "src/assets/sounds/explosion.wav"
-    }
-
-    this.currentBGM = this.waveBGM;
     this.soundId = 0;
     this.currentSounds = {};
     this.toggle = false;
@@ -80,52 +46,41 @@ class Sound {
   switchBGM(key) {
     this.currentBGM.pause();
     this.currentBGM.currentTime = 0;
-    this.currentBGM = this[key];
+    this.currentBGM.src = this[key];
     if (this.toggle) this.currentBGM.play();
   }
 
-  playPlayerDeathSound() {
-    this.currentBGM.pause();
-    if (this.toggle) this.playerDeathSound.play();
-  }
+  playMajorSound(key) {
+    if (key === null) {
+      this.majorSound.src = ""
+      return;
+    }
 
-  playBossDeathSound() {
-    this.currentBGM.pause();
-    if (this.toggle) this.bossDeathSound.play();
-  }
+    if (key !== "playerHurt") this.currentBGM.pause();
 
-  playGameOverSound() {
-    this.currentBGM.pause();
-    if (this.toggle) this.gameOverSound.play();
-  }
+    this.majorSound.pause();
+    this.majorSound.currentTime = 0;
+    this.majorSound.src = this[key];
 
-  playWinSound() {
-    this.currentBGM.pause();
-    if (this.toggle) this.winSound.play();
-  }
+    if (key === "playerDeath") this.majorSound.volume = 0.2;
+    else if (key === "win") this.majorSound.volume = 0.3;
+    else this.majorSound.volume = 1.0;
 
-  playPlayerHurtSound() {
-    if (this.toggle) this.playerHurtSound.play();
+    if (this.toggle) this.majorSound.play();
   }
 
   // sound toggling
   toggleOff() {
-    if (this.audioCtx.state !== "suspended") {
-      this.audioCtx.suspend();
-    }
-
-    this.currentBGM.pause();
+    if (this.audioCtx.state !== "suspended") this.audioCtx.suspend();
     this.reset();
     this.toggle = false;
   }
 
   toggleOn() {
-    if (this.audioCtx.state === "suspended") {
-      this.audioCtx.resume();
-    }
-
+    if (this.audioCtx.state === "suspended") this.audioCtx.resume();
     if (!this.game.startScreen && !this.game.gameOver && !this.game.win) {
       this.currentBGM.play();
+      if (!isNaN(this.majorSound.duration)) this.majorSound.play();
     }
     this.toggle = true;
   }
@@ -134,7 +89,7 @@ class Sound {
   add(audioSourceKey) {
     if (this.toggle) {
       const newAudio = document.createElement("audio");
-      newAudio.src = this.audioSources[audioSourceKey];
+      newAudio.src = this[audioSourceKey];
       const newAudioCtx = this.audioCtx.createMediaElementSource(newAudio);
       newAudioCtx.connect(this.audioCtx.destination);
 
@@ -147,6 +102,7 @@ class Sound {
         newAudio.srcObject = null;
         delete this.currentSounds[id];
       }
+
       newAudio.play().then(() => { 
         if(!this.toggle) newAudio.pause() 
       }).catch((error) => {
@@ -169,29 +125,9 @@ class Sound {
   }
 
   reset() {
-    this.bossDeathSound.pause();
-    this.bossDeathSound.currentTime = 0;
-
-    this.playerDeathSound.pause();
-    this.playerDeathSound.currentTime = 0;
-
-    this.gameOverSound.pause();
-    this.gameOverSound.currentTime = 0;
-
-    this.winSound.pause();
-    this.winSound.currentTime = 0;
-
-    this.playerHurtSound.pause();
-    this.playerHurtSound.currentTime = 0;
-
-    this.waveBGM.pause();
-    this.waveBGM.currentTime = 0;
-
-    this.bossIncomingBGM.pause();
-    this.bossIncomingBGM.currentTime = 0;
-
-    this.bossBGM.pause();
-    this.bossBGM.currentTime = 0;
+    this.currentBGM.pause();
+    // this.currentBGM.currentTime = 0;
+    this.majorSound.pause();
 
     Object.values(this.currentSounds).forEach(soundObject => {
       if (this.isPlaying(soundObject.audio)) {soundObject.audio.pause();}

@@ -217,7 +217,7 @@ class Boss extends Ship {
     
     // final explosion and start timer for setting game win
     new Timer(this.game, () => {
-      this.game.sounds.playBossDeathSound();
+      this.game.sounds.playMajorSound("bossDeath");
       const multiplier = (this.velocity[0] < 0 ? 1 : -1);
       const posX = this.position[0]-(this.width/2);
       const posY = this.position[1]-(this.height/1.5);
