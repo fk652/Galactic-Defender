@@ -249,7 +249,11 @@ class GameView {
 
   // retry on win/game over
   handleRetryKey(event) {
-    if (this.game.secretEnd) location.href = "https://fk652.github.io/capybaby-in-space/";
+    if (this.game.secretEnd) {
+      location.href = "https://fk652.github.io/capybaby-in-space/";
+      return
+    }
+    
     if (event?.key === " ") event.preventDefault();
 
     document.removeEventListener("keypress", this.retryHandler);
