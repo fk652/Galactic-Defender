@@ -107,8 +107,10 @@ class Game {
         this.enemiesRemaining = this.enemyWaveCount;
         this.addedEnemies = 0;
 
-        this.score *= Math.ceil(this.player.health/2) || 1;
-        this.healPlayer();
+        if (this.enemyWave > 1) {
+          this.score += (this.player.health * 100);
+          this.healPlayer();
+        }
       } else {
         this.setBoss();
       }
@@ -152,7 +154,7 @@ class Game {
     if (Object.values(this.allMovingObjects.projectiles).length === 0) {
       this.sounds.switchBGM("bossIncomingBGM");
       this.boss = new Boss(this);
-      this.score *= Math.ceil(this.player.health/2) || 1;
+      this.score += (this.player.health * 100);
       this.healPlayer();
       this.bossFight = true;
       this.gameView.switchGameInformation();
@@ -161,7 +163,7 @@ class Game {
 
   setWin() {
     if (!this.gameOver) {
-      this.score *= this.player.health;
+      this.score += (this.player.health * 200);
       this.win = true;
       this.sounds.playMajorSound("win");
     }

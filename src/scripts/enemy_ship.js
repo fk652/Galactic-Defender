@@ -77,7 +77,7 @@ class EnemyShip extends Ship {
     if (this.health <= 0) {
       this.game.sounds.add("explosion");
       new Explosion(this.game, 80, this.position, "minor", [0, 0.5]);
-      this.game.score += 10;
+      this.game.score += 50;
     }
 
     super.remove();
