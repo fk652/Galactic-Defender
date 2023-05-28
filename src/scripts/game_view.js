@@ -98,9 +98,11 @@ class GameView {
     if (!this.messageDrawn) {
       const message = this.game.startScreen 
                       ?  ["Press any key or click here to", "START"]
-                      : this.game.gameOver
-                        ? "GAME OVER"
-                        : "YOU WIN"
+                      : this.game.secretEnd
+                        ? "🫡"
+                        : this.game.gameOver
+                          ? "GAME OVER"
+                          : "YOU WIN"
 
       this.ctx.textAlign = "center";
       this.ctx.fillStyle = "white";
@@ -125,8 +127,11 @@ class GameView {
   }
 
   drawRetryKey() {
+    const message = this.game.secretEnd
+                    ? "(press any key or click here for a secret mission 🦫)"
+                    : "(press any key or click here to retry)"
     this.ctx.font = "24px roboto";
-    this.ctx.fillText("(press any key or click here to retry)", this.canvasWidth/2, this.canvasHeight/2 + 50);
+    this.ctx.fillText(message, this.canvasWidth/2, this.canvasHeight/2 + 50);
     this.bindRetryHandler();
   }
 
@@ -230,7 +235,7 @@ class GameView {
     this.game.sounds.switchBGM("waveBGM");
     this.game.startScreen = false;
     document.removeEventListener("keypress", this.startHandler)
-    this.canvas.removeEventListener("click", this.startHandler)
+    this.canvas.removeEventListener("pointerdown", this.startHandler)
     this.bindControlHandlers();
     setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
     this.messageDrawn = false;
@@ -239,15 +244,16 @@ class GameView {
   bindStartHandler() {
     this.startHandler = this.handleStartKey.bind(this);
     document.addEventListener("keypress", this.startHandler);
-    this.canvas.addEventListener("click", this.startHandler);
+    this.canvas.addEventListener("pointerdown", this.startHandler);
   }
 
   // retry on win/game over
   handleRetryKey(event) {
+    if (this.game.secretEnd) location.href = "https://fk652.github.io/capybaby-in-space/";
     if (event?.key === " ") event.preventDefault();
 
     document.removeEventListener("keypress", this.retryHandler);
-    this.canvas.removeEventListener("click", this.retryHandler);
+    this.canvas.removeEventListener("pointerdown", this.retryHandler);
     this.game.reset();
     this.bindControlHandlers();
     setTimeout(this.game.resetAddEnemyCooldown.bind(this.game), 1500);
@@ -257,7 +263,7 @@ class GameView {
   bindRetryHandler() {
     this.retryHandler = this.handleRetryKey.bind(this);
     document.addEventListener("keypress", this.retryHandler);
-    this.canvas.addEventListener("click", this.retryHandler);
+    this.canvas.addEventListener("pointerdown", this.retryHandler);
   }
 
   // mouse/touch follow movements
