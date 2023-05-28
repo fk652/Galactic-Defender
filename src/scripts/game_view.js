@@ -43,7 +43,7 @@ class GameView {
     // dy controls change in speed
     const backgroundImg = new Image();
     backgroundImg.src = "src/assets/images/game_background.png";
-    this.backgroundOptions = {
+    this.bgSettings = {
       img: backgroundImg,
       x: 0,
       y: 700,
@@ -154,21 +154,21 @@ class GameView {
 
   // canvas background moves vertically downward
   drawBackground() {
-    const img = this.backgroundOptions.img;
+    const img = this.bgSettings.img;
 
     // if end is reached, reset image back to beginning
-    if (this.backgroundOptions.y > this.canvasHeight) {
-      this.backgroundOptions.y = -img.height + this.backgroundOptions.y;
+    if (this.bgSettings.y > this.canvasHeight) {
+      this.bgSettings.y -= img.height;
     }
 
     // if looping around, cut remaining end and draw below new
-    if (this.backgroundOptions.y > 0) {
-      this.ctx.drawImage(img, this.backgroundOptions.x, -img.height + this.backgroundOptions.y, img.width, img.height);
+    if (this.bgSettings.y > 0) {
+      this.ctx.drawImage(img, this.bgSettings.x, this.bgSettings.y - img.height, img.width, img.height);
     }
 
     // draw background and then update new position
-    this.ctx.drawImage(img, this.backgroundOptions.x, this.backgroundOptions.y, img.width, img.height);
-    this.backgroundOptions.y += this.backgroundOptions.dy;
+    this.ctx.drawImage(img, this.bgSettings.x, this.bgSettings.y, img.width, img.height);
+    this.bgSettings.y += this.bgSettings.dy;
   }
 
   // updates all game info related html elements
