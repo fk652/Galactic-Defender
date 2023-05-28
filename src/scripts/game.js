@@ -194,14 +194,13 @@ class Game {
     this.secretEnd = false;
     this.startScreen = false;
     
-    this.idCounter = 0;
-    this.timers = {};
-    this.allMovingObjects = {
-      player: {},
-      enemies: {},
-      projectiles: {},
-      explosions: {}
-    };
+    for (const id in this.timers) delete this.timers[id];
+    for (const type in this.allMovingObjects) {
+      for (const id in this.allMovingObjects[type]) {
+        delete this.allMovingObjects[type][id];
+      }
+    }
+    this.idCounter = 1;
 
     this.player = new PlayerShip(this);
     this.boss = null;

@@ -115,10 +115,12 @@ class Sound {
     this.currentSounds[id] = audioObject;
     
     newAudio.onended = () => {
-      newAudioCtx.disconnect(this.audioCtx.destination);
-      newAudio.remove();
-      newAudio.src = '';
+      audioObject.audio = audioObject.ctx = null;
       delete this.currentSounds[id];
+
+      newAudioCtx.disconnect(this.audioCtx.destination);
+      newAudio.src = '';
+      newAudio.load();
     }
 
     newAudio.play().then(() => { 
@@ -133,13 +135,15 @@ class Sound {
   }
 
   clearCurrentSounds() {
-    Object.values(this.currentSounds).forEach(soundObject => {
+    for (const id in this.currentSounds) {
+      const soundObject = this.currentSounds[id];
       if (this.isPlaying(soundObject.audio)) soundObject.audio.pause();
-      soundObject.audio.remove();
-      soundObject.audio.src = '';
       soundObject.ctx.disconnect(this.audioCtx.destination);
-    });
-    this.currentSounds = {};
+      soundObject.audio.src = '';
+      soundObject.audio.load();
+      soundObject.audio = soundObject.ctx = null;
+      delete this.currentSounds[id];
+    }
   }
 
   bindToggleListener() {
