@@ -1,7 +1,7 @@
 // Sound class creates and handles all game sounds
 class Sound {
   constructor(game) {
-    // this.audioCtx = new AudioContext();
+    this.audioCtx = new AudioContext();
     
     this.waveBGM = "src/assets/sounds/wave_bgm.mp3";
     this.bossIncomingBGM = "src/assets/sounds/boss_incoming_bgm.mp3";
@@ -11,8 +11,8 @@ class Sound {
     this.currentBGM.src = this.waveBGM;
     this.currentBGM.preload = "auto";
     this.currentBGM.loop = true;
-    // this.currentBGMCtx = this.audioCtx.createMediaElementSource(this.currentBGM);
-    // this.currentBGMCtx.connect(this.audioCtx.destination);
+    this.currentBGMCtx = this.audioCtx.createMediaElementSource(this.currentBGM);
+    this.currentBGMCtx.connect(this.audioCtx.destination);
     
     this.playerHurt = "src/assets/sounds/player_hurt.wav";
     this.playerDeath = "src/assets/sounds/player_death.wav";
@@ -24,8 +24,8 @@ class Sound {
     this.majorSound.src = "";
     this.majorSound.preload = "auto";
     this.majorSound.onended = () => this.majorSound.src = "";
-    // this.majorSoundCtx = this.audioCtx.createMediaElementSource(this.majorSound);
-    // this.majorSoundCtx.connect(this.audioCtx.destination);
+    this.majorSoundCtx = this.audioCtx.createMediaElementSource(this.majorSound);
+    this.majorSoundCtx.connect(this.audioCtx.destination);
 
     this.defaultProjectile = "src/assets/sounds/default_laser.wav";
     this.playerProjectile = "src/assets/sounds/player_laser.wav";
@@ -79,7 +79,7 @@ class Sound {
 
   // sound toggling
   toggleOff() {
-    // if (this.audioCtx.state !== "suspended") this.audioCtx.suspend();
+    if (this.audioCtx.state !== "suspended") this.audioCtx.suspend();
     this.currentBGM.pause();
     this.majorSound.pause();
     this.clearCurrentSounds();
@@ -87,7 +87,7 @@ class Sound {
   }
 
   toggleOn() {
-    // if (this.audioCtx.state === "suspended") this.audioCtx.resume();
+    if (this.audioCtx.state === "suspended") this.audioCtx.resume();
     if (!this.game.startScreen && !this.game.gameOver && !this.game.win) {
       this.currentBGM.play();
     }
@@ -97,33 +97,33 @@ class Sound {
 
   // adding projectile and explosion sounds, to be called in other classes as needed
   add(audioSourceKey) {
-    if (this.toggle) {
-      const newAudio = document.createElement("audio");
-      newAudio.src = this[audioSourceKey];
-      newAudio.preload = "auto";
-      // const newAudioCtx = this.audioCtx.createMediaElementSource(newAudio);
-      // newAudioCtx.connect(this.audioCtx.destination);
+    if (!this.toggle) return;
 
-      if (audioSourceKey === "enemyProjectile") newAudio.volume = 0.02;
+    const newAudio = document.createElement("audio");
+    newAudio.src = this[audioSourceKey];
+    newAudio.preload = "auto";
+    const newAudioCtx = this.audioCtx.createMediaElementSource(newAudio);
+    newAudioCtx.connect(this.audioCtx.destination);
 
-      newAudio.onended = () => {
-        // newAudioCtx.disconnect(this.audioCtx.destination);
-        newAudio.remove();
-        newAudio.src = '';
-        delete this.currentSounds[id];
-      }
+    if (audioSourceKey === "enemyProjectile") newAudio.volume = 0.02;
 
-      newAudio.play().then(() => { 
-        if(!this.toggle) newAudio.pause() 
-      }).catch(() => {});
-
-      const id = this.soundId++
-      const audioObject = {
-        audio: newAudio
-        // ctx: newAudioCtx
-      }
-      this.currentSounds[id] = audioObject;
+    const id = this.soundId++
+    const audioObject = {
+      audio: newAudio,
+      ctx: newAudioCtx
     }
+    this.currentSounds[id] = audioObject;
+    
+    newAudio.onended = () => {
+      newAudioCtx.disconnect(this.audioCtx.destination);
+      newAudio.remove();
+      newAudio.src = '';
+      delete this.currentSounds[id];
+    }
+
+    newAudio.play().then(() => { 
+      if(!this.toggle) newAudio.pause() 
+    }).catch(() => {});
   }
 
   reset() {
@@ -137,7 +137,7 @@ class Sound {
       if (this.isPlaying(soundObject.audio)) soundObject.audio.pause();
       soundObject.audio.remove();
       soundObject.audio.src = '';
-      // soundObject.ctx.disconnect(this.audioCtx.destination);
+      soundObject.ctx.disconnect(this.audioCtx.destination);
     });
     this.currentSounds = {};
   }
