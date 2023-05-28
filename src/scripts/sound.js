@@ -13,11 +13,11 @@ class Sound {
     this.currentBGMCtx = this.audioCtx.createMediaElementSource(this.currentBGM);
     this.currentBGMCtx.connect(this.audioCtx.destination);
     
+    this.playerHurt = "src/assets/sounds/player_hurt.wav";
     this.playerDeath = "src/assets/sounds/player_death.wav";
     this.bossDeath = "src/assets/sounds/boss_death.mp3";
-    this.gameOver = "src/assets/sounds/game_over.mp3";
     this.win = "src/assets/sounds/win.mp3";
-    this.playerHurt = "src/assets/sounds/player_hurt.wav";
+    this.gameOver = "src/assets/sounds/game_over.mp3";
 
     this.majorSound = document.createElement("audio");
     this.majorSound.src = "";
@@ -42,6 +42,11 @@ class Sound {
     this.bindToggleListener();
   }
 
+  // only pause when playing, to avoid asynchronous play() issues
+  isPlaying(audio) {
+    return audio.currentTime > 0 && !audio.paused && !audio.ended;
+  }
+
   // switching the background music
   switchBGM(key) {
     this.currentBGM.pause();
@@ -50,6 +55,7 @@ class Sound {
     if (this.toggle) this.currentBGM.play();
   }
 
+  // player hurt, player death, boss death, win, game over sounds
   playMajorSound(key) {
     if (key === null) {
       this.majorSound.src = ""
@@ -72,7 +78,9 @@ class Sound {
   // sound toggling
   toggleOff() {
     if (this.audioCtx.state !== "suspended") this.audioCtx.suspend();
-    this.reset();
+    this.currentBGM.pause();
+    this.majorSound.pause();
+    this.clearCurrentSounds();
     this.toggle = false;
   }
 
@@ -80,8 +88,8 @@ class Sound {
     if (this.audioCtx.state === "suspended") this.audioCtx.resume();
     if (!this.game.startScreen && !this.game.gameOver && !this.game.win) {
       this.currentBGM.play();
-      if (!isNaN(this.majorSound.duration)) this.majorSound.play();
     }
+    if (!isNaN(this.majorSound.duration)) this.majorSound.play();
     this.toggle = true;
   }
 
@@ -99,16 +107,12 @@ class Sound {
         newAudioCtx.disconnect(this.audioCtx.destination);
         newAudio.remove();
         newAudio.src = '';
-        newAudio.srcObject = null;
         delete this.currentSounds[id];
       }
 
       newAudio.play().then(() => { 
         if(!this.toggle) newAudio.pause() 
-      }).catch((error) => {
-        console.log(error);
-        return;
-      });
+      }).catch(() => {});
 
       const id = this.soundId++
       const audioObject = {
@@ -119,21 +123,17 @@ class Sound {
     }
   }
 
-  // only pause when playing, to avoid asynchronous play() issues
-  isPlaying(audio) {
-    return audio.currentTime > 0 && !audio.paused && !audio.ended;
+  reset() {
+    this.switchBGM("waveBGM");
+    this.playMajorSound(null);
+    this.clearCurrentSounds();
   }
 
-  reset() {
-    this.currentBGM.pause();
-    // this.currentBGM.currentTime = 0;
-    this.majorSound.pause();
-
+  clearCurrentSounds() {
     Object.values(this.currentSounds).forEach(soundObject => {
-      if (this.isPlaying(soundObject.audio)) {soundObject.audio.pause();}
+      if (this.isPlaying(soundObject.audio)) soundObject.audio.pause();
       soundObject.audio.remove();
       soundObject.audio.src = '';
-      soundObject.audio.srcObject = null;
       soundObject.ctx.disconnect(this.audioCtx.destination);
     });
     this.currentSounds = {};

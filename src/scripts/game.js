@@ -201,8 +201,6 @@ class Game {
     this.gameView.switchGameInformation();
 
     this.sounds.reset();
-    this.sounds.switchBGM("waveBGM");
-    this.sounds.playMajorSound(null);
   }
 }
 
