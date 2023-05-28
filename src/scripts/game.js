@@ -23,6 +23,7 @@ class Game {
     this.score = 0;
     this.gameOver = false;
     this.win = false;
+    this.secretEnd = false;
     this.startScreen = true;
 
     // all moving objects and timers have a unique game id
@@ -162,6 +163,8 @@ class Game {
   }
 
   setWin() {
+    if (this.player?.health <= 0) this.secretEnd = true;
+
     if (!this.gameOver) {
       this.score += (this.player.health * 200);
       this.win = true;
@@ -170,7 +173,9 @@ class Game {
   }
 
   setGameOver() {
-    if (!this.win) {
+    if (this.boss?.health <= 0) {
+      this.secretEnd = true;
+    } else if (!this.win) {
       this.gameOver = true;
       this.sounds.playMajorSound("gameOver");
     }
@@ -186,6 +191,7 @@ class Game {
     
     this.gameOver = false;
     this.win = false;
+    this.secretEnd = false;
     this.startScreen = false;
     
     this.idCounter = 0;
