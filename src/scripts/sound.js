@@ -1,149 +1,180 @@
 // Sound class creates and handles all game sounds
 class Sound {
   constructor(game) {
+    this.game = game;
     this.audioCtx = new AudioContext();
     
-    this.waveBGM = "src/assets/sounds/wave_bgm.mp3";
-    this.bossIncomingBGM = "src/assets/sounds/boss_incoming_bgm.mp3";
-    this.bossBGM = "src/assets/sounds/boss_bgm.mp3";
+    const soundUrls = {
+      // background musics
+      waveBGM: "src/assets/sounds/wave_bgm.mp3",
+      bossIncomingBGM: "src/assets/sounds/boss_incoming_bgm.mp3",
+      bossBGM: "src/assets/sounds/boss_bgm.mp3",
 
-    this.currentBGM = document.createElement("audio");
-    this.currentBGM.src = this.waveBGM;
-    this.currentBGM.preload = "auto";
-    this.currentBGM.loop = true;
-    this.currentBGMCtx = this.audioCtx.createMediaElementSource(this.currentBGM);
-    this.currentBGMCtx.connect(this.audioCtx.destination);
-    
-    this.playerHurt = "src/assets/sounds/player_hurt.wav";
-    this.playerDeath = "src/assets/sounds/player_death.wav";
-    this.bossDeath = "src/assets/sounds/boss_death.mp3";
-    this.win = "src/assets/sounds/win.mp3";
-    this.gameOver = "src/assets/sounds/game_over.mp3";
+      // major sounds
+      playerDeath: "src/assets/sounds/player_death.wav",
+      bossDeath: "src/assets/sounds/boss_death.mp3",
+      win: "src/assets/sounds/win.mp3",
+      gameOver: "src/assets/sounds/game_over.mp3",
+      
+      // normal sounds
+      playerHurt: "src/assets/sounds/player_hurt.wav",
+      defaultProjectile: "src/assets/sounds/default_laser.wav",
+      playerProjectile: "src/assets/sounds/player_laser.wav",
+      enemyProjectile: "src/assets/sounds/enemy_laser.wav",
+      bossProjectile: "src/assets/sounds/boss_projectile.wav",
+      explosion: "src/assets/sounds/explosion.wav"
+    };
 
-    this.majorSound = document.createElement("audio");
-    this.majorSound.src = "";
-    this.majorSound.preload = "auto";
-    this.majorSound.onended = () => this.majorSound.src = "";
-    this.majorSoundCtx = this.audioCtx.createMediaElementSource(this.majorSound);
-    this.majorSoundCtx.connect(this.audioCtx.destination);
+    // create audio buffers from each sound file and save as a Sound class property
+    (async () => {
+      for (const key in soundUrls) {
+        const url = soundUrls[key];
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        const audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
+        this[key] = audioBuffer;
+      }
+    })();
 
-    this.defaultProjectile = "src/assets/sounds/default_laser.wav";
-    this.playerProjectile = "src/assets/sounds/player_laser.wav";
-    this.enemyProjectile = "src/assets/sounds/enemy_laser.wav";
-    this.bossProjectile = "src/assets/sounds/boss_projectile.wav";
-    this.explosion = "src/assets/sounds/explosion.wav";
+    this.currentBGM = "waveBGM";
+    this.bgm = null;
+    this.bgmPlaying = false;
+
+    this.majorSound = null;
+    this.majorSoundVolume = null;
+    this.majorPlaying = false;
 
     this.soundId = 0;
     this.currentSounds = {};
-    this.toggle = false;
-    this.game = game;
 
+    this.toggle = false;
     this.soundOnElement = document.getElementById("sound-on");
     this.soundOffElement = document.getElementById("sound-off");
     this.soundTextElement = document.getElementById("sound-text");
     this.bindToggleListener();
   }
 
-  // only pause when playing, to avoid asynchronous play() issues
-  isPlaying(audio) {
-    return audio.currentTime > 0 && !audio.paused && !audio.ended;
-  }
-
-  // switching the background music
+  // switching the background music, and play on loop
+  // also used to play same background music again after stopping
   switchBGM(key) {
-    this.currentBGM.pause();
-    this.currentBGM.currentTime = 0;
-    this.currentBGM.src = this[key];
-    if (this.toggle) this.currentBGM.play();
+    this.currentBGM = key;
+
+    if (!this.toggle) return;
+
+    this.stopBGM();
+    this.bgm = this.audioCtx.createBufferSource();
+    this.bgm.buffer = this[key];
+    this.bgm.connect(this.audioCtx.destination);
+    this.bgm.loop = true;
+    this.bgm.start(0);
+    this.bgmPlaying = true;
   }
 
-  // player hurt, player death, boss death, win, game over sounds
+  stopBGM() {
+    if (!this.bgmPlaying) return;
+
+    this.bgm.stop();
+    // this.bgm.disconnect(this.audioCtx.destination);
+    this.bgm = null;
+    this.bgmPlaying = false;
+  }
+
+  // major sounds will stop background music before playing
+  // only 1 major sound should be playing at a time
   playMajorSound(key) {
-    if (key === null) {
-      this.majorSound.src = ""
-      return;
+    if (!this.toggle) return;
+
+    this.stopMajorSound();
+    this.stopBGM();
+
+    this.majorSound = this.audioCtx.createBufferSource();
+    this.majorSound.buffer = this[key];
+    this.majorSoundVolume = this.audioCtx.createGain();
+    this.majorSound.connect(this.majorSoundVolume).connect(this.audioCtx.destination);
+
+    if (key === "playerDeath") this.majorSoundVolume.gain.value = 0.3;
+    else if (key === "win") this.majorSoundVolume.gain.value = 0.3;
+    else this.majorSoundVolume.gain.value = 1.0;
+
+    this.majorSound.start(0);
+    this.majorPlaying = true;
+  }
+
+  stopMajorSound() {
+    if (!this.majorPlaying) return;
+
+    this.majorSound.stop();
+    // this.majorSoundVolume.disconnect(this.audioCtx.destination);
+    this.majorSound = null;
+    this.majorSoundVolume = null;
+    this.majorPlaying = false;
+  }
+
+  // all currently playing normal sounds are kept track of with ids in this.currentSounds
+  // deletes itself from this.currentSounds after finished playing
+  // to be called in other classes as needed
+  add(key) {
+    if (!this.toggle) return;
+
+    const newAudio = this.audioCtx.createBufferSource();
+    newAudio.buffer = this[key];
+    const newAudioVolume = this.audioCtx.createGain();
+    newAudio.connect(newAudioVolume).connect(this.audioCtx.destination);
+
+    if (key === "enemyProjectile") newAudioVolume.gain.value = 0.04;
+    else newAudioVolume.gain.value = 1.0;
+
+    const id = this.soundId++
+    const audioObject = {
+      audio: newAudio,
+      volume: newAudioVolume
+    }
+    this.currentSounds[id] = audioObject;
+    
+    newAudio.onended = () => {
+      if (this.currentSounds[id]) {
+        // newAudioVolume.disconnect(this.audioCtx.destination);
+        delete this.currentSounds[id];
+      }
     }
 
-    if (key !== "playerHurt") this.currentBGM.pause();
-
-    this.majorSound.pause();
-    this.majorSound.currentTime = 0;
-    this.majorSound.src = this[key];
-
-    if (key === "playerDeath") this.majorSound.volume = 0.2;
-    else if (key === "win") this.majorSound.volume = 0.3;
-    else this.majorSound.volume = 1.0;
-
-    if (this.toggle) this.majorSound.play();
+    newAudio.start(0);
+  }
+  
+  clearCurrentSounds() {
+    for (const id in this.currentSounds) {
+      const soundObject = this.currentSounds[id];
+      soundObject.audio.stop();
+      // soundObject.volume.disconnect(this.audioCtx.destination);
+      soundObject.audio = null;
+      soundObject.volume = null;
+      delete this.currentSounds[id];
+    }
   }
 
   // sound toggling
   toggleOff() {
     if (this.audioCtx.state !== "suspended") this.audioCtx.suspend();
-    this.currentBGM.pause();
-    this.majorSound.pause();
-    this.clearCurrentSounds();
     this.toggle = false;
+
+    this.stopBGM();
+    this.stopMajorSound();
+    this.clearCurrentSounds();
   }
 
   toggleOn() {
     if (this.audioCtx.state === "suspended") this.audioCtx.resume();
-    if (!this.game.startScreen && !this.game.gameOver && !this.game.win) {
-      this.currentBGM.play();
-    }
-    if (!isNaN(this.majorSound.duration)) this.majorSound.play();
     this.toggle = true;
-  }
 
-  // adding projectile and explosion sounds, to be called in other classes as needed
-  add(audioSourceKey) {
-    if (!this.toggle) return;
-
-    const newAudio = document.createElement("audio");
-    newAudio.src = this[audioSourceKey];
-    newAudio.preload = "auto";
-    const newAudioCtx = this.audioCtx.createMediaElementSource(newAudio);
-    newAudioCtx.connect(this.audioCtx.destination);
-
-    if (audioSourceKey === "enemyProjectile") newAudio.volume = 0.02;
-
-    const id = this.soundId++
-    const audioObject = {
-      audio: newAudio,
-      ctx: newAudioCtx
+    if (!this.game.startScreen && !this.game.gameOver && !this.game.win) {
+      this.switchBGM(this.currentBGM);
     }
-    this.currentSounds[id] = audioObject;
-    
-    newAudio.onended = () => {
-      audioObject.audio = audioObject.ctx = null;
-      delete this.currentSounds[id];
-
-      newAudioCtx.disconnect(this.audioCtx.destination);
-      newAudio.src = '';
-      newAudio.load();
-    }
-
-    newAudio.play().then(() => { 
-      if(!this.toggle) newAudio.pause() 
-    }).catch(() => {});
   }
 
   reset() {
     this.switchBGM("waveBGM");
-    this.playMajorSound(null);
+    this.stopMajorSound();
     this.clearCurrentSounds();
-  }
-
-  clearCurrentSounds() {
-    for (const id in this.currentSounds) {
-      const soundObject = this.currentSounds[id];
-      if (this.isPlaying(soundObject.audio)) soundObject.audio.pause();
-      soundObject.ctx.disconnect(this.audioCtx.destination);
-      soundObject.audio.src = '';
-      soundObject.audio.load();
-      soundObject.audio = soundObject.ctx = null;
-      delete this.currentSounds[id];
-    }
   }
 
   bindToggleListener() {
