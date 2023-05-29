@@ -127,9 +127,7 @@ class GameView {
   }
 
   drawRetryKey() {
-    const message = this.game.secretEnd
-                    ? "(press any key or click here for a secret mission 🦫)"
-                    : "(press any key or click here to retry)"
+    const message = "(press any key or click here to retry)";
     this.ctx.font = "24px roboto";
     this.ctx.fillText(message, this.canvasWidth/2, this.canvasHeight/2 + 50);
     this.bindRetryHandler();
@@ -249,11 +247,6 @@ class GameView {
 
   // retry on win/game over
   handleRetryKey(event) {
-    if (this.game.secretEnd) {
-      location.href = "https://fk652.github.io/capybaby-in-space/";
-      return
-    }
-    
     if (event?.key === " ") event.preventDefault();
 
     document.removeEventListener("keypress", this.retryHandler);
