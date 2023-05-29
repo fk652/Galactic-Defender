@@ -40,10 +40,6 @@ class Sound {
     this.bgm = null;
     this.bgmPlaying = false;
 
-    this.majorSound = null;
-    this.majorSoundVolume = null;
-    this.majorPlaying = false;
-
     this.soundId = 0;
     this.currentSounds = {};
 
@@ -80,34 +76,11 @@ class Sound {
   }
 
   // major sounds will stop background music before playing
-  // only 1 major sound should be playing at a time
   playMajorSound(key) {
     if (!this.toggle) return;
-
-    this.stopMajorSound();
+    
     this.stopBGM();
-
-    this.majorSound = this.audioCtx.createBufferSource();
-    this.majorSound.buffer = this[key];
-    this.majorSoundVolume = this.audioCtx.createGain();
-    this.majorSound.connect(this.majorSoundVolume).connect(this.audioCtx.destination);
-
-    if (key === "playerDeath") this.majorSoundVolume.gain.value = 0.3;
-    else if (key === "win") this.majorSoundVolume.gain.value = 0.3;
-    else this.majorSoundVolume.gain.value = 1.0;
-
-    this.majorSound.start(0);
-    this.majorPlaying = true;
-  }
-
-  stopMajorSound() {
-    if (!this.majorPlaying) return;
-
-    this.majorSound.stop();
-    // this.majorSoundVolume.disconnect(this.audioCtx.destination);
-    this.majorSound = null;
-    this.majorSoundVolume = null;
-    this.majorPlaying = false;
+    this.add(key);
   }
 
   // all currently playing normal sounds are kept track of with ids in this.currentSounds
@@ -122,6 +95,8 @@ class Sound {
     newAudio.connect(newAudioVolume).connect(this.audioCtx.destination);
 
     if (key === "enemyProjectile") newAudioVolume.gain.value = 0.04;
+    else if (key === "playerDeath") newAudioVolume.gain.value = 0.3;
+    else if (key === "win") newAudioVolume.gain.value = 0.3;
     else newAudioVolume.gain.value = 1.0;
 
     const id = this.soundId++
@@ -156,9 +131,7 @@ class Sound {
   toggleOff() {
     if (this.audioCtx.state !== "suspended") this.audioCtx.suspend();
     this.toggle = false;
-
     this.stopBGM();
-    this.stopMajorSound();
     this.clearCurrentSounds();
   }
 
@@ -173,7 +146,6 @@ class Sound {
 
   reset() {
     this.switchBGM("waveBGM");
-    this.stopMajorSound();
     this.clearCurrentSounds();
   }
 
