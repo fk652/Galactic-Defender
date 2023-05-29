@@ -1,9 +1,12 @@
+// Ship is the top parent class for player, enemy, and boss ships
+
 import MovingObject from "./moving_object";
 import Projectile from "./projectile";
 import Timer from "./timer";
 
-// Ship is the top parent class for player, enemy, and boss ships
 class Ship extends MovingObject {
+  // takes in constructor argument objects for MovingObject and Projectile
+  // and takes in an array of shooting pattern objects
   constructor(objArgs, projectileArgs, patternArgs) {
     super(objArgs);
     this.projectileArgs = projectileArgs;
@@ -48,10 +51,12 @@ class Ship extends MovingObject {
     })
   }
 
+  // projectileSound is a string of either 'playerProjectile', 'bossProjectile', or 'enemyProjectile'
   playShootSound(projectileSound) {
     this.game.sounds.add(projectileSound);
   }
 
+  // takes in an index for the shooting patterns array
   resetCooldown(index) {
     this.patternArgs[index].onCooldown = false;
     this.patternArgs[index].timer = null;

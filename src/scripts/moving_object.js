@@ -1,22 +1,25 @@
+// MovingObject is the top parent class for ships, projectiles, explosions, etc.
+
 import { rectangleCollision } from "./utils";
 
-// MovingObject is the top parent class for ships, projectiles, explosions, etc.
 class MovingObject {
   // for smoothing gameplay based on fps
   static NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
+  // takes in an argument object with the following:
   constructor(argsObject) {
-    this.position = argsObject["position"];
-    this.velocity = argsObject["velocity"];
-    this.speed = argsObject["speed"];
-    this.health = argsObject["health"];
-    this.game = argsObject["game"];
-    this.width = argsObject["width"];
-    this.height = argsObject["height"];
-    this.image = argsObject["image"];
-    this.type = argsObject["type"];
-    this.rotationAngle = argsObject["rotation"] || 0;
+    this.position = argsObject["position"];             // initial canvas position [int, int]
+    this.velocity = argsObject["velocity"];             // initial velocity [int, int]
+    this.speed = argsObject["speed"];                   // initial speed
+    this.health = argsObject["health"];                 // initial health
+    this.game = argsObject["game"];                     // Game object
+    this.width = argsObject["width"];                   // image width
+    this.height = argsObject["height"];                 // image height
+    this.image = argsObject["image"];                   // image url
+    this.type = argsObject["type"];                     // type can be 'enemy', 'boss', 'player', or 'explosion'
+    this.rotationAngle = argsObject["rotation"] || 0;   // (optional) image rotation angle in degrees
 
+    // stores itself in the Game with an id
     this.id = this.game.idCounter++;
     this.game.allMovingObjects[this.type][this.id] = this;
   }
@@ -35,14 +38,14 @@ class MovingObject {
     ctx.restore();
   }
 
-  // checks collisions against all hitboxes of the object
-  // rectangleCollision is a utility function for mathematically determining collisions
-  // hitBoxCollisions is used by subclasses with more complex logic
+  // checks collisions against all hitboxes of the other MovingObject
   collideCheck(otherObj) {
+    // hitBoxCollisions is used by subclasses with more complex logic
     const hitBoxCollisions = [];
-
+    
     this.getHitbox().forEach((thisBox, idx) => {
       const collisionFound = otherObj.getHitbox().some(otherBox => { 
+        // rectangleCollision is a utility function for mathematically determining collisions
         return rectangleCollision(thisBox, otherBox) 
       })
 
@@ -55,10 +58,10 @@ class MovingObject {
   }
 
   // will be overwritten by subclasses with more complex logic
-  // two cases: enemy/player to projectile, player to enemy
   handleCollided(otherObj) {
     const otherObjClass = otherObj.constructor.name;
-
+    
+    // three cases: ship to projectile, player to enemy, player to boss
     if (otherObjClass === "Projectile") {
       const damage = otherObj.health;
       otherObj.remove();
@@ -84,6 +87,7 @@ class MovingObject {
     }]
   }
 
+  // movement is smoothed out during fps changes
   move(timeDelta) {
     this.updateVelocity();
     const velocityScale = timeDelta / MovingObject.NORMAL_FRAME_TIME_DELTA;
@@ -96,6 +100,7 @@ class MovingObject {
     this.handleBounds([newX, newY])
   }
 
+  // updates the position with a new [int, int]
   handleBounds(newPosition) {
     // to be changed in sub classes as needed
     this.position = newPosition;
@@ -105,34 +110,37 @@ class MovingObject {
     // to be implemented in sub classes as needed
   }
 
+  // these functions take in a y position as int
   inUpperYHeightBounds(y) {
     return (y <= this.game.canvasHeight + this.height);
-  }
-
-  inUpperXBounds(x) {
-    return (x >= 0);
   }
 
   inUpperYBounds(y) {
     return (y >= 0);
   }
 
-  inLowerXBounds(x) {
-    return (x <= this.game.canvasWidth - this.width);
-  }
-
   inLowerYBounds(y) {
     return (y <= this.game.canvasHeight - this.height);
+  }
+  
+  inYBounds(y) {
+    return (this.inUpperYBounds(y) && this.inLowerYBounds(y));
+  }
+
+  // these functions take in a x position as int
+  inUpperXBounds(x) {
+    return (x >= 0);
+  }
+
+  inLowerXBounds(x) {
+    return (x <= this.game.canvasWidth - this.width);
   }
 
   inXBounds(x) {
     return (this.inUpperXBounds(x) && this.inLowerXBounds(x));
   }
 
-  inYBounds(y) {
-    return (this.inUpperYBounds(y) && this.inLowerYBounds(y));
-  }
-
+  // takes in a position as [int, int]
   inBounds(position) {
     return this.inXBounds(position[0]) && this.inYBounds(position[1]);
   }

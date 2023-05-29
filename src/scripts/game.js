@@ -1,10 +1,11 @@
+// Game class handles all game state logic
+
 import PlayerShip from "./player_ship";
 import EnemyShip from "./enemy_ship";
 import Boss from "./boss";
 import Sound from "./sound";
 import Timer from "./timer";
 
-// Game class handles overall game state logic
 class Game {
   static MAX_ENEMY_WAVE = 5;
 
@@ -45,6 +46,7 @@ class Game {
   }
 
   // apply game logic to determine next state of the game for next animation frame
+  // time changes, handled by GameView, are used to smooth gameplay during fps changes
   step(timeDelta) {
     this.checkCollisions();
     if (!this.bossFight) this.setEnemies();
@@ -98,7 +100,7 @@ class Game {
   }
 
   // next wave if 0 enemies remaining, activate boss fight if last wave finished
-    // increased enemies per wave
+    // increases enemies per wave
     // multiply score by remaining player health, and then heal player
   setEnemies() {
     if (this.enemiesRemaining === 0) {
@@ -117,7 +119,7 @@ class Game {
       }
     }
 
-    // throught a wave, enemies are placed in clusters of 3 to 10 at different intervals
+    // throughout a wave, enemies are placed in clusters of 3 to 10 at different intervals
     if (!this.addEnemyOnCooldown) {
       const remaining = this.enemyWaveCount - this.addedEnemies;
 
@@ -162,6 +164,7 @@ class Game {
     }
   }
 
+  // secret ending if both player and boss die
   setWin() {
     if (this.player?.health <= 0) this.secretEnd = true;
 
@@ -181,6 +184,7 @@ class Game {
     }
   }
 
+  // resetting the game on retries
   reset() {
     this.enemyWave = 0;
     this.addEnemyOnCooldown = true;

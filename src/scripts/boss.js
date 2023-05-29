@@ -1,8 +1,9 @@
+// The big bad boss, the final enemy in a level
+// Defeat the boss to win and save the galaxy!
+
 import Ship from "./ship";
-import Projectile from "./projectile";
 import Explosion from "./explosion";
 import Timer from "./timer";
-import { rectangleCollision } from "./utils";
 
 class Boss extends Ship {
   static MAX_HEALTH = 50;
@@ -121,6 +122,7 @@ class Boss extends Ship {
   }
 
   // only takes damage if weakpoint hit (index 0 is the hitbox1 weakpoint)
+  // takes in the colliding MovingObject and an array of hitbox collision positions as [[int, int]]
   handleCollided(otherObj, hitboxesCollided) {
     const otherObjClass = otherObj.constructor.name;
 

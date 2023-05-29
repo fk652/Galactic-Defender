@@ -1,5 +1,7 @@
 // vector and collision math related helper functions go here
+
 // rectangle to rectangle collision 
+// takes in 2 box objects that have x/y positions, width, and height
 export function rectangleCollision(box1, box2) {
   return (
     box1.x < box2.x + box2.width &&

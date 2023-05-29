@@ -1,4 +1,5 @@
 // Sound class creates and handles all game sounds
+
 class Sound {
   constructor(game) {
     this.game = game;

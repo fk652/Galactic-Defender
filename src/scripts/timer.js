@@ -1,5 +1,8 @@
 // Timer class wraps setTimeouts with added pause and resume functionality
+
 class Timer {
+  // callback function to be called after the delay expires
+  // delay is in milliseconds
   constructor(game, callback, delay) {
     // all Timers are kept tracked of in Game.timers
     this.game = game;

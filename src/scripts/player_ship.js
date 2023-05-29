@@ -1,3 +1,5 @@
+// The player, aka the Galactic Defender
+
 import Ship from "./ship";
 import Explosion from "./explosion";
 import Timer from "./timer";

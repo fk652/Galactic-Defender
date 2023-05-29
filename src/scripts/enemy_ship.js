@@ -1,8 +1,12 @@
+// Low level enemies that move top to bottom
+// shooting 1 bullet downwards at consistent intervals
+
 import Ship from "./ship";
-import MovingObject from "./moving_object";
 import Explosion from "./explosion";
 
 class EnemyShip extends Ship {
+  // posX is the initial x position
+  // cooldown is in milliseconds
   constructor(game, posX, speed, cooldown) {
     // Ship/MovingObject related arguments
     let image = document.createElement("img");

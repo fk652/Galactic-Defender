@@ -1,10 +1,14 @@
+// Explosion class handles different explosion types for death animations
+
 import MovingObject from "./moving_object";
 
-// Explosion class handles different explosion types
-// minor for enemy ships, major for player and boss death
 class Explosion extends MovingObject {
+  // position and velocityDeltas are [int, int]
+  // explosionType is a string of either "minor" or "major"
   constructor(game, size, position, explosionType, velocityDelta) {
     const image = document.createElement("img");
+    
+    // minor for enemy ships, major for player/boss death
     if (explosionType === "minor") {
       image.src = "src/assets/images/explosion1.png";
     } else if (explosionType === "major" ) {

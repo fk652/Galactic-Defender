@@ -1,7 +1,9 @@
+// GameView handles anything canvas/html related, and event handlers
+// Also creates the single Game object that handles all game logic
+
 import Game from "./game";
 import Boss from "./boss";
 
-// GameView handles anything canvas/html related, and event handlers
 class GameView {
   // player movement keybind mappings
   static UP_KEYS = ["ArrowUp", 'w']
@@ -22,8 +24,8 @@ class GameView {
     "pause-container"
   ]
 
-  constructor(canvas, ctx) {
-    this.ctx = ctx;
+  constructor(canvas, canvasContext) {
+    this.ctx = canvasContext;
     this.canvas = canvas;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
@@ -78,6 +80,7 @@ class GameView {
   }
 
   // draw next state of the game, or start/win/game over message
+  // takes in time, which is automatically given and kept track off in recursive calls
   animate(time) {
     if (this.game.startScreen || this.game.gameOver || this.game.win) {
       if (this.pause) this.handlePauseToggle();
@@ -187,6 +190,7 @@ class GameView {
   }
 
   // updates either boss or player hp
+  // type is a string of either 'player' or 'boss'
   updateHealthBar(type) {
     let obj, healthBar;
     if (type === 'player') {
@@ -385,6 +389,7 @@ class GameView {
     this.game.player.keysPressed.shoot = false;
   }
 
+  // binding and removing player controls
   bindControlHandlers() {
     this.keyDownHandler = this.handleKeyDown.bind(this);
     this.keyUpHandler = this.handleKeyUp.bind(this);
