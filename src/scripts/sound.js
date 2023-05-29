@@ -2,6 +2,8 @@
 class Sound {
   constructor(game) {
     this.game = game;
+    
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
     
     const soundUrls = {
