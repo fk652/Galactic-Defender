@@ -97,7 +97,7 @@ class Sound {
     newAudio.connect(newAudioVolume).connect(this.audioCtx.destination);
 
     if (key === "enemyProjectile") newAudioVolume.gain.value = 0.04;
-    else if (key === "playerDeath") newAudioVolume.gain.value = 0.3;
+    else if (key === "playerDeath") newAudioVolume.gain.value = 0.2;
     else if (key === "win") newAudioVolume.gain.value = 0.3;
     else newAudioVolume.gain.value = 1.0;
 
