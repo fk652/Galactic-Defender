@@ -18,12 +18,23 @@ It's game over if the player loses all their health points (HP) before defeating
 
 ## Instructions
 
-Controls are simply arrow keys (or WASD) to move in any direction, spacebar (or left click) to shoot (can be held down to continously shoot).
+Controls are simply:
 
-Setting options include a toggle mute, pause, and mouse/touch follow mode.
+- arrow keys or WASD to move in any direction
+- spacebar or left click to shoot (can be held down to continously shoot)
 
-The player ship will automatically follow a mouse or touch point if follow mode is enabled.
-Touch follow is automatically enabled at the start if a touch screen device is detected.
+Setting options include:
+
+- toggle mute
+- pause
+- mouse/touch follow mode
+
+Playable on touch screen mobile devices when touch follow is enabled.  
+Touch follow is automatically enabled at the start if a touch screen device is detected.  
+Control everything with just a single finger!
+
+- move finger around the screen to move the ship.
+- continously shoot while touching the screen.
 
 <img src="./src/assets/screenshots/controls.png" height="300">
 
