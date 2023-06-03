@@ -234,6 +234,7 @@ class GameView {
   handleStartKey(event) {
     if (event?.key === " ") event.preventDefault();
 
+    this.canvas.style.touchAction = "none";
     this.game.sounds.switchBGM("waveBGM");
     this.game.startScreen = false;
     document.removeEventListener("keypress", this.startHandler)
@@ -253,6 +254,7 @@ class GameView {
   handleRetryKey(event) {
     if (event?.key === " ") event.preventDefault();
 
+    this.canvas.style.touchAction = "none";
     document.removeEventListener("keypress", this.retryHandler);
     this.canvas.removeEventListener("pointerdown", this.retryHandler);
     this.game.reset();
@@ -262,6 +264,7 @@ class GameView {
   }
 
   bindRetryHandler() {
+    this.canvas.style.removeProperty("touch-action");
     this.retryHandler = this.handleRetryKey.bind(this);
     document.addEventListener("keypress", this.retryHandler);
     this.canvas.addEventListener("pointerdown", this.retryHandler);
