@@ -61,7 +61,7 @@ table {
   flex-wrap: wrap;
   padding: 10px;
 }
-.main-container i {
+.main-container i, .main-container p, .main-container span, .main-container li, .main-container h1, .main-container h2 {
   background-color: black;
 }
 .main-container .header, .main-container aside, .main-container #game-view {
@@ -73,6 +73,9 @@ table {
   margin-bottom: 10px;
   padding: 20px;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .main-container .header .project-title {
   font-size: 80px;
@@ -103,6 +106,7 @@ table {
 .main-container #game-view {
   margin: 0 10px;
   background: black;
+  touch-action: none;
   cursor: crosshair;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -626,6 +630,9 @@ body {
   background-repeat: repeat;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body::-webkit-scrollbar {

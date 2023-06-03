@@ -234,7 +234,7 @@ class GameView {
   handleStartKey(event) {
     if (event?.key === " ") event.preventDefault();
 
-    this.canvas.style.touchAction = "none";
+    this.canvas.scrollIntoView();
     this.game.sounds.switchBGM("waveBGM");
     this.game.startScreen = false;
     document.removeEventListener("keypress", this.startHandler)
@@ -254,7 +254,7 @@ class GameView {
   handleRetryKey(event) {
     if (event?.key === " ") event.preventDefault();
 
-    this.canvas.style.touchAction = "none";
+    this.canvas.scrollIntoView();
     document.removeEventListener("keypress", this.retryHandler);
     this.canvas.removeEventListener("pointerdown", this.retryHandler);
     this.game.reset();
@@ -264,7 +264,6 @@ class GameView {
   }
 
   bindRetryHandler() {
-    this.canvas.style.removeProperty("touch-action");
     this.retryHandler = this.handleRetryKey.bind(this);
     document.addEventListener("keypress", this.retryHandler);
     this.canvas.addEventListener("pointerdown", this.retryHandler);
@@ -339,8 +338,7 @@ class GameView {
 
   // setting option keybinds
   handleSettingKeybinds(event) {
-    if (event.key === " ") event.preventDefault();
-    else if (event.key === "m") this.handleMouseFollowToggle();
+    if (event.key === "m") this.handleMouseFollowToggle();
     else if (event.key === "k") this.game.sounds.handleSoundToggle();
     else if (event.key === "p") this.handlePauseToggle();
   }
@@ -373,7 +371,7 @@ class GameView {
   }
   
   handleKeyUp(event) {
-    if (event.key === " ") event.preventDefault();
+    event.preventDefault();
 
     if (GameView.RIGHT_KEYS.includes(event.key)) this.game.player.keysPressed.right = false;
     else if (GameView.LEFT_KEYS.includes(event.key)) this.game.player.keysPressed.left = false;
