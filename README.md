@@ -8,11 +8,11 @@ Galactic Defender is a galaxy shooter game, based off the classic [Space Invader
 
 In Galactic Defender the player's goal is to survive waves of enemies.
 
-<img src="./src/assets/screenshots/enemy_wave.png" height="500">
+<img src="./src/assets/screenshots/enemy_wave.png" width="1000">
 
 ...and defeat the boss at the end.
 
-<img src="./src/assets/screenshots/boss_fight.png" height="500">
+<img src="./src/assets/screenshots/boss_fight.png" width="1000">
 
 It's game over if the player loses all their health points (HP) before defeating the boss. Enemies also have their own HP that must be depleted to be destroyed, with scaling difficulty.
 
@@ -36,7 +36,7 @@ Control everything with just a single finger!
 - move finger around the screen to move the ship.
 - continously shoot while touching the screen.
 
-<img src="./src/assets/screenshots/controls.png" height="300">
+<img src="./src/assets/screenshots/controls.png" width="300">
 
 ## Functionality & MVPs
 
@@ -118,7 +118,7 @@ class Game {
 
 ## Wireframe
 
-![wireframe diagram](./src/assets/screenshots/Wireframe.png)
+<img src="./src/assets/screenshots/Wireframe.png" width="1000">
 
 * Nav links include a link to this project's Github repo and my LinkedIn.
 * Game instructions include basic controls and any rules about the game.
