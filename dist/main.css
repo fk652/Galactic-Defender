@@ -96,7 +96,7 @@ table {
 }
 .main-container .header .nav-links a i {
   color: white;
-  font-size: 40px;
+  font-size: 30px;
 }
 .main-container aside {
   width: 220px;
@@ -346,7 +346,7 @@ table {
     font-size: 45px;
   }
   .main-container .header .dev-name {
-    font-size: 18px;
+    font-size: 25px;
   }
   .main-container .header .nav-links a {
     margin: 0 10px;
